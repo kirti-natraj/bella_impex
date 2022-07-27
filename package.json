@@ -1,0 +1,31 @@
+{
+  "name": "bella_impex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon ./bin/bi_app"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "alert": "^5.1.1",
+    "cookie-parser": "^1.4.6",
+    "cookies-parser": "^1.2.0",
+    "debug": "^4.3.4",
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.17.3",
+    "express-validator": "^6.14.2",
+    "http-errors": "^2.0.0",
+    "moment": "^2.29.4",
+    "mongodb": "^4.8.0",
+    "mongoose": "^6.4.6",
+    "mongoose-auto-increment": "^5.0.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.19",
+    "popups": "^1.1.3"
+  }
+}

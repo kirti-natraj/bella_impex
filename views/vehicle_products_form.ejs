@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belle Impex</title>
+      <!--     Fonts and icons     -->
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+      <!-- Nucleo Icons -->
+      <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+      <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+      <!-- Font Awesome Icons -->
+      <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+      <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+      <!-- CSS Files -->
+      <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+</head>
+<body>
+    
+    <div class="content-wrapper">
+        <div class="card shadow-lg mx-4 card-profile">
+            <div class="card-body p-3">
+              <div class="row gx-4">
+                <div class="col-auto">
+                  <div class="avatar avatar-xl position-relative">
+                    <img src="../assets/img/jm-category.png" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                  </div>
+                </div>
+                <div class="col-auto my-auto">
+                  <div class="h-100">
+                    <h5 class="mb-1">
+                   Enter Ad Details
+                    </h5>
+                    
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          <div class="container-fluid py-4">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  
+                <form action="/add_category_form"  method="post" >
+                  <div class="card-body">
+                    <p class="text-uppercase text-sm">Enter Details</p>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Select Category</label>
+                          <select name="cars" id="cars">
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="mercedes">Mercedes</option>
+                            <option value="audi">Audi</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Select Subcategory</label>
+                          <select name="cars" id="cars">
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="mercedes">Mercedes</option>
+                            <option value="audi">Audi</option>
+                          </select>
+                        </div>
+                      </div>
+                      
+                      
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Enter Model Number</label>
+                          <input class="form-control" type="text" name="category_name" >
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Enter Usage Year</label>
+                          <input class="form-control" type="text" name="category_name" >
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Select Brand</label>
+                          <select name="cars" id="cars">
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="mercedes">Mercedes</option>
+                            <option value="audi">Audi</option>
+                          </select>
+                        </div>
+                      </div>
+                      
+                      
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Number of Owners</label>
+                          <select name="cars" id="cars">
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="mercedes">Mercedes</option>
+                            <option value="audi">Audi</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Enter Usage Year</label>
+                          <input class="form-control" type="text" name="category_name" >
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Insurance Type</label>
+                          <select name="cars" id="cars">
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                            <option value="mercedes">Mercedes</option>
+                            <option value="audi">Audi</option>
+                          </select>
+                        </div>
+                      </div>
+                      
+                      
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Enter Insurance Validity Date</label>
+                          <input class="form-control" type="date" name="category_name" >
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Description</label>
+                          <input class="form-control" type="text" name="category_name" >
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Price</label>
+                          <input class="form-control" type="text" name="category_name" >
+                        </div>
+                      </div>
+                      
+                      
+                    </div>
+                    <p class="text-uppercase text-sm">Location Information</p>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Address</label>
+                          <input class="form-control" type="text" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">City</label>
+                          <input class="form-control" type="text" value="New York">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Country</label>
+                          <input class="form-control" type="text" value="United States">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Postal code</label>
+                          <input class="form-control" type="text" value="437300">
+                        </div>
+                      </div>
+                    </div>
+                    <hr>
+                   <div class="row">
+                    <div class="d-flex justify-content-between">
+                      <a href="/category/" class="btn btn-sm btn-info mb-0 d-none d-lg-block">Cancel</a>
+                      <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-block d-lg-none">Reset</a>
+                      <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Add</button>
+                      <a href="javascript:;" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none">Submit</i></a>
+                    </div>
+                   </div>
+                    
+                   </div>
+                </form>
+                </div>
+              </div>
+              
+            </div>
+            
+        </div>
+   
+    </div>
+  </main>
+  
+  <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+  
+    <script src="/assets/js/plugins/chartjs.min.js"></script>
+    <script>
+      var ctx1 = document.getElementById("chart-line").getContext("2d");
+  
+      var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
+  
+      gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
+      gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
+      gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
+      new Chart(ctx1, {
+        type: "line",
+        data: {
+          labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          datasets: [{
+            label: "Mobile apps",
+            tension: 0.4,
+            borderWidth: 0,
+            pointRadius: 0,
+            borderColor: "#5e72e4",
+            backgroundColor: gradientStroke1,
+            borderWidth: 3,
+            fill: true,
+            data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+            maxBarThickness: 6
+  
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false,
+            }
+          },
+          interaction: {
+            intersect: false,
+            mode: 'index',
+          },
+          scales: {
+            y: {
+              grid: {
+                drawBorder: false,
+                display: true,
+                drawOnChartArea: true,
+                drawTicks: false,
+                borderDash: [5, 5]
+              },
+              ticks: {
+                display: true,
+                padding: 10,
+                color: '#fbfbfb',
+                font: {
+                  size: 11,
+                  family: "Open Sans",
+                  style: 'normal',
+                  lineHeight: 2
+                },
+              }
+            },
+            x: {
+              grid: {
+                drawBorder: false,
+                display: false,
+                drawOnChartArea: false,
+                drawTicks: false,
+                borderDash: [5, 5]
+              },
+              ticks: {
+                display: true,
+                color: '#ccc',
+                padding: 20,
+                font: {
+                  size: 11,
+                  family: "Open Sans",
+                  style: 'normal',
+                  lineHeight: 2
+                },
+              }
+            },
+          },
+        },
+      });
+    </script>
+   
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="/assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+</body>
+</html>
