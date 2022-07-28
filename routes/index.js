@@ -16,7 +16,7 @@ app.use(cors());
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'public/images/category');
+        cb(null, 'public/assets/images/category/');
     },
     filename: function (req, file, cb) {
         cb(null, Date.now()+ '__' + file.originalname);
@@ -107,7 +107,7 @@ router.post('/subcategory_form/:id', async function(req,res,next ){             
       category_id: _id,
   });
  
-  res.redirect('/category/');
+  res.redirect('/subcategory_list/');
 });
 
 
