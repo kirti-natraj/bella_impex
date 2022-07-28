@@ -3,7 +3,20 @@ const userSchema = new mongoose.Schema({
     user_id:{
         type:mongoose.ObjectId,
     },
+    password:{
+        type: String,
+        required: false,
+        default:'123'
+    },
     user_name:{
+        type: String,
+        required: false
+    },
+    district:{
+        type: String,
+        required: false
+    },
+    city:{
         type: String,
         required: false
     },
@@ -22,10 +35,25 @@ const userSchema = new mongoose.Schema({
         required: false,
         default: ''
     },
+    buy_sell:{
+        type: Boolean,
+        required: false,
+        default: true
+    },
+    reach:{
+        type: Boolean,
+        required: false,
+        default: true
+    },
     status:{
         type: Boolean,
         required: false,
         default: true
+    },
+    added_on:{
+        type: Date,
+        required: false,
+        default: Date.now()
     },
     
 })

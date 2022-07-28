@@ -20,8 +20,9 @@ conn.on('disconnected',function(){
 conn.on('error', console.error.bind(console, 'connection error:'));
 module.exports = conn;
 const indexRouter = require('./routes/index');
+//const user_apiRouter = require('./apis/user');
 
-
+global.imageBaseDir = '/public/';
 
 
 
@@ -59,7 +60,10 @@ app.use('/category', indexRouter);
 app.use('/add_category', indexRouter);
 app.use('/add_subcategory', indexRouter);
 app.use('/subcategory_list', indexRouter);
-app.use('/vehicle_products', indexRouter);
+app.use('/products', indexRouter);
+app.use('/properties', indexRouter);
+// app.use('/api/user',user_apiRouter);
+
 
 
 // catch 404 and forward to error handler

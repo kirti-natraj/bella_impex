@@ -28,10 +28,7 @@ const subcategorySchema = new mongoose.Schema({
         required: false,
         default: true
     },
-    last_update:{
-        type: Date,
-        required: false, 
-    }
+  
 })
 
 module.exports = mongoose.model('subcategory',subcategorySchema,'subcategory');

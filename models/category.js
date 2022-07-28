@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-let counter = 1;
 const categorySchema = new mongoose.Schema({
     cat_id:{
         type:mongoose.ObjectId,
@@ -16,7 +15,7 @@ const categorySchema = new mongoose.Schema({
         required: false,
 
     },
-    category_desc:{
+    image:{
         type: String,
         required: false,
 
@@ -24,7 +23,7 @@ const categorySchema = new mongoose.Schema({
     created_on:{
         type: Date,
         required: false,
-       
+       default: Date.now()
 
     },
     created_by:{
@@ -41,9 +40,3 @@ const categorySchema = new mongoose.Schema({
 })
 
 module.exports = mongoose.model('category',categorySchema,'category');
-const Model =mongoose.model('category',categorySchema,'category');
-Model.find({ id: { $gt: 0 } }).sort({ id: -1 })
-    .then(([first, ...others]) => {
-        if (first)
-            counter = first.id + 1;
-    });

@@ -4,15 +4,31 @@ var admin_db = require('../models/adminlogin');
 var user_db = require('../models/user');
 var category_db = require('../models/category');
 var subcategory_db = require('../models/sub_category');
+var properties_db= require('../models/properties');
+var vehicle_db= require('../models/vehicle');
+var product_db = require('../models/products');
 const moment = require('moment');
+
+const multer = require('multer');
+const cors = require('cors')
+const app = express();
+app.use(cors());
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/images/category');
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now()+ '__' + file.originalname);
+    }
+});
+const upload = multer({storage: storage});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {                        //for login Page
   res.render('login', { title: '' });
 });
-router.get('/vehicle_products', function(req, res, next) {                        //for login Page
-  res.render('vehicle_products_form', { title: '' });
-});
+
 router.get('/index',function(req,res,next){                          //for Dashboard Page
   res.render('index',{title: 'Dashboard'});
 });
@@ -40,13 +56,29 @@ router.get('/add_category',async function(req,res,next){                        
 });
 
 
-router.post('/add_category_form', async function(req, res, next) {                          //category add
+router.post('/add_category_form', upload.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
 
   await category_db.create({
       category_name: req.body.category_name,
-      category_desc: req.body.category_desc,
-      created_on: Date.now(),
+      image: req.files.image[0].filename
   });
+  res.redirect('/category/');
+});
+
+router.get('/update_category/:id', async function(req,res,next ){
+  let id= req.params.id
+  const data = await category_db.find({'_id':id});
+  
+  res.render('category_update', {data:data , id:id,title: 'Update Category' });
+});
+
+router.get('/update_cat_form/:id', async function(req,res,next ){
+  let _id = req.params.id;
+
+  const a1= await category_db.findByIdAndUpdate( _id, {
+      category_name: req.query.category_name,
+    
+    });
   res.redirect('/category/');
 });
 
@@ -62,7 +94,7 @@ router.get('/add_subcategory/:id',async function(req,res,next){                 
 router.get('/subcategory_list',async function(req,res,next){                        //for SubCategory TAble Update
   const data = await category_db.find().exec();
   const sub_data = await subcategory_db.find().exec();
-  res.render('subcategory_list',{title:'Subcategory List', data: data, sub_data: sub_data, moment:moment});
+  res.render('subcategory_list',{title:'Subcategory List', data: data, sub_data: sub_data, moment: moment});
 
 });
 
@@ -86,7 +118,7 @@ router.get('/update_subcat/:id', async function(req,res,next ){
   res.render('sub_update', {data:data , id:id,sub_data:sub_data, title: 'Update Subcategory' });
 });
 
-router.post('/update_subcat_form/:id', async function(req,res,next ){
+router.get('/update_subcat_form/:id', async function(req,res,next ){
   let _id = req.params.id;
 
   const a1= await subcategory_db.findByIdAndUpdate( _id, {
@@ -97,6 +129,23 @@ router.post('/update_subcat_form/:id', async function(req,res,next ){
   res.redirect('/subcategory_list/');
 });
 
+//////////////////////////////////////////////Products
+router.get('/products',async function(req, res, next) {  
+  const data = await product_db.find().exec();                      
+  res.render('products', { title: 'Products' , data: data, moment: moment});
+});
+
+/////////////////////////////////////////properties
+router.get('/properties',async function(req, res, next) {  
+  const data = await properties_db.find().exec();                      
+  res.render('properties', { title: 'Properties' , data: data, moment: moment});
+});
+
+/////////////////////////////////////////vehicle
+router.get('/vehicle',async function(req, res, next) {  
+  const data = await vehicle_db.find().exec();                      
+  res.render('vehicle', { title: 'Vehicle' , data: data, moment: moment});
+});
 ///////////////////////////////admin Login
 router.post('/save', async function(req, res, next) {
  
@@ -123,6 +172,21 @@ router.post('/save', async function(req, res, next) {
   }
 });
 
+/////////////////////////////////////////delete
+router.get('/delete_subcat/:id', async function(req,res,next ){
+  let id= req.params.id;
+  await subcategory_db.deleteOne({ _id:id});
 
+  res.redirect('/subcategory_list/');
+
+});
+
+router.get('/delete_cat/:id', async function(req,res,next ){
+  let id= req.params.id;
+  await category_db.deleteOne({ _id:id});
+
+  res.redirect('/category/');
+
+});
 
 module.exports = router;

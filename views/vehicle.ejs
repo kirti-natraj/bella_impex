@@ -14,22 +14,29 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>User table</h6>
+              <h6>Vehicle table</h6>
+              
             </div>
+
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Mobile</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Birth Date</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Address</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Buyer</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Seller</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Reach Buyer</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">S.No.</th>  
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Category Name</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Subcategory</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date of Post</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Purchase Year</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fuel Type</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kilo Meter</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Description</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Price</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sold Out</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Location</th>
+                    
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
@@ -37,66 +44,70 @@
                     <% if(data.length){
                 for(var i = 0; i< data.length; i++) {%>  
                     <tr>
+                        <td>
+                            <p class="text-xs text-secondary mb-0">&nbsp;&nbsp; &nbsp;&nbsp;<%= i+1 %></p>
+                        </td>
                       <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
-                          </div>
+                       
+                          
                           <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm"><%= data[i].user_name %></h6>
-                            <p class="text-xs text-secondary mb-0"><%= data[i].email %></p>
+                            <h6 class="mb-0 text-sm"><%= data[i].title %></h6>
                           </div>
-                        </div>
                       </td>
                       <td>
-                        <p class="text-xs font-weight-bold mb-0">India</p>
-                        <p class="text-xs text-secondary mb-0"><%= data[i].mobile %></p>
+                        <div>
+                            <img src="../assets/img/chair.jpg" class=" avatar-lg me-3" alt="user1">
+                          </div>
+                      </td>
+                      <td>
+                      
+                        <p class="text-xs text-secondary mb-0"><%= data[i].category %></p>
+                      </td>
+                      <td>
+                      
+                        <p class="text-xs text-secondary mb-0"><%= data[i].subcategory %></p>
                       </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">Online</span>
+                        <span class="badge badge-sm bg-gradient-success"><%= moment(data[i].date).format("MM Do YYYY") %></span>
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold"><%= data[i].birthdate %></span>
-                      </td>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm"><%= data[i].destrict %></h6>
-                            <p class="text-xs text-secondary mb-0"><%= data[i].city %></p>
-                          </div>
-                        </div>
+                        <span class="text-secondary text-xs font-weight-bold"><%= data[i].year %></span>
                       </td>
                       <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold"><%= data[i].fuel %></span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold"><%= data[i].km %></span>
+                      </td>
+                    </td>
+                    <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">Brand - <%= data[i].brand %></span>
+                        <p class="text-secondary text-xs font-weight-bold"><%= data[i].description %></p>
+                     
+                      </td>
+                      
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold"><%= data[i].price %></span>
+                      </td>
+                    </td>
+                    <td class="align-middle text-center">
                         <% if(data[i].buy_sell === true ){ %>
                           <a href="/user_edit/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                            Yes
+                            Sold Out
                           </a>
                         <% }else{ %>
                           <a href="/user_edit/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                            No
+                            Not Sold
                           </a>
                         <% } %>
 
                       </td>
-                      <td class="align-middle text-center">
-                        <% if(data[i].buy_sell === true ){ %>
-                          <a href="/user_edit/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                            No
-                          </a>
-                        <% }else{ %>
-                          <a href="/user_edit/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                            Yes
-                          </a>
-                        <% } %>
-
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold"><%= data[i].reach %></span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold"><%= data[i].description %></span>
-                      </td>
-                      <td class="align-middle">
+                    <td class="align-middle text-center">
+                      <span class="text-secondary text-xs font-weight-bold"><%= data[i].location %></span>
+                    </td>
+                    
+                     <td>
                        
 
                         <% if(data[i].status === true ){ %>
@@ -112,7 +123,7 @@
                         
                       }else{ %>
                           <tr>
-                             <td colspan="3">No user</td>
+                             <td colspan="3">No Products</td>
                           </tr>
                        <% } %> 
                   </tbody>

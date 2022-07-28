@@ -21,7 +21,7 @@
                 <div class="col-auto my-auto">
                   <div class="h-100">
                     <h5 class="mb-1">
-                   Add Category
+                  Update Category Details
                     </h5>
                     
                   </div>
@@ -40,20 +40,25 @@
                      
                     </div>
                   </div>
-                <form action="/add_category_form"  method="post" enctype="multipart/form-data" >
+                <form action="/update_cat_form/<%= data[0]._id %>"  method="get" >
                   <div class="card-body">
                     <p class="text-uppercase text-sm">Enter Details</p>
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Category Name</label>
-                          <input class="form-control" type="text" name="category_name" >
+                          <label for="example-text-input" class="form-control-label">Enter Category Name</label>
+                          
+                          <input class="form-control" type="text" name="category_name" value="<%= data[0].category_name %>" >
+                        
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Category Image</label>
-                          <input class="form-control" type="file" name="image">
+                          <label for="example-text-input" class="form-control-label">Add Image </label>
+                          <br>
+                          <img src="..\assets\img\bruce-mars.jpg" class="avatar avatar-xl me-3" alt="user1">
+                          <input class="form-control" type="file" name="image" >
+                       
                         </div>
                       </div>
                       
@@ -66,7 +71,7 @@
                         <div class="d-flex justify-content-between">
                           <a href="/category/" class="btn btn-sm btn-info mb-0 d-none d-lg-block">Cancel</a>
                           <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-block d-lg-none"><i class="ni ni-collection"></i></a>
-                          <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Add</button>
+                          <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Update</button>
                           <a href="javascript:;" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none"><i class="ni ni-email-83"></i></a>
                         </div>
                     </div>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <%- include('admin/includes/header') %>
+<body>
+  <div class="min-height-250 bg-primary position-absolute w-100"></div>
+ <%- include('admin/includes/sidebar')%>
+  <main class="main-content position-relative border-radius-lg ">
+    <!-- Navbar -->
+   <%- include('admin/includes/navbar')%>
+    <!-- End Navbar -->
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <h6>Properties table</h6>
+              
+            </div>
+
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">S.No.</th>  
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Project Name</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Category Name</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Subcategory</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date of Post</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Listed By</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Furnishing / Construction</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Area</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Facing</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Description</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sold Out</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Location</th>
+                    
+                      <th class="text-secondary opacity-7"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% if(data.length){
+                for(var i = 0; i< data.length; i++) {%>  
+                    <tr>
+                        <td>
+                            <p class="text-xs text-secondary mb-0">&nbsp;&nbsp; &nbsp;&nbsp;<%= i+1 %></p>
+                        </td>
+                      <td>
+                       
+                          
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm"><%= data[i].title %></h6>
+                          </div>
+                      </td>
+                      <td>
+                        <div>
+                            <img src="../assets/img/flat.jpg" class=" avatar-lg me-3" alt="user1">
+                          </div>
+                      </td>
+                      <td>
+                      
+                        <p class="text-xs text-secondary mb-0"><%= data[i].category %></p>
+                      </td>
+                      <td>
+                      
+                        <p class="text-xs text-secondary mb-0"><%= data[i].subcategory %></p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <span class="badge badge-sm bg-gradient-success"><%= moment(data[i].date).format("MMM Do YY");  %></span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold"><%= data[i].listed_by %></span>
+                      </td>
+                    </td>
+                    <td class="align-middle text-center">
+                        <% if(data[i].furnishing === true ){ %>
+                          <a href="/user_edit/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                            Furnished
+                          </a>
+                        <% }else{ %>
+                          <a href="/user_edit/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                            Not Furnished
+                          </a>
+                        <% } %>
+                        <% if(data[i].construction === true ){ %>
+                            <a href="/user_edit/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                              Furnished
+                            </a>
+                          <% }else{ %>
+                            <a href="/user_edit/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                              Not Furnished
+                            </a>
+                          <% } %>
+
+                      </td>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                        
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">Area - <%= data[i].area %></h6>
+                            <p class="text-xs text-secondary mb-0">Carpet Area - <%= data[i].carepet_area %></p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="align-middle text-center">
+                        <p class="text-secondary text-xs font-weight-bold"><%= data[i].facing %></p>
+                      </td>
+                      
+                    <td class="align-middle text-center">
+                        <p class="text-secondary text-xs font-weight-bold"><%= data[i].description %></p>
+                        <div class="d-flex px-2 py-1">
+                        
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">Type - <%= data[i].type %></h6>
+                              <p class="text-xs text-secondary mb-0">Bath Room - <%= data[i].bathroom %></p>
+                              <p class="text-xs text-secondary mb-0">Bed Room - <%= data[i].bathroom %></p>
+                              <span class="text-secondary text-xs font-weight-bold"><%= data[i].price %></span>
+                            </div>
+                          </div>
+                    </td>
+                    <td class="align-middle text-center">
+                        <% if(data[i].sold === true ){ %>
+                          <a href="/user_edit/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                            Sold Out
+                          </a>
+                        <% }else{ %>
+                          <a href="/user_edit/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                            Not Sold
+                          </a>
+                        <% } %>
+
+                      </td>
+                    <td class="align-middle text-center">
+                      <span class="text-secondary text-xs font-weight-bold"><%= data[i].location %></span>
+                    </td>
+                    
+                     <td>
+                       
+
+                        <% if(data[i].status === true ){ %>
+                          <button class="btn btn-success btn-sm" onclick="active()">Activate</button>
+                        <% }else{ %>
+                          <button class="btn btn-danger btn-sm" onclick="active()">Deactive</button>
+                        <% } %>
+
+
+                      </td>
+                    </tr>
+                    <% }
+                        
+                      }else{ %>
+                          <tr>
+                             <td colspan="3">No Products</td>
+                          </tr>
+                       <% } %> 
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+      <%- include('admin/includes/footer')%>
+    </div>
+  </main>
+  <div class="fixed-plugin">
+    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+      <i class="fa fa-cog py-2"> </i>
+    </a>
+  </div>
+
+
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+
+    function active(){
+        alert("Employee is active");
+      }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+</body>
+</html>
