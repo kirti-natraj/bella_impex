@@ -5,7 +5,13 @@ const propertiesSchema = new mongoose.Schema({
     },
     user_id: {
         type: String,
-        required: false
+        required: false,
+        default: 'Admin'
+    },
+    listed_by:{
+        type: String,
+        required: false,
+        default: 'Admin'
     },
     category: {
         type: String,
@@ -54,11 +60,10 @@ const propertiesSchema = new mongoose.Schema({
         default: true
     },
     construction:{
-        type: Boolean,
-        required: false,
-        default: true
+        type: String,
+        required: false
     },
-    listed_by:{
+    owner:{
         type: String,
         required: false,
         default:'Owner'
@@ -98,6 +103,27 @@ const propertiesSchema = new mongoose.Schema({
         type: Boolean,
         required: false,
         default: false
+    },
+            
+    location: {
+        type: String,
+        required: false
+    },
+    country: {
+        type: String,
+        required: false
+    },
+    state: {
+        type: String,
+        required: false
+    },
+    city: {
+        type: String,
+        required: false
+    },
+    pin: {
+        type: String,
+        required: false
     }
 
 })

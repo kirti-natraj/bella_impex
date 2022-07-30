@@ -20,9 +20,10 @@ conn.on('disconnected',function(){
 conn.on('error', console.error.bind(console, 'connection error:'));
 module.exports = conn;
 const indexRouter = require('./routes/index');
-//const user_apiRouter = require('./apis/user');
+const user_apiRouter = require('./apis/user');
+const userRouter = require('./routes/user');
 
-global.imageBaseDir = '/public/';
+global.imageBaseDir = '/public/images';
 
 
 
@@ -55,14 +56,15 @@ app.use(session({
 
 app.use('/', indexRouter);
 app.use('/login', indexRouter);
-app.use('/user',indexRouter);
+//app.use('/user',indexRouter);
 app.use('/category', indexRouter);
 app.use('/add_category', indexRouter);
 app.use('/add_subcategory', indexRouter);
 app.use('/subcategory_list', indexRouter);
 app.use('/products', indexRouter);
 app.use('/properties', indexRouter);
-// app.use('/api/user',user_apiRouter);
+app.use('/api/user',user_apiRouter);
+app.use('/user', userRouter);
 
 
 

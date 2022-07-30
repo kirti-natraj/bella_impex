@@ -47,6 +47,27 @@ const productSchema = new mongoose.Schema({
         type: Boolean,
         required: false,
         default: false
+    },
+        
+    location: {
+        type: String,
+        required: false
+    },
+    country: {
+        type: String,
+        required: false
+    },
+    state: {
+        type: String,
+        required: false
+    },
+    city: {
+        type: String,
+        required: false
+    },
+    pin: {
+        type: String,
+        required: false
     }
 
 })

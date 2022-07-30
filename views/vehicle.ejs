@@ -13,25 +13,39 @@
       <div class="row">
         <div class="col-12">
           <div class="card mb-4">
-            <div class="card-header pb-0">
-              <h6>Vehicle table</h6>
-              
-            </div>
+            <div class="row">
 
+              <div  class="col-10">
+               <div class="card-header pb-0">
+                   <h6>Vehicle table 
+                     </h6>
+                  
+                 </div>
+               </div>
+               <div class="col-2">
+               <div class="card-header pb-0">
+               <h6>
+               <a href="/add_vehicle" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                   <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Add Vehicle</button>
+                 </a>
+                   <!-- <a href="/add_category" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none">
+                       <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Add Category</button>
+                   </a> -->
+                  </h6>
+               </div>
+               </div>
+           </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">S.No.</th>  
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Category Name</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Subcategory</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date of Post</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Purchase Year</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fuel Type</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Kilo Meter</th>
+                 
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Description</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Price</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sold Out</th>
@@ -47,6 +61,11 @@
                         <td>
                             <p class="text-xs text-secondary mb-0">&nbsp;&nbsp; &nbsp;&nbsp;<%= i+1 %></p>
                         </td>
+                        <td>
+                          <div>
+                              <img src="../assets/images/vehicle/<%= data[i].image %>" class=" avatar-lg me-3" alt="user1">
+                            </div>
+                        </td> 
                       <td>
                        
                           
@@ -54,34 +73,23 @@
                             <h6 class="mb-0 text-sm"><%= data[i].title %></h6>
                           </div>
                       </td>
-                      <td>
-                        <div>
-                            <img src="../assets/img/chair.jpg" class=" avatar-lg me-3" alt="user1">
-                          </div>
-                      </td>
+                    
                       <td>
                       
-                        <p class="text-xs text-secondary mb-0"><%= data[i].category %></p>
+                        <p class="text-xs text-secondary mb-0">Category :- Vehicle</p>
+                        <p class="text-xs text-secondary mb-0">Subcategory :- Car</p>
                       </td>
-                      <td>
                       
-                        <p class="text-xs text-secondary mb-0"><%= data[i].subcategory %></p>
-                      </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success"><%= moment(data[i].date).format("MM Do YYYY") %></span>
+                        <p class="text-secondary text-xs font-weight-bold"><%= moment(data[i].date).format('dd mm yyyy') %></p>
                       </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold"><%= data[i].year %></span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold"><%= data[i].fuel %></span>
-                      </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold"><%= data[i].km %></span>
-                      </td>
-                    </td>
+                      
+                 
                     <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold">Brand - <%= data[i].brand %></span>
+                        <div class="text-secondary text-xs font-weight-bold"><i class="text-dark">Brand -</i>  <%= data[i].brand %></div>
+                        <div class="text-secondary text-xs font-weight-bold"><i class="text-dark">Purchase Year -</i> <%= data[i].year %></div>
+                        <div class="text-secondary text-xs font-weight-bold"><i class="text-dark">Fuel -</i> <%= data[i].fuel %></div>
+                        <div class="text-secondary text-xs font-weight-bold"><i class="text-dark">Kilometer -</i> <%= data[i].km %></div>
                         <p class="text-secondary text-xs font-weight-bold"><%= data[i].description %></p>
                      
                       </td>
@@ -108,14 +116,9 @@
                     </td>
                     
                      <td>
-                       
-
-                        <% if(data[i].status === true ){ %>
-                          <button class="btn btn-success btn-sm" onclick="active()">Activate</button>
-                        <% }else{ %>
-                          <button class="btn btn-danger btn-sm" onclick="active()">Deactive</button>
-                        <% } %>
-
+                      <a href="/update_category/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs text-end" data-toggle="tooltip" data-original-title="Edit user">
+                        <button class="btn btn-success btn-sm">Update</button>
+                           </a>
 
                       </td>
                     </tr>

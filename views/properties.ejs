@@ -13,10 +13,28 @@
       <div class="row">
         <div class="col-12">
           <div class="card mb-4">
-            <div class="card-header pb-0">
-              <h6>Properties table</h6>
-              
-            </div>
+            <div class="row">
+
+              <div  class="col-10">
+               <div class="card-header pb-0">
+                   <h6>Properties table 
+                     </h6>
+                  
+                 </div>
+               </div>
+               <div class="col-2">
+               <div class="card-header pb-0">
+               <h6>
+               <a href="/add_properties" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                   <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Add Properties</button>
+                 </a>
+                   <!-- <a href="/add_category" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none">
+                       <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Add Category</button>
+                   </a> -->
+                  </h6>
+               </div>
+               </div>
+           </div>
 
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
@@ -26,8 +44,7 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">S.No.</th>  
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Project Name</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Category Name</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Subcategory</th>
+            
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date of Post</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Listed By</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Furnishing / Construction</th>
@@ -56,17 +73,10 @@
                       </td>
                       <td>
                         <div>
-                            <img src="../assets/img/flat.jpg" class=" avatar-lg me-3" alt="user1">
+                            <img src="../assets/images/properties/<%= data[i].image %>" class=" avatar-lg me-3" alt="user1">
                           </div>
                       </td>
-                      <td>
-                      
-                        <p class="text-xs text-secondary mb-0"><%= data[i].category %></p>
-                      </td>
-                      <td>
-                      
-                        <p class="text-xs text-secondary mb-0"><%= data[i].subcategory %></p>
-                      </td>
+                    
                       <td class="align-middle text-center text-sm">
                         <span class="badge badge-sm bg-gradient-success"><%= moment(data[i].date).format("MMM Do YY");  %></span>
                       </td>
@@ -84,15 +94,11 @@
                             Not Furnished
                           </a>
                         <% } %>
-                        <% if(data[i].construction === true ){ %>
+                     /
                             <a href="/user_edit/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                              Furnished
+                              <%= data[i].construction %>
                             </a>
-                          <% }else{ %>
-                            <a href="/user_edit/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                              Not Furnished
-                            </a>
-                          <% } %>
+                       
 
                       </td>
                       <td>
@@ -100,7 +106,7 @@
                         
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm">Area - <%= data[i].area %></h6>
-                            <p class="text-xs text-secondary mb-0">Carpet Area - <%= data[i].carepet_area %></p>
+                            <p class="text-xs text-secondary mb-0">Carpet Area - <%= data[i].carpet_area %></p>
                           </div>
                         </div>
                       </td>
@@ -139,12 +145,9 @@
                      <td>
                        
 
-                        <% if(data[i].status === true ){ %>
-                          <button class="btn btn-success btn-sm" onclick="active()">Activate</button>
-                        <% }else{ %>
-                          <button class="btn btn-danger btn-sm" onclick="active()">Deactive</button>
-                        <% } %>
-
+                      <a href="/update_category/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs text-end" data-toggle="tooltip" data-original-title="Edit user">
+                        <button class="btn btn-success btn-sm">Update</button>
+                           </a>
 
                       </td>
                     </tr>

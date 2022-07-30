@@ -44,7 +44,7 @@
               <div class="col-md-12">
                 <div class="card">
                   
-                <form action="/add_vehicle_form"  method="post" enctype="multipart/form-data" >
+                <form action="/update_product_form/<%= data[0]._id %>"  method="get" enctype="multipart/form-data" >
                   <div class="card-body">
                     <p class="text-uppercase text-sm">Enter Details</p>
                     <div class="row">
@@ -79,104 +79,35 @@
                         </div>
                       </div>
                       <div class="col-md-3">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Select Brand</label>
-                          <select name="brand" id="cars">
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="mercedes">Mercedes</option>
-                            <option value="audi">Audi</option>
-                          </select>
-                        </div>
+                        
                       </div>
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Number of Owners</label>
-                          <select name="owner" id="cars">
-                            <option value="1">1st</option>
-                            <option value="2">2nd</option>
-                            <option value="3">3rd</option>
-                            <option value="4">4th</option>
-                          </select>
-                        </div>
-                      </div>
+                     
                       
                     </div>
                     <div class="row">
                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Title</label>
-                          <input class="form-control" type="text" name="title" >
+                          <input class="form-control" type="text" name="title" value="<%= sub_data[0].title %>" >
                         </div>
                       </div>
                       <div class="col-md-2">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Price</label>
-                          <input class="form-control" type="text" name="price" >
+                          <input class="form-control" type="text" name="price" value="<%= sub_data[0].price %>">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Description</label>
-                          <input class="form-control" type="text" name="description" >
+                          <input class="form-control" type="text" name="description" value="<%= sub_data[0].description %>">
                         </div>
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">KM</label>
-                          <input class="form-control" type="text" name="km" >
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Fuel</label>
-                          <input class="form-control" type="text" name="fuel" >
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Enter Usage Year</label>
-                          <input class="form-control" type="text" name="year" >
-                        </div>
-                      </div>
-                      <!-- <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Insurance Type</label>
-                          <select name="cars" id="cars">
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                            <option value="mercedes">Mercedes</option>
-                            <option value="audi">Audi</option>
-                          </select>
-                        </div>
-                      </div> -->
                       
-                      
-                    <!-- </div> -->
-                    <!-- <div class="row">
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Enter Insurance Validity Date</label>
-                          <input class="form-control" type="date" name="category_name" >
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Description</label>
-                          <input class="form-control" type="text" name="category_name" >
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Price</label>
-                          <input class="form-control" type="text" name="category_name" >
-                        </div>
-                      </div>
-                      
-                      
-                    </div> -->
+                    
+                     
                     <p class="text-uppercase text-sm">Location Information</p>
                     <div class="row">
                       <div class="col-md-4">
@@ -428,31 +359,31 @@
                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Select State</label>
-                          <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" class="form-control" required></select>
+                          <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" value="<%= sub_data[0].state %>" class="form-control" required></select>
                           </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                         <label for="example-text-input" class="form-control-label">Select City</label> 
-                        <select id ="state" name="city" class="form-control" required></select>
+                        <select id ="state" name="city" class="form-control"  value="<%= sub_data[0].city %>" required ></select>
                         </div>
                       </div>  
                       <div class="col-md-12">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Address</label>
-                          <input class="form-control" type="text" name="location">
+                          <input class="form-control" type="text" name="location"  value="<%= sub_data[0].location %>">
                         </div>
                       </div>
                       
                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Postal code</label>
-                          <input class="form-control" type="text" name="pin">
+                          <input class="form-control" type="text" name="pin"  value="<%= sub_data[0].pin %>">
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Vehicle Image</label>
+                          <label for="example-text-input" class="form-control-label">Post Image</label>
                           <input class="form-control" type="file" name="image">
                         </div>
                       </div>
@@ -461,9 +392,9 @@
                     <hr>
                    <div class="row">
                     <div class="d-flex justify-content-between">
-                      <a href="/vehicle/" class="btn btn-sm btn-info mb-0 d-none d-lg-block">Cancel</a>
+                      <a href="/products/" class="btn btn-sm btn-info mb-0 d-none d-lg-block">Cancel</a>
                       <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-block d-lg-none">Reset</a>
-                      <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Add</button>
+                      <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Update</button>
                     </div>
                    </div>
                     
