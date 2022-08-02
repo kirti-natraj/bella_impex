@@ -7,6 +7,11 @@ var subcategory_db = require('../models/sub_category');
 var properties_db= require('../models/properties');
 var vehicle_db= require('../models/vehicle');
 var product_db = require('../models/products');
+const brand_db = require('../models/brand');
+const year_db = require('../models/year');
+const budget_db = require('../models/budget');
+
+
 const moment = require('moment');
 
 const multer = require('multer');
@@ -53,12 +58,92 @@ const storageProperties = multer.diskStorage({
   }
 });
 const uploadProperties = multer({storage: storageProperties});
+
+const storageBrand = multer.diskStorage({
+  destination: function (req, file, cb) {
+      cb(null, 'public/assets/images/brand/');
+  },
+  filename: function (req, file, cb) {
+      cb(null, Date.now()+ '__' + file.originalname);
+  }
+});
+const uploadBrand = multer({storage: storageBrand});
 /* GET home page. */
 router.get('/',  function(req, res, next) {    
               //for login Page
   res.render('login', { title: '' });
 });
 
+///////////////////////////////////////brand
+router.get('/brand',async function(req,res,next){                        //for UserTable Page
+  const data = await brand_db.find().exec();
+  
+  res.render('brand',{title:'Brand Table',data : data});
+
+
+});
+router.get('/brand_form',async function(req,res,next){                        //for Category TAble Update
+ 
+  res.render('brand_form',{title:'Add Brand'});
+
+});
+
+
+router.post('/add_brand_form', uploadBrand.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
+
+  await brand_db.create({
+      brand_name: req.body.brand_name,
+      image: req.files.image[0].filename
+  });
+  res.redirect('/brand/');
+});
+/////////////////////////////////////////year
+router.get('/year',async function(req,res,next){                        //for UserTable Page
+  const data = await year_db.find().exec();
+  
+  res.render('year',{title:'Year Table',data : data});
+
+
+});
+router.get('/year_form',async function(req,res,next){                        //for Category TAble Update
+ 
+  res.render('year_form',{title:'Add Year'});
+
+});
+
+
+router.post('/add_year_form',  async function(req, res, next) {                          //category add
+
+  await year_db.create({
+      year: req.body.year
+  });
+  res.redirect('/year/');
+});
+/////////////////////////////////////budgte
+
+router.get('/budget',async function(req,res,next){                        //for UserTable Page
+  const data = await budget_db.find().exec();
+  
+  res.render('budget',{title:'Budget Table',data : data});
+
+
+});
+router.get('/budget_form',async function(req,res,next){                        //for Category TAble Update
+ 
+  res.render('budget_form',{title:'Add Budget'});
+
+});
+
+
+router.post('/add_budget_form',  async function(req, res, next) {                          //category add
+
+  await budget_db.create({
+      budget: req.body.budget
+  });
+  res.redirect('/budget/');
+});
+
+/////////////////////////////////////index
 router.get('/index',async function(req,res,next){     
   const totalUser = await user_db.count();    
   const totalCat = await category_db.count();
@@ -194,7 +279,10 @@ router.post('/add_product_form', uploadProduct.fields([{name:'image', maxCount: 
       state: req.body.sts,
       city: req.body.city,
       pin:req.body.pin,
-      brand: req.body.brand
+      brand: req.body.brand,
+      longitude: req.body.longitude,
+      latitude: req.body.latitude
+
 
   });
   res.redirect('/products/');
@@ -221,7 +309,9 @@ router.get('/update_product_form/:id', async function(req,res,next ){
     state: req.query.sts,
     city: req.query.city,
     pin:req.query.pin,
-    brand: req.query.brand
+    brand: req.query.brand,
+    longitude: req.query.longitude,
+    latitude: req.query.latitude
     });
   res.redirect('/products/');
 });
@@ -346,5 +436,25 @@ router.get('/delete_cat/:id', async function(req,res,next ){
   res.redirect('/category/');
 
 });
+router.get('/delete_brand/:id', async function(req,res,next ){
+  let id= req.params.id;
+  await brand_db.deleteOne({ _id:id});
 
+  res.redirect('/brand/');
+
+});
+router.get('/delete_year/:id', async function(req,res,next ){
+  let id= req.params.id;
+  await year_db.deleteOne({ _id:id});
+
+  res.redirect('/year/');
+
+});
+router.get('/delete_budget/:id', async function(req,res,next ){
+  let id= req.params.id;
+  await budget_db.deleteOne({ _id:id});
+
+  res.redirect('/budget/');
+
+});
 module.exports = router;

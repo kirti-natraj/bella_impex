@@ -84,7 +84,7 @@ const vehicleSchema = new mongoose.Schema({
     pin: {
         type: String,
         required: false
-    },
+    }
 
 
 })

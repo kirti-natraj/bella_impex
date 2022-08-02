@@ -6,7 +6,7 @@ const propertiesSchema = new mongoose.Schema({
     user_id: {
         type: String,
         required: false,
-        default: 'Admin'
+     
     },
     listed_by:{
         type: String,

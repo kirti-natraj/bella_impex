@@ -17,7 +17,7 @@
 
            <div  class="col-10">
             <div class="card-header pb-0">
-                <h6>Category table 
+                <h6>Brand table 
                   </h6>
                
               </div>
@@ -25,8 +25,8 @@
             <div class="col-2">
             <div class="card-header pb-0">
             <h6>
-            <a href="/add_category" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Add Category</button>
+            <a href="/brand_form" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Add Brand</button>
               </a>
                 <!-- <a href="/add_category" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none">
                     <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Add Category</button>
@@ -41,9 +41,7 @@
                   <thead>
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">S.no.</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Category Name</th>
-                      <th class="text-uppercase text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">Category Image</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created On</th>
+                      <th class="text-uppercase text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">Brand Image</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
@@ -61,33 +59,21 @@
 
                                     </div>
                                 </td>
+                                
                                 <td>
-                                  <div class="d-flex px-2 py-1">
-                                  
-                                    <div class="d-flex flex-column justify-content-center">
-                                      <h6 class="mb-0 text-sm"><%= data[i].category_name %></h6>
-                                      
-                                    </div>
-                                  </div>
-                                </td>
-                                <td>
-                                  <img src="../assets/images/category/<%= data[i].image %>" class="avatar-xl">
+                                  <img src="../assets/images/brand/<%= data[i].image %>" class="avatar-xl">
 
                                 </td>
                                
-                                <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold">14/09/20</span>
-                                </td>
+                               
                                 <td class="align-middle">
                                   <a href="/update_category/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs text-end" data-toggle="tooltip" data-original-title="Edit user">
                                    Update &nbsp;&nbsp;
                                       </a>
-                                  <a href="/delete_cat/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs text-info" data-toggle="tooltip" data-original-title="Edit user">
+                                  <a href="/delete_brand/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs text-info" data-toggle="tooltip" data-original-title="Edit user">
                                     Delete &nbsp;&nbsp;
                                       </a>
-                                  <a href="/add_subcategory/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs text-danger" data-toggle="tooltip" data-original-title="Edit user">
-                                ADD SUBCATEGORY
-                                  </a>
+                                 
                                 </td>
                               </tr>
                             <% }

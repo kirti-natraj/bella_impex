@@ -22,6 +22,7 @@ module.exports = conn;
 const indexRouter = require('./routes/index');
 const user_apiRouter = require('./apis/user');
 const userRouter = require('./routes/user');
+const vehiclesubRouter = require('./routes/vehicle_sub');
 
 global.imageBaseDir = '/public/images';
 
@@ -56,7 +57,6 @@ app.use(session({
 
 app.use('/', indexRouter);
 app.use('/login', indexRouter);
-//app.use('/user',indexRouter);
 app.use('/category', indexRouter);
 app.use('/add_category', indexRouter);
 app.use('/add_subcategory', indexRouter);
@@ -66,7 +66,9 @@ app.use('/properties', indexRouter);
 app.use('/api/user',user_apiRouter);
 app.use('/user', userRouter);
 
-
+app.use('/brand', indexRouter);
+app.use('/year', indexRouter);
+app.use('/budget', indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
