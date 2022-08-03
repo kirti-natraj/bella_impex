@@ -22,7 +22,8 @@ module.exports = conn;
 const indexRouter = require('./routes/index');
 const user_apiRouter = require('./apis/user');
 const userRouter = require('./routes/user');
-const vehiclesubRouter = require('./routes/vehicle_sub');
+const categoryRouter = require('./routes/category');
+const vehicleRouter = require('./routes/vehicle');
 
 global.imageBaseDir = '/public/images';
 
@@ -57,12 +58,6 @@ app.use(session({
 
 app.use('/', indexRouter);
 app.use('/login', indexRouter);
-app.use('/category', indexRouter);
-app.use('/add_category', indexRouter);
-app.use('/add_subcategory', indexRouter);
-app.use('/subcategory_list', indexRouter);
-app.use('/products', indexRouter);
-app.use('/properties', indexRouter);
 app.use('/api/user',user_apiRouter);
 app.use('/user', userRouter);
 

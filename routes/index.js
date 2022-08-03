@@ -362,11 +362,11 @@ router.get('/vehicle',async function(req, res, next) {
 
 
 router.get('/add_vehicle',async function(req,res,next){  
-  const cat = await category_db.findOne({category_name: 'Vehicles'}); 
-                    //for Category TAble Update
-  const data = await subcategory_db.find().exec();
-  const sub_data = await product_db.find().exec();
-  res.render('vehicle_products_form',{title:'Add Vehicle', data: data, sub_data: sub_data, cat: cat});
+  const brand = await brand_db.find().exec();
+  const year = await year_db.find().exec();
+  const budget = await budget_db.find().exec();
+  const data = await subcategory_db.find({category_id : '62e242cc71d2a78f7b1373e3'}).exec();
+  res.render('vehicle_products_form',{title:'Add Vehicle', data: data,  brand: brand, years: year, budget: budget});
 
 });
 
@@ -401,20 +401,24 @@ router.post('/save', async function(req, res, next) {
     const user = await admin_db.findOne({username:req.body.email,password:req.body.password});
    console.log(user);
     if(user.username === req.body.email && user.password === req.body.password  ){
-      res.render('index',{title:'Welcome to Admin Panel'});
+      console.log('if condi');
+      res.redirect('/index/');
     }
  else if(user.username === req.body.email || user.password === req.body.password  ){
+  console.log('else if condi');
   res.render('login',{ title: '* Wrong Credentials', msg:'Incorrect Password!!'});
     }else{
       // sessionVar=req.session;
       // sessionVar.userdetail=user;
       // sessionVar.save();
       // console.log('After Save : ',sessionVar);
+      console.log('else condi');
       res.render('login',{ title: 'Empty Fields', msg:'Incorrect Password!!'});
      
     }
   }catch(err){
    console.log(err);
+   console.log('catch');
    res.render('login',{ title: '* Wrong Credentials', msg:'Incorrect Password!!'});
   
   }
