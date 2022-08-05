@@ -63,7 +63,7 @@
                             <% if(data.length){
                               for(var i = 0; i< data.length; i++) {%>  
                         
-                          <option class="border-radius-lg list-group-item" name="subcategory" value="<%= data[i]._id %>"><%= data[i].sub_category_name %></option>
+                          <option class="border-radius-lg list-group-item" name="subcategory" value="<%= data[i].sub_category_name %>"><%= data[i].sub_category_name %></option>
                           <% } %> 
                           <% } %>                            
                           </select>
@@ -75,7 +75,7 @@
                           <select class="form-control" name="brand" id="cars" >
                             <% if(brand.length){
                               for(var i = 0; i< brand.length; i++) {%> 
-                            <option data-img-src="../assets/images/brand/<%= brand[i].image %>" value="<%= brand[i]._id %>"><%= brand[i].brand_name%></option>
+                            <option data-img-src="../assets/images/brand/<%= brand[i].image %>" value="<%= brand[i].brand_name %>"><%= brand[i].brand_name %></option>
                             <% } %> 
                             <% } %> 
                           </select>
@@ -84,7 +84,7 @@
                       <div class="col-md-2">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Number of Owners</label>
-                          <select class="form-control" name="owner" id="cars">
+                          <select class="form-control" name="owner" id="cars" required>
                             <option value="1">1st</option>
                             <option value="2">2nd</option>
                             <option value="3">3rd</option>
@@ -97,17 +97,17 @@
                       <div class="col-md-2">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Title</label>
-                          <input class="form-control" type="text" name="title" >
+                          <input class="form-control" type="text" name="title" required>
                         </div>
                       </div>
                       <div class="col-md-2">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Budget</label>
-                          <select class="form-control" name="year" id="cars">
+                          <select class="form-control" name="budget" id="cars" required>
                             
                             <% if(budget.length){
                               for(var i = 0; i< budget.length; i++) {%> 
-                            <option class="dropdown" value="<%= budget[i]._id %>" ><%= budget[i].budget %></option>
+                            <option class="dropdown" value="<%= budget[i].budget%>" ><%= budget[i].budget %></option>
                             <% } %> 
                             <% } %> 
                           </select>
@@ -116,13 +116,13 @@
                       <div class="col-md-2">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Price</label>
-                          <input class="form-control" type="text" name="price" >
+                          <input class="form-control" type="text" name="price" required>
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Description</label>
-                          <input class="form-control" type="text" name="description" >
+                          <input class="form-control" type="text" name="description" required>
                         </div>
                       </div>
                     </div>
@@ -130,23 +130,23 @@
                       <div class="col-md-2">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">KM</label>
-                          <input class="form-control" type="text" name="km" >
+                          <input class="form-control" type="text" name="km" required>
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Fuel</label>
-                          <input class="form-control" type="text" name="fuel" >
+                          <input class="form-control" type="text" name="fuel"required >
                         </div>
                       </div>
                       <div class="col-md-2">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Enter Usage Year</label>
-                          <select class="form-control" name="year" id="cars">
+                          <select class="form-control" name="year" id="cars" required>
                             
                             <% if(years.length){
                               for(var i = 0; i< years.length; i++) {%> 
-                            <option class="dropdown" value="<%= years[i]._id %>" ><%= years[i].year %></option>
+                            <option class="dropdown" value="<%= years[i].year %>" ><%= years[i].year %></option>
                             <% } %> 
                             <% } %> 
                           </select>
@@ -156,7 +156,7 @@
                       <div class="col-md-2">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Enter Insurance Validity Date</label>
-                          <input class="form-control" type="date" name="category_name" >
+                          <input class="form-control" type="date" name="insurance" required >
                         </div>
                       </div>
                     </div> 
@@ -165,7 +165,7 @@
                       <div class="col-md-2">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Country</label>
-                          <select class="form-control">
+                          <select class="form-control" name="country" required>
                             <option value="Afghanistan">Afghanistan</option>
                         <option value="Albania">Albania</option>
                         <option value="Algeria">Algeria</option>

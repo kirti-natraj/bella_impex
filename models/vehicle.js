@@ -9,7 +9,8 @@ const vehicleSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        required: false
+        required: false,
+        default: 'Vehicles'
     },
     subcategory: {
         type: String,
@@ -84,7 +85,11 @@ const vehicleSchema = new mongoose.Schema({
     pin: {
         type: String,
         required: false
-    }
+    },
+    insurance: {
+        type: String,
+        required: false
+    },
 
 
 })

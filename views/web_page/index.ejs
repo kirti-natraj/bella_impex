@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">
+ 
+</head>
+<style>
+    *,
+*:before,
+*:after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body{
+    height : 100vh;
+    background:linear-gradient(135deg,);
+}
+hr{
+    border: 2px solid;
+    border-color:#dedcdc;
+}
+.container{
+    width: 98%;
+    background-color: #ffffff;
+    padding: 10px 13px;
+    transform: translate(-50%,-50%);
+    position: relative;
+    left: 50%;
+    top: 50%;
+    border-radius: 5px;
+    box-shadow: 20px 30px 25px rgba(0,0,0,0.15);
+}
+.title-con{
+    background-color: #edf1ee;
+    padding-top: 15px;
+}
+.title-con img{
+    text-align: right;
+    padding: 6px 4px;
+    display: flex;
+    width:35px;
+    cursor: pointer;
+}
+p{
+    text-align: right;
+    font-weight: 100;
+}
+h3{
+    font-size: 20px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+form{
+    width: 100%;
+    position: relative;
+    margin: 10px auto 0 auto;
+ }
+ .row{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+    grid-gap: 10px 10px;
+    margin-bottom: 5px;
+ }
+ label{
+    color:black;
+    font-family: Arial;
+    font-size: 15px;
+    font-weight: 500;
+ }
+ textarea,input,select{
+    width: 100%;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: 1px solid #c4cae0;
+    margin-top: 5px;
+}
+textarea{ 
+    resize: none;
+}
+textarea:focus,
+input:focus,
+select:focus{
+    outline: none;
+    border-color: black;
+}
+.btn-shadow{
+    border-radius: 5px;
+    border: 2px solid rgb(215, 215, 215);  
+}
+button{
+    font-size: 17px;
+    font-weight: 1000;
+    width: 100%;
+    border: 2px solid white;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #ff4d00, #e48c5c);
+    border-radius: 5px;
+    color: #ffff;
+    position: sticky;
+    cursor: pointer;
+}
+
+input[type="radio"]{
+    display: none;
+}
+.radiobtn{
+    padding: 2px;
+    display: flex;
+    overflow-x: scroll;
+}
+.radiobtn label{
+    position: relative;
+    color: rgb(155, 154, 154);
+    background: #f0f0f0;
+    font-size: 12px;
+    border: 2px solid #9ea19f;
+    border-radius: 5px;
+    padding: 2px  20px;
+    margin: 5px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.13);
+    cursor: pointer;
+}
+.radiobtn label:before{
+    position: relative;
+    content: "";
+}
+.radiobtn [type="radio"]:checked + label{
+    background-color: #ffff;
+    color: black;
+    border-color: black;
+}
+.owner-con{
+    padding: 2px;
+    display: flex;
+    overflow-x: scroll;
+}
+.owner-con label{
+    position: relative;
+    color: rgb(155, 154, 154);
+    background: #f0f0f0;
+    font-size: 12px;
+    border: 2px solid #9ea19f;
+    border-radius: 5px;
+    padding: 2px  20px;
+    margin: 5px;
+    cursor: pointer;
+}
+.owner-con label:before{
+    position: relative;
+    content: "";
+}
+.owner-con [type="radio"]:checked + label{
+    background-color: #ffff;
+    color: black;
+    border-color: black;
+     box-shadow: 0 3px 6px rgba(0,0,0,0.13);
+}
+.insurance-con{
+    padding: 2px;
+    display: flex;
+    overflow-x: scroll;
+}
+.insurance-con label{
+    display: flex;
+    position: relative;
+    color: rgb(155, 154, 154);
+    background: #f0f0f0;
+    font-size: 12px;
+    border: 2px solid #9ea19f;
+    border-radius: 5px;
+    padding: 2px  20px;
+    margin: 5px;
+    cursor: pointer;
+   
+}
+.insurance-con label:before{
+    position: relative;
+    content: "";
+}
+.insurance-con [type="radio"]:checked + label{
+    background-color: #ffff;
+    color: black;
+    border-color: black;
+}
+.trans-container{
+    padding: 2px;
+}
+.trans-container label{
+    position: relative;
+    color: rgb(155, 154, 154);
+    background: #f0f0f0;
+    font-size: 12px;
+    border: 2px solid #9ea19f;
+    border-radius: 5px;
+    padding: 2px  20px;
+    cursor: pointer;
+}
+.trans-container label:before{
+    position: relative;
+    content: "";
+}
+.trans-container [type="radio"]:checked + label{
+    background-color: #ffff;
+    color: black;
+    border-color: black;
+}
+
+</style>
+<body>
+    <div class="container">
+        <div class="title-con">
+            <h3>Fill Some Details</h3>
+            <img src="./img/backicon.png" alt="Sunflower">
+            <hr>
+        </div>
+        
+        <form>
+            <div class="row">
+                <div class="col">
+                    <label for="brand-details">Brand*</label>
+                    <div class="brand-container">
+                        <select name="brand-names" id="dropdown-brand">
+                            <option value="Mahendra">Mahendra</option>
+                            <option value="Maruti Suzuki">Maruti Suzuki</option>
+                            <option value="Hyundai">Hyundai</option>
+                            <option value="TATA">TATA</option>
+                            <option value="Volkswagen">Volkswagen</option>
+                            <option value="Honda">Honda</option>
+                            <option value="Audi">Audi</option>
+                            <option value="Ford">Ford</option>
+                            <option value="Skoda">Skoda</option>
+                            <option value="Nisaan">Nisaan</option>
+                            <option value="Renault">Renault</option>
+                            <option value="Datsum">Datsum</option>
+                            <option value="Mercedes">Mercedes</option>
+                            <option value="Porche">Porche</option>
+                            <option value="BMW">BMW</option>
+                            <option value="Jagur">Jagur</option>
+                            <option value="Kia">Kia</option>
+                            <option value="Toyota">Toyota</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <label for="year">Year*</label>
+                    <input type="number" required id="year" placeholder="Year">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="labelad">
+                        <label>Fuel*</label>
+                    </div>
+                    <div class="radiobtn" required>
+                        <input type="radio" name="fuel" id="lpg">
+                        <label for="lpg">LPG</label>
+                        <input type="radio" name="fuel" id="electric">
+                        <label for="electric">Electric</label>
+                        <input type="radio" name="fuel" id="diesel">
+                        <label for="diesel">Diesel</label>
+                        <input type="radio" name="fuel" id="petrol">
+                        <label for="petrol">Petrol</label>
+                        <input type="radio" name="fuel" id="cng">
+                        <label for="cng">CNG&Hybrid</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="labelad">
+                        <label>Transmission*</label>
+                    </div>
+                    <div class="trans-container" required>
+                        <input type="radio" name="transmission" id="Automatic">
+                        <label for="Automatic">Automatic</label>
+                        <input type="radio" name="transmission" id="Manual">
+                        <label for="Manual">Manual</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="km-run">Km run*</label>
+                    <input type="number" required id="km-run" placeholder="Km run">
+                </div>
+                <div class="col">
+                    <div class="labelad">
+                        <label>Number Of Owner*</label>
+                    </div>
+                    <div class="owner-con" required>
+                        <input type="radio" name="owner" id="1st">
+                        <label for="1st">1st</label>
+                        <input type="radio" name="owner" id="2nd">
+                        <label for="2nd">2nd</label>
+                        <input type="radio" name="owner" id="3rd">
+                        <label for="3rd">3rd</label>
+                        <input type="radio" name="owner" id="4th">
+                        <label for="4th">4th</label>
+                        <input type="radio" name="owner" id="4th+">
+                        <label for="4th+">4th+</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="labelad">
+                        <label>Insurance Type</label>
+                    </div>
+                    <div class="insurance-con" required>
+                        <input type="radio" name="insurance-type" id="comprehensive">
+                        <label for="comprehensive">Comprehensive</label>
+                        <input type="radio" name="insurance-type" id="third-party">
+                        <label for="third-party">Third Party</label>
+                        <input type="radio" name="insurance-type" id="zero-dep">
+                        <label for="zero-dep">Zero Dep</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <label for="insurance-val">Insurance Validity</label>
+                    <input type="date" id="km-run" required  placeholder="Expiry date in DD.MM.YYYY" >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="ad-title">Ad title*</label>
+                    <textarea id="my-text" required  name="ad" placeholder="Heading of your Ad" id="" cols="68" rows="1"></textarea>
+                    <p id="result"></p>
+                </div>
+                <div class="col">
+                    <label for="other-info">Other Information*</label>
+                    <textarea id="my-text2"  required name="Other-information" placeholder="Any other information related to car" cols="1" rows="6"></textarea>
+                <p id="result2"></p>
+                </div>
+            </div>
+            <div class="btn-shadow">
+                <button type="submit" required value="submit">
+                    <a href="/webviewIndex/price">Next</a></button>
+            </div>
+        </form>
+    </div>
+    <script>
+        var myText = document.getElementById("my-text");
+var result = document.getElementById("result");
+var limit = 60;
+result.textContent = 0 + "/" + limit;
+
+myText.addEventListener("input", function(){
+    var textlength = myText.value.length;
+    result.textContent = textlength + "/" + limit;
+
+    if (textlength > limit) {
+        myText.style.borderColor = "#ff2851";
+        result.style.color = "#ff2851";
+    }
+});
+var myText2 = document.getElementById("my-text2");
+var result2 = document.getElementById("result2");
+var limit2 = 100;
+result2.textContent = 0 + "/" + limit2;
+
+myText.addEventListener("input", function(){
+    var textlength2 = myText2.value.length;
+    result2.textContent = textlength2 + "/" + limit2;
+
+    if (textlength > limit) {
+        myText2.style.borderColor = "#ff2851";
+        result2.style.color = "#ff2851";
+    }
+});
+    </script>
+</body>
+</html>

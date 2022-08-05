@@ -39,9 +39,9 @@
                   <thead>
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Catgory Name</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subcategory List</th>
-                     
-                      <th class="text-secondary opacity-7"></th>
+                      <th class="text-uppercase text-secondary font-weight-bolder opacity-7">Subcategory List</th>
+                      <th class="text-uppercase text-secondary font-weight-bolder opacity-7">Action</th>
+                      
                     </tr>
                   </thead>
                   <tbody>
@@ -78,7 +78,7 @@
                                  
                                   <td>
                                     
-                                    <ul>
+                                    <select class="dropdown" name="subcategory" onchange="myFunction(this.value)">
                               
 
                                   <% 
@@ -89,48 +89,26 @@
                                          
                                   <% if(data[i]._id.equals(sub_data[j].category_id)){ %>  
                              
-                                            <li> <%= sub_data[j].sub_category_name %>
+                                            <option value="<%= sub_data[j]._id %>"> <%= sub_data[j].sub_category_name %>
                                                
-                                            </li>  
+                                            </option>  
                                             
                                       <% count = count +1 %>
                                       <% }%>
                                   
                                       <% } %>
-                                    </ul></td>
+                                          </select>
+                                        </td>
                                 
                                 
                                 
-                                <td>
-                                    <ul>
-                                        <% 
-                                        for(var j = 0; j< sub_data.length; j++) {%>  
-                                            <%= console.log(sub_data[j].category_id)%>
-                                            <%= console.log(data[i]._id)%>
-                                            <% var count =0 %>    
-                                          
-                                             
-                                      <% if(data[i]._id.equals(sub_data[j].category_id)){ %>  
-                                 
-                                        <dt>
-                                            <a href="/update_subcat/<%= sub_data[j]._id %>" class="text-secondary font-weight-bold text-xs text-info" data-toggle="tooltip" data-original-title="Edit user">
-                                                Update
-                                              </a>
-                                              &nbsp;&nbsp;
-                                              &nbsp;&nbsp;
-                                              <a href="/delete_subcat/<%= sub_data[j]._id %>" class="text-secondary font-weight-bold text-xs text-danger" data-toggle="tooltip" data-original-title="Edit user">
-                                                Delete
-                                              </a>
-                                            
-                                            </dt>  
-                                        
-                                          <% count = count +1 %>
-                                          <% }%>
-                                      
-                                          <% } %>
-
-
-                                    </ul>
+                                <td >
+                                    <a class="form-control" id="action" style="display: none;">
+                                       Update
+                                    </a>
+                                    <a class="form-control" id="delete" style="display: none;">
+                                      Delete
+                                   </a>
                                 </td>
                                   
                              
@@ -168,6 +146,30 @@
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script>
+  function myFunction(id) {
+    var x = document.getElementById("action");
+ 
+  if (x.style.display === 'none') {
+    x.style.display = 'block';
+  }
+  var y = document.getElementById("delete");
+  if (y.style.display === 'none') {
+    y.style.display = 'block';
+  } 
+  document.getElementById("action").onclick = function()
+  {
+    location.href='/update_subcat/'+ id;
+    
+  }
+  document.getElementById("delete").onclick = function()
+  {
+    location.href='/delete/'+ id;
+    
+  }
+  
+}
+  </script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {

@@ -265,18 +265,17 @@ router.get('/add_product',async function(req,res,next){                        /
 
 });
 
-router.post('/add_product_form', uploadProduct.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
-
+router.post('/add_product_form', uploadProduct.fields({name: 'image', maxCount: 5}), async function(req, res, next) {                          //category add
   await product_db.create({
       category: req.body.category,
-      image: req.files.image[0].filename,
+      image :req.files.image.filename,
       subcategory: req.body.subcategory,
       price: req.body.price,
       description: req.body.description,
       title:req.body.title,
       location: req.body.location,
       country: req.body.country,
-      state: req.body.sts,
+      state: req.body.stt,
       city: req.body.city,
       pin:req.body.pin,
       brand: req.body.brand,
@@ -384,16 +383,47 @@ router.post('/add_vehicle_form', uploadVehicle.fields([{name:'image', maxCount: 
       fuel:req.body.fuel,
       location: req.body.location,
       country: req.body.country,
-      state: req.body.sts,
+      state: req.body.stt,
       city: req.body.city,
       pin:req.body.pin,
-      brand: req.body.brand
+      brand: req.body.brand,
+      insurance: req.body.insurance
 
   });
   res.redirect('/vehicle/');
 });
 
+router.get('/update_vehicle/:id', async function(req,res,next ){
+  let id= req.params.id
+  const data = await vehicle_db.find({'_id':id});
+  const subcategory = await subcategory_db.find({category_id : '62e242cc71d2a78f7b1373e3'}).exec();
+  const brand = await brand_db.find().exec();
+  const year = await year_db.find().exec();
+  const budget = await budget_db.find().exec();
+  res.render('update_vehicle', { data:data , id:id , subcategory: subcategory, brand: brand, years: year, budget: budget , title: 'Update Product' });
+});
+router.get('/update_vehicle_form/:id', async function(req,res,next ){
+  let _id = req.params.id;
 
+  const a1= await vehicle_db.findByIdAndUpdate( _id, {
+    
+      subcategory: req.query.subcategory,
+      price: req.query.price,
+      description: req.query.description,
+      title:req.query.title,
+      km:req.query.km,
+      year:req.query.year,
+      fuel:req.query.fuel,
+      location: req.query.location,
+      country: req.query.country,
+      state: req.query.stt,
+      city: req.query.city,
+      pin:req.query.pin,
+      brand: req.query.brand,
+      insurance: req.query.insurance
+    });
+  res.redirect('/vehicle/');
+});
 ///////////////////////////////admin Login
 router.post('/save', async function(req, res, next) {
  

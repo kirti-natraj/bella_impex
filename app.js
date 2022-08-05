@@ -22,6 +22,7 @@ module.exports = conn;
 const indexRouter = require('./routes/index');
 const user_apiRouter = require('./apis/user');
 const userRouter = require('./routes/user');
+const webview_apiRouter= require('./apis/webview');
 const categoryRouter = require('./routes/category');
 const vehicleRouter = require('./routes/vehicle');
 
@@ -59,6 +60,7 @@ app.use(session({
 app.use('/', indexRouter);
 app.use('/login', indexRouter);
 app.use('/api/user',user_apiRouter);
+app.use('/webviewIndex',webview_apiRouter);
 app.use('/user', userRouter);
 
 app.use('/brand', indexRouter);

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<style>
+    *,
+*:before,
+*:after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body{
+    height : 100vh;
+    background:linear-gradient(135deg,);
+}
+hr{
+    border: 2px solid;
+    border-color:#dedcdc;
+}
+.container{
+    width: 98%;
+    background-color: #ffffff;
+    padding: 10px 13px;
+    transform: translate(-50%,-50%);
+    position: relative;
+    left: 50%;
+    top: 50%;
+    border-radius: 5px;
+    box-shadow: 20px 30px 25px rgba(0,0,0,0.15);
+}
+.title-con{
+    background-color: #edf1ee;
+    padding-top: 15px;
+}
+.title-con img{
+    text-align: right;
+    padding: 6px 4px;
+    display: flex;
+    width:35px;
+    cursor: pointer;
+}
+p{
+    text-align: right;
+    font-weight: 100;
+}
+h3{
+    font-size: 20px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+form{
+    width: 100%;
+    position: relative;
+    margin: 10px auto 0 auto;
+ }
+ .row{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+    grid-gap: 10px 10px;
+    margin-bottom: 5px;
+ }
+ label{
+    color:black;
+    font-family: Arial;
+    font-size: 15px;
+    font-weight: 500;
+ }
+ textarea,input,select{
+    width: 100%;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: 1px solid #c4cae0;
+    margin-top: 5px;
+}
+textarea{ 
+    resize: none;
+}
+textarea:focus,
+input:focus,
+select:focus{
+    outline: none;
+    border-color: black;
+}
+.btn-shadow{
+    border-radius: 5px;
+    border: 2px solid rgb(215, 215, 215);  
+}
+button{
+    font-size: 17px;
+    font-weight: 1000;
+    width: 100%;
+    border: 2px solid white;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #ff4d00, #e48c5c);
+    border-radius: 5px;
+    color: #ffff;
+    position: sticky;
+    cursor: pointer;
+}
+
+input[type="radio"]{
+    display: none;
+}
+.radiobtn{
+    padding: 2px;
+    display: flex;
+    overflow-x: scroll;
+}
+.radiobtn label{
+    position: relative;
+    color: rgb(155, 154, 154);
+    background: #f0f0f0;
+    font-size: 12px;
+    border: 2px solid #9ea19f;
+    border-radius: 5px;
+    padding: 2px  20px;
+    margin: 5px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.13);
+    cursor: pointer;
+}
+.radiobtn label:before{
+    position: relative;
+    content: "";
+}
+.radiobtn [type="radio"]:checked + label{
+    background-color: #ffff;
+    color: black;
+    border-color: black;
+}
+.owner-con{
+    padding: 2px;
+    display: flex;
+    overflow-x: scroll;
+}
+.owner-con label{
+    position: relative;
+    color: rgb(155, 154, 154);
+    background: #f0f0f0;
+    font-size: 12px;
+    border: 2px solid #9ea19f;
+    border-radius: 5px;
+    padding: 2px  20px;
+    margin: 5px;
+    cursor: pointer;
+}
+.owner-con label:before{
+    position: relative;
+    content: "";
+}
+.owner-con [type="radio"]:checked + label{
+    background-color: #ffff;
+    color: black;
+    border-color: black;
+     box-shadow: 0 3px 6px rgba(0,0,0,0.13);
+}
+.insurance-con{
+    padding: 2px;
+    display: flex;
+    overflow-x: scroll;
+}
+.insurance-con label{
+    display: flex;
+    position: relative;
+    color: rgb(155, 154, 154);
+    background: #f0f0f0;
+    font-size: 12px;
+    border: 2px solid #9ea19f;
+    border-radius: 5px;
+    padding: 2px  20px;
+    margin: 5px;
+    cursor: pointer;
+   
+}
+.insurance-con label:before{
+    position: relative;
+    content: "";
+}
+.insurance-con [type="radio"]:checked + label{
+    background-color: #ffff;
+    color: black;
+    border-color: black;
+}
+.trans-container{
+    padding: 2px;
+}
+.trans-container label{
+    position: relative;
+    color: rgb(155, 154, 154);
+    background: #f0f0f0;
+    font-size: 12px;
+    border: 2px solid #9ea19f;
+    border-radius: 5px;
+    padding: 2px  20px;
+    cursor: pointer;
+}
+.trans-container label:before{
+    position: relative;
+    content: "";
+}
+.trans-container [type="radio"]:checked + label{
+    background-color: #ffff;
+    color: black;
+    border-color: black;
+}
+
+</style>
+<body>
+    <div class="container">
+        <div class="title-con">
+            <h3>set price</h3>
+            <img src="img/backicon.png" alt="Sunflower">
+            <hr>
+        </div>
+        
+        <form>
+            <div class="row">
+                <div class="col">
+                    <label for="ad-title">Price*</label>
+                    <textarea id="my-text" required  name="ad" placeholder="price"></textarea>
+                    <p id="result"></p>
+                </div>
+            </div>
+            <div class="btn-shadow">
+                <button type="submit" required  value="submit">
+                    <a href="/webviewIndex/location">Next</a></button>
+            </div>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

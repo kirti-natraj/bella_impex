@@ -15,10 +15,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    image: {
-        type: String,
-        required: false
-    },
+    image: [ 
+        String
+       
+    ],
     description: {
         type: String,
         required: false
@@ -66,6 +66,14 @@ const productSchema = new mongoose.Schema({
         required: false
     },
     pin: {
+        type: String,
+        required: false
+    },
+    longitude: {
+        type: String,
+        required: false
+    },
+    latitude: {
         type: String,
         required: false
     }

@@ -22,29 +22,10 @@ router.get('/user',async function(req,res,next){                        //for Us
   
   
   });
-  router.get('/subcategory_list',async function(req,res,next){                        //for SubCategory TAble Update
-    const data = await category_db.find().exec();
-    const sub_data = await subcategory_db.find().exec();
-    res.render('subcategory_list',{title:'Subcategory List', data: data, sub_data: sub_data, moment: moment});
-  
-  });
+
   
   
-  router.get('/add_category',async function(req,res,next){                        //for Category TAble Update
-   
-    res.render('add_category',{title:'Add Category'});
-  
-  });
-  
-  
-  router.post('/add_category_form', upload.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
-  
-    await category_db.create({
-        category_name: req.body.category_name,
-        image: req.files.image[0].filename
-    });
-    res.redirect('/category/');
-  });
+
   
   router.get('/update_category/:id', async function(req,res,next ){
     let id= req.params.id

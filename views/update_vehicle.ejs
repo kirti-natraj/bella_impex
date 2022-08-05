@@ -16,86 +16,160 @@
       <!-- CSS Files -->
       <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 </head>
-<body >
+<body>
     
-    <div class="content-wrapper opacity-7 " style=" margin-top: 50px;">
-        <div class="card shadow-sm mx-12 card-profile Center" style="background-image: url('https://venngage-wordpress.s3.amazonaws.com/uploads/2018/09/Simple-White-Gradient-Background-Image.jpg'); image-resolution: unset;" >
-            
-          <div class="container-fluid py-4 ">
+    <div class="content-wrapper">
+        <div class="card shadow-lg mx-2 card-profile">
+            <div class="card-body p-2">
+              <!-- <div class="row gx-4">
+                <div class="col-auto">
+                  <div class="avatar avatar-xl position-relative">
+                    <img src="../assets/img/jm-category.png" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                  </div>
+                </div>
+                <div class="col-auto my-auto">
+                  <div class="h-100">
+                    <h5 class="mb-1">
+                   Enter Ad Details
+                    </h5>
+                    
+                  </div>
+                </div>
+                
+              </div> -->
+           <!-- </div> -->
+          </div>
+          <div class="container-fluid py-2">
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
                   
-                <form action="/update_product_form/<%= data[0]._id %>"  method="get" enctype="multipart/form-data" >
+                <form action="/update_vehicle_form/<%= data[0]._id %>"  method="get" enctype="multipart/form-data" >
                   <div class="card-body">
-                    <p class="text-uppercase text-sm">Update Products Details</p>
+                    <p class="text-uppercase text-sm">Update Vehicle Details</p>
                     <div class="row">
-                      <div class="col-md-3">
+                      <div class="col-md-2">
                         <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Select Category</label>
-                          <select class="form-control" name="cars" id="cars">
-                            
-                            <% if(data.length){
-                              for(var i = 0; i< data.length; i++) {%>  
-                        
-                          <option class="border-radius-lg list-group-item" name="category" value="<%= data[i]._id %>"><%= data[i].category_name %></option>
-                          <% } %> 
-                          <% } %> 
-
-                           
-                          </select>
+                          <label for="example-text-input" class="form-control-label">Category</label>
+                          <input class="form-control" type="text" name="category" placeholder="Vehicle" disabled >
                         </div>
                       </div>
-                      <div class="col-md-3">
+                      <div class="col-md-2">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Select Subcategory</label>
-                          <select class="form-control" name="subcategory" id="cars">
-                            <% if(sub_data.length){
-                              for(var i = 0; i< data.length; i++) {%>  
                         
-                          <option class="border-radius-lg list-group-item" value="<%= data[i]._id %>"><%= data[i].category_name %></option>
+                          <select class="form-control" name="subcategory" id="cars">
+                            <option class="border-radius-lg list-group-item"  selected value="<%= data[0].subcategory %>" ><%= data[0].subcategory %></option>
+                           
+                            <% if(subcategory.length){
+                              for(var i = 0; i< subcategory.length; i++) {%>  
+                        
+                          <option class="border-radius-lg list-group-item"  value="<%= subcategory[i].sub_category_name %>"><%= subcategory[i].sub_category_name %></option>
                           <% } %> 
-                          <% } %> 
-
+                          <% } %>                            
                           </select>
                         </div>
                       </div>
                       <div class="col-md-3">
-                        
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Select Brand</label>
+                          <select class="form-control" name="brand" id="cars" >
+                            <option class="border-radius-lg list-group-item" selected value="<%= data[0].brand %>" ><%= data[0].brand %></option>
+                            <% if(brand.length){
+                              for(var i = 0; i< brand.length; i++) {%> 
+                            <option data-img-src="../assets/images/brand/<%= brand[i].image %>" value="<%= brand[i].brand_name %>"><%= brand[i].brand_name %></option>
+                            <% } %> 
+                            <% } %> 
+                          </select>
+                        </div>
                       </div>
-                     
-                      
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Number of Owners</label>
+                          <select class="form-control" name="owner" id="cars">
+                            <option value="<%= data[0].owner%>" selected><%= data[0].owner%></option>
+                            <option value="1">1st</option>
+                            <option value="2">2nd</option>
+                            <option value="3">3rd</option>
+                            <option value="4">4th</option>
+                          </select>
+                        </div>
+                       
                     </div>
                     <div class="row">
-                      <div class="col-md-4">
+                      <div class="col-md-2">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Title</label>
-                          <input class="form-control" type="text" name="title" value="<%= sub_data[0].title %>" >
+                          <input class="form-control" type="text" name="title" value="<%= data[0].title %>" >
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Budget</label>
+                          <select class="form-control" name="budget" id="cars">
+                            <option class="dropdown" selected value="<%= data[0].budget %>"><%= data[0].budget %></option>
+                            <% if(budget.length){
+                              for(var i = 0; i< budget.length; i++) {%> 
+                            <option class="dropdown" value="<%= budget[i].budget %>" ><%= budget[i].budget %></option>
+                            <% } %> 
+                            <% } %> 
+                          </select>
                         </div>
                       </div>
                       <div class="col-md-2">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Price</label>
-                          <input class="form-control" type="text" name="price" value="<%= sub_data[0].price %>">
+                          <input class="form-control" type="text" name="price" value="<%= data[0].price %>">
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-3">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Description</label>
-                          <input class="form-control" type="text" name="description" value="<%= sub_data[0].description %>">
+                          <input class="form-control" type="text" name="description" value="<%= data[0].description %>">
                         </div>
                       </div>
                     </div>
                     <div class="row">
-                      
-                    
-                     
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">KM</label>
+                          <input class="form-control" type="text" name="km" value="<%= data[0].km %>" >
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Fuel</label>
+                          <input class="form-control" type="text" name="fuel" value="<%= data[0].fuel %>">
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Enter Usage Year</label>
+                          <select class="form-control" name="year" id="cars">
+                            <option value="<%= data[0].year %>" selected><%= data[0].year %></option>
+                            <% if(years.length){
+                              for(var i = 0; i< years.length; i++) {%> 
+                            <option class="dropdown" value="<%= years[i].year %>" ><%= years[i].year %></option>
+                            <% } %> 
+                            <% } %> 
+                          </select>
+                        </div>
+                      </div>
+                   
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Enter Insurance Validity Date</label>
+                          <input class="form-control" type="date" name="insurance" value="<%= data[0].insurance %>">
+                        </div>
+                      </div>
+                    </div> 
                     <p class="text-uppercase text-sm">Location Information</p>
                     <div class="row">
                       <div class="col-md-2">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Country</label>
-                          <select class="form-control">
+                          <select class="form-control" name="country">
+                            <option value="<%= data[0].country %>" selected><%= data[0].country %></option>
                             <option value="Afghanistan">Afghanistan</option>
                         <option value="Albania">Albania</option>
                         <option value="Algeria">Algeria</option>
@@ -340,59 +414,51 @@
                       </div>
                       <div class="col-md-2">
                         <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Select State</label>
-                          <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" value="<%= sub_data[0].state %>" class="form-control" required></select>
-                          </div>
+                          <label for="example-text-input" class="form-control-label">State</label>
+                          <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" class="form-control" required>
+                            <option value="<%= data[0].state %>" selected ><%= data[0].state %></option>
+                        </select>
+                            
+                        </div>
                       </div>
                       <div class="col-md-2">
                         <div class="form-group">
                         <label for="example-text-input" class="form-control-label">Select City</label> 
-                        <select id ="state" name="city" class="form-control"  value="<%= sub_data[0].city %>" required ></select>
+                        <select id ="state" name="city" class="form-control" aria-placeholder="Select City" required>
+                            <option value="<%= data[0].city %>" selected ><%= data[0].city %></option>  
+                        </select>
                         </div>
                       </div>  
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Address</label>
-                          <input class="form-control" type="text" name="location"  value="<%= sub_data[0].location %>">
-                        </div>
-                      </div>
-                    </div>
-                      <div class="row">
-                        <div class="col-md-2">
-                          <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Longitude</label>
-                            <input class="form-control" type="text" name="longitude" value="<%= sub_data[0].longitude %>">
-                          </div>
-                        </div>
-                        <div class="col-md-2">
-                          <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Latiitude</label>
-                            <input class="form-control" type="text" name="latitude" value="<%= sub_data[0].latitude %>">
-                          </div>
-                        </div>
-                        <div class="col-md-2">
-                          <div class="form-group">
-                            <label for="example-text-input" class="form-control-label">Postal code</label>
-                            <input class="form-control" type="text" name="pin"  value="<%= sub_data[0].pin %>">
-                          </div>
-
-                      </div>
-                      
-                      
                       <div class="col-md-3">
                         <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Post Image</label>
-                          <input class="form-control" type="file" name="image">
+                          <label for="example-text-input" class="form-control-label">Address</label>
+                          <input class="form-control" type="text" name="location" value="<%= data[0].location%>" required>
                         </div>
                       </div>
-                      
+                      </div>
+                      <div class="row"></div>
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Postal code</label>
+                          <input class="form-control" type="number" name="pin" value="<%= data[0].pin %>" placeholder="Please Enter postal code" required>
+                        </div>
+                      </div>
+
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Vehicle Image</label>
+                          <img src="../assets/images/vehicle/<%= data[0].image %>" class="avatar avatar-xl me-3" alt="user1">
+                          <input class="form-control" type="file" value="<%= data[0].image %>" name="image">
+                        </div>
+                      </div>
                     </div>
                     <hr>
+
                    <div class="row">
                     <div class="d-flex justify-content-between">
-                      <a href="/products/" class="btn btn-sm btn-info mb-0 d-none d-lg-block">Cancel</a>
-                      <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-block d-lg-none">Reset</a>
-                      <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Update</button>
+                      <a href="/vehicle/" class="btn btn-sm btn-info mb-0 d-none d-lg-block">Cancel</a>
+                      <button type="reset" class="btn btn-sm btn-info float-right mb-0  " onclick="reset()">Reset</button>
+                      <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Add</button>
                     </div>
                    </div>
                     
@@ -413,6 +479,7 @@
     <script src="/assets/js/cities.js"></script>
     <script language="javascript">print_state("sts");</script>
     <script src="/assets/js/plugins/chartjs.min.js"></script>
+    
     <script>
       var ctx1 = document.getElementById("chart-line").getContext("2d");
   
