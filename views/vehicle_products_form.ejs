@@ -17,29 +17,11 @@
       <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 </head>
 <body>
-    
-    <div class="content-wrapper">
-        <div class="card shadow-lg mx-2 card-profile">
-            <div class="card-body p-2">
-              <!-- <div class="row gx-4">
-                <div class="col-auto">
-                  <div class="avatar avatar-xl position-relative">
-                    <img src="../assets/img/jm-category.png" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
-                  </div>
-                </div>
-                <div class="col-auto my-auto">
-                  <div class="h-100">
-                    <h5 class="mb-1">
-                   Enter Ad Details
-                    </h5>
-                    
-                  </div>
-                </div>
-                
-              </div> -->
-           <!-- </div> -->
-          </div>
-          <div class="container-fluid py-2">
+  <div class="content-wrapper">
+    <div class="card shadow-lg mx-12 card-profile" style="background-image: url('https://venngage-wordpress.s3.amazonaws.com/uploads/2018/09/Simple-White-Gradient-Background-Image.jpg'); image-resolution: unset;">
+      <div class="container-fluid py-2">
+
+          <div class="container-fluid py-1">
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
@@ -139,7 +121,7 @@
                           <input class="form-control" type="text" name="fuel"required >
                         </div>
                       </div>
-                      <div class="col-md-2">
+                      <div class="col-md-3">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Enter Usage Year</label>
                           <select class="form-control" name="year" id="cars" required>
@@ -153,7 +135,7 @@
                         </div>
                       </div>
                    
-                      <div class="col-md-2">
+                      <div class="col-md-3">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Enter Insurance Validity Date</label>
                           <input class="form-control" type="date" name="insurance" required >
@@ -435,10 +417,10 @@
                         </div>
                       </div>
 
-                      <div class="col-md-2">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Vehicle Image</label>
-                          <input class="form-control" type="file" name="image" required>
+                          <input class="form-control" type="file" name="image" multiple maxlength="5">
                         </div>
                       </div>
                     </div>
@@ -462,8 +444,10 @@
         </div>
    
     </div>
-  </main>
   
+  </div>
+  </div>
+
   <script src="/assets/js/core/popper.min.js"></script>
     <script src="/assets/js/core/bootstrap.min.js"></script>
     <script src="/assets/js/cities.js"></script>

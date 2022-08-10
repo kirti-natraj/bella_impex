@@ -13,8 +13,11 @@ const budget_db = require('../models/budget');
 
 
 const moment = require('moment');
-
+const aws = require('aws-sdk');
 const multer = require('multer');
+const multerS3 = require('multer-s3');
+const path = require('path');
+const s3 = new aws.S3({ accessKeyId: "***", secretAccessKey: "***" });
 const cors = require('cors')
 const app = express();
 app.use(cors());
@@ -261,27 +264,31 @@ router.get('/products',async function(req, res, next) {
 router.get('/add_product',async function(req,res,next){                        //for Category TAble Update
   const data = await category_db.find().exec();
   const sub_data = await subcategory_db.find().exec();
+
   res.render('product_form',{title:'Add Vehicle', data: data, sub_data: sub_data});
 
 });
 
-router.post('/add_product_form', uploadProduct.fields({name: 'image', maxCount: 5}), async function(req, res, next) {                          //category add
+router.post('/add_product_form', uploadProduct.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
+  // for (let i = 0; i < req.files.length; i++) {
+  //   let file = req.files.image[i].location;
+  //   let fileImg = new Array(req.files.length);
+  //   fileImg[i] = file;
+  // }
   await product_db.create({
       category: req.body.category,
-      image :req.files.image.filename,
+      image: req.files.image.filename,
       subcategory: req.body.subcategory,
       price: req.body.price,
       description: req.body.description,
       title:req.body.title,
       location: req.body.location,
       country: req.body.country,
-      state: req.body.stt,
+      state: req.body.sts,
       city: req.body.city,
       pin:req.body.pin,
-      brand: req.body.brand,
       longitude: req.body.longitude,
       latitude: req.body.latitude
-
 
   });
   res.redirect('/products/');
@@ -320,12 +327,12 @@ router.get('/properties',async function(req, res, next) {
   res.render('properties', { title: 'Properties' , data: data, moment: moment});
 });
 router.get('/add_properties',async function(req,res,next){                        //for Category TAble Update
-  const data = await category_db.find().exec();
-  const sub_data = await subcategory_db.find().exec();
-  res.render('properties_form',{title:'Add Properties', data: data, sub_data: sub_data});
+
+  const sub_data = await subcategory_db.find({category_id : '62e2422071d2a78f7b1373d9'}).exec();
+  console.log(sub_data);
+  res.render('properties_form',{title:'Add Properties', sub_data: sub_data});
 
 });
-
 router.post('/add_properties_form', uploadProperties.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
 
   await properties_db.create({
@@ -364,7 +371,8 @@ router.get('/add_vehicle',async function(req,res,next){
   const brand = await brand_db.find().exec();
   const year = await year_db.find().exec();
   const budget = await budget_db.find().exec();
-  const data = await subcategory_db.find({category_id : '62e242cc71d2a78f7b1373e3'}).exec();
+  const data = await subcategory_db.find({category_id : "62e242cc71d2a78f7b1373e3"}).exec();
+  console.log(data);
   res.render('vehicle_products_form',{title:'Add Vehicle', data: data,  brand: brand, years: year, budget: budget});
 
 });

@@ -18,10 +18,11 @@
 </head>
 <body>
     
-    <div class="content-wrapper">
-        <div class="card shadow-lg mx-12 card-profile" style="background-image: url('https://venngage-wordpress.s3.amazonaws.com/uploads/2018/09/Simple-White-Gradient-Background-Image.jpg'); image-resolution: unset;">
-            
-          <div class="container-fluid py-4">
+  <div class="content-wrapper" style="margin-top: 40px;">
+    <div class="card shadow-lg mx-12 card-profile" style="background-image: url('https://venngage-wordpress.s3.amazonaws.com/uploads/2018/09/Simple-White-Gradient-Background-Image.jpg'); image-resolution: unset;">
+      <div class="container-fluid py-2">
+
+          <div class="container-fluid py-1">
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
@@ -33,33 +34,32 @@
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Select Category</label>
-                          <select class="form-control"  id="category" size="1" >
-                            <option value="" disabled selected>Choose Category</option>
+                          <select class="form-control" name="category" id="category" onchange="myFunction()" >
+                            
                             <% if(data.length){
                               for(var i = 0; i< data.length; i++) {%>  
                         
-                          <option class="border-radius-lg list-group-item" name="category" value="<%= data[i]._id %>"><%= data[i].category_name %></option>
+                          <option class="border-radius-lg list-group-item"  value="<%= data[i]._id %>"><%= data[i].category_name %></option>
                           <% } %> 
                           <% } %> 
-                            </select>
+
+                           
+                          </select>
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Select Subcategory</label>
-                          <select class="form-control" id="categorySelect" size="1">
-                            <option value="" disabled selected>Choose Subcategory</option>
-                            <% if(sub_data.length){
+                          <select class="form-control" name="subcategory" id="cars">
                             
-                              for(var i = 0; i< sub_data.length; i++) {%>  
-                        if(sub_data[i].category_id == 0 ){
-                          <option class="border-radius-lg list-group-item" name="category" value="<%= sub_data[i]._id %>"><%= sub_data[i].sub_category_name %></option>
-                         
-                        }
-                        
+                             <%  for(var i = 0; i< sub_data.length; i++) {%>
+                             <% if(sub_data[i].category_id === catId){ %>
+                              
+                          <option class="border-radius-lg list-group-item" value="<%= sub_data[i]._id %>"><%= sub_data[i].sub_category_name %></option>
                           <% } %> 
                           <% } %> 
-                            </select>
+
+                          </select>
                         </div>
                       </div>
                       <div class="col-md-3">
@@ -94,7 +94,7 @@
                      
                     <p class="text-uppercase text-sm">Location Information</p>
                     <div class="row">
-                      <div class="col-md-2">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Country</label>
                           <select class="form-control">
@@ -340,37 +340,38 @@
                         </select>
                         </div>
                       </div>
-                      <div class="col-md-2">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Select State</label>
-                          <select class="form-control" onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" class="form-control" required></select>
+                          <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" class="form-control" required></select>
                           </div>
                       </div>
-                      <div class="col-md-2">
+                      <div class="col-md-4">
                         <div class="form-group">
                         <label for="example-text-input" class="form-control-label">Select City</label> 
                         <select id ="state" name="city" class="form-control" required></select>
                         </div>
                       </div>  
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Address</label>
-                          <input class="form-control" type="text" name="location">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Longitude</label>
                           <input class="form-control" type="text" name="longitude">
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Latiitude</label>
                           <input class="form-control" type="text" name="latitude">
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-5">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Address</label>
+                          <input class="form-control" type="text" name="location">
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-3">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Postal code</label>
                           <input class="form-control" type="text" name="pin">
@@ -410,22 +411,12 @@
     <script src="/assets/js/cities.js"></script>
     <script language="javascript">print_state("sts");</script>
     <script src="/assets/js/plugins/chartjs.min.js"></script>
-    <script type="text/javascript">
-   
-      function makeSubmenu(value) {
-          if (value.length == 0) document.getElementById("categorySelect").value = "<option></option>";
-          else {
-              var citiesOptions = "";
-              for (i=0; i<sub_data.length; i++) {
-                if(sub_data[i].category_id === value)
-                  citiesOptions += "<option>" + sub_data[i].sub_category_name + "</option>";
-              }
-              document.getElementById("categorySelect").innerHTML = citiesOptions;
-          }
+    <script>
+      function myFunction(){
+        let catId = document.getElementsByName("category").value;
+        return catId;
       }
-
-
-  </script>
+    </script>
     <script>
       var ctx1 = document.getElementById("chart-line").getContext("2d");
   

@@ -18,9 +18,10 @@
 </head>
 <body>
     
-    <div class="content-wrapper">
-        <div class="card shadow-lg mx-4 card-profile">
-            <div class="card-body p-3">
+  <div class="content-wrapper">
+    <div class="card shadow-lg mx-12 card-profile" style="background-image: url('https://venngage-wordpress.s3.amazonaws.com/uploads/2018/09/Simple-White-Gradient-Background-Image.jpg'); image-resolution: unset;">
+        
+      <div class="container-fluid py-4">
               <!-- <div class="row gx-4">
                 <div class="col-auto">
                   <div class="avatar avatar-xl position-relative">
@@ -51,14 +52,7 @@
                       <div class="col-md-2">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Select Category</label>
-                          <select name="cars" id="cars">
-                            
-                            <% if(data.length){
-                              for(var i = 0; i< data.length; i++) {%>  
-                        
-                          <option class="border-radius-lg list-group-item" name="category" value="<%= data[i]._id %>"><%= data[i].category_name %></option>
-                          <% } %> 
-                          <% } %> 
+                          <input class="form-control" type="text" name="category" placeholder="Properties" disabled >
 
                            
                           </select>
@@ -67,13 +61,14 @@
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Select Subcategory</label>
-                          <select name="subcategory" id="cars">
+                          <select class="form-control" name="subcategory" id="cars">
+                            
                             <% if(sub_data.length){
-                              for(var i = 0; i< data.length; i++) {%>  
+                              for(var i = 0; i< sub_data.length; i++) {%>  
                         
-                          <option class="border-radius-lg list-group-item" value="<%= data[i]._id %>"><%= data[i].category_name %></option>
+                          <option class="border-radius-lg list-group-item" name="subcategory" value="<%= sub_data[i].sub_category_name %>"><%= sub_data[i].sub_category_name %></option>
                           <% } %> 
-                          <% } %> 
+                          <% } %>  
 
                           </select>
                         </div>
@@ -82,7 +77,7 @@
                       <div class="col-md-2">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Facing</label>
-                          <select name="facing" id="cars">
+                          <select  class="form-control" name="facing" id="cars">
                             <option value="East">East</option>
                             <option value="West">West</option>
                             <option value="North">North</option>
@@ -93,7 +88,7 @@
                       <div class="col-md-1">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Bathrooom</label>
-                          <select name="bathroom" id="cars">
+                          <select  class="form-control" name="bathroom" id="cars">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -104,7 +99,7 @@
                       <div class="col-md-1">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Bedroom</label>
-                          <select name="bedroom" id="cars">
+                          <select  class="form-control" name="bedroom" id="cars">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -115,7 +110,7 @@
                       <div class="col-md-2">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Furnishing</label>
-                          <select name="furnishing" id="cars">
+                          <select  class="form-control" name="furnishing" id="cars">
                             <option value="true">Furnished</option>
                             <option value="false">Unfurnished</option>
                           </select>
@@ -149,20 +144,15 @@
                           <input class="form-control" type="text" name="description" >
                         </div>
                       </div>
+                      
+                    </div>
+                    <div class="row">
                       <div class="col-md-2">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Type</label>
                           <input class="form-control" type="text" name="km" placeholder="e.g. villa, row house" >
                         </div>
                       </div>
-                    </div>
-                    <div class="row">
-                     
-                     
-                      
-                      
-                    </div>
-                    <div class="row">
                         <div class="col-md-2">
                             <div class="form-group">
                               <label for="example-text-input" class="form-control-label">Construction Status</label>
@@ -191,7 +181,7 @@
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Country</label>
                           <br>
-                          <select>
+                          <select  class="form-control">
                             <option value="Afghanistan">Afghanistan</option>
                         <option value="Albania">Albania</option>
                         <option value="Algeria">Algeria</option>

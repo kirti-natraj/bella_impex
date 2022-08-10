@@ -63,7 +63,13 @@
                         </td>
                         <td>
                           <div>
-                              <img src="../assets/images/product/<%= data[i].image %>" class=" avatar-lg me-3" alt="user1">
+                            <% if(data.length){
+                              for(var j = 0; j< data[i].image.length; j++) {%> 
+                               <% console.log(data[i].image[j].filename) %>
+                              <img src="../assets/images/product/<%= data[i].image[j].filename %>" class=" avatar-lg me-3" alt="user1">
+                            
+                              <% } %> 
+                              <% } %> 
                             </div>
                         </td>
                       <td>
