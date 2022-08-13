@@ -26,8 +26,8 @@ router.get('/',async function (req, res, next) {
  
 });
 
-router.get('/subcategory/:id',async function (req, res, next) {
-    const data = await subcategory_db.find({category_id: req.params.id});
+router.post('/subcategory',async function (req, res, next) {
+    const data = await subcategory_db.find({category_id: req.body.category_id});
     if(!data) return res.json({response: false, msg:"Data not found"})
     else res.json({ response: true , msg: "Data Found",data: data });
 });
