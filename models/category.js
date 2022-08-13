@@ -4,12 +4,7 @@ const categorySchema = new mongoose.Schema({
     cat_id:{
         type:mongoose.ObjectId,
     },
-   
-    category_id:{
-        type: String,
-        required: false,
-
-    },
+  
     category_name:{
         type: String,
         required: false,

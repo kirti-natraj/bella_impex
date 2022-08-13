@@ -44,7 +44,7 @@ const uploadVehicle= multer({storage: storageVehicle});
 
 const storageProduct = multer.diskStorage({
   destination: function (req, file, cb) {
-      cb(null, 'public/assets/images/product/');
+      cb(null, 'public/assets/images/products/');
   },
   filename: function (req, file, cb) {
       cb(null, Date.now()+ '__' + file.originalname);
@@ -170,7 +170,7 @@ router.get('/user',async function(req,res,next){                        //for Us
 router.get('/category',async function(req,res,next){                        //for UserTable Page
   const data = await category_db.find().exec();
  
-  res.render('category',{title:'Category List',data : data});
+  res.render('category',{title:'Category List',data : data, moment: moment});
 
 
 });
@@ -189,6 +189,7 @@ router.post('/add_category_form', upload.fields([{name:'image', maxCount: 1}]), 
       image: req.files.image[0].filename
   });
   res.redirect('/category/');
+
 });
 
 router.get('/update_category/:id', async function(req,res,next ){
@@ -198,25 +199,20 @@ router.get('/update_category/:id', async function(req,res,next ){
   res.render('category_update', {data:data , id:id,title: 'Update Category' });
 });
 
-router.get('/update_cat_form/:id', async function(req,res,next ){
+router.get('/update_cat_form/:id', upload.fields([{name:'image', maxCount: 1}]), async function(req,res,next ){
   let _id = req.params.id;
+  console.log(req.files);
 
-  const a1= await category_db.findByIdAndUpdate( _id, {
+    const a1= await category_db.findByIdAndUpdate( _id, {
       category_name: req.query.category_name,
-    
+   
     });
+ 
+  
   res.redirect('/category/');
 });
 
 //////////////////////////////////////subcat
-
-router.get('/add_subcategory/:id',async function(req,res,next){                        //for Category TAble Update
-  let _id = req.params.id;
-  const category_name = await category_db.findById(_id);
-  res.render('add_subcategory',{title:'Add Subcategory', id: _id, category_name: category_name});
-
-});
-
 router.get('/subcategory_list',async function(req,res,next){                        //for SubCategory TAble Update
   const data = await category_db.find().exec();
   const sub_data = await subcategory_db.find().exec();
@@ -224,13 +220,20 @@ router.get('/subcategory_list',async function(req,res,next){                    
 
 });
 
+router.get('/add_subcategory/:id',async function(req,res,next){                        //for Category TAble Update
+  let _id = req.params.id;
+  const category_name = await category_db.findById(_id);
+  res.render('add_subcategory',{title:'Add Subcategory', id: _id, category_name: category_name});
 
+});
 router.post('/subcategory_form/:id', async function(req,res,next ){                          //for updating subcategory info
   let _id = req.params.id;
   await subcategory_db.create({
+      category_name: req.body.category,
       sub_category_name: req.body.sub_category_name,
       created_on: Date.now(),
       category_id: _id,
+    
   });
  
   res.redirect('/subcategory_list/');
@@ -240,8 +243,8 @@ router.post('/subcategory_form/:id', async function(req,res,next ){             
 router.get('/update_subcat/:id', async function(req,res,next ){
   let id= req.params.id
   const sub_data = await subcategory_db.find({'_id':id});
-  const data = await category_db.find().exec();
-  res.render('sub_update', {data:data , id:id,sub_data:sub_data, title: 'Update Subcategory' });
+  const data = await category_db.find({'_id': sub_data[0].category_id});
+  res.render('sub_update', {data:data , id:id,sub_data:sub_data,data: data, title: 'Update Subcategory' });
 });
 
 router.get('/update_subcat_form/:id', async function(req,res,next ){
@@ -257,8 +260,10 @@ router.get('/update_subcat_form/:id', async function(req,res,next ){
 
 //////////////////////////////////////////////Products
 router.get('/products',async function(req, res, next) {  
+  const category = await category_db.find().exec();
+  const subcategory = await subcategory_db.find().exec();
   const data = await product_db.find().exec();                      
-  res.render('products', { title: 'Products' , data: data, moment: moment});
+  res.render('products', { title: 'Products' , data: data, category: category, subcategory: subcategory, moment: moment});
 });
 
 router.get('/add_product',async function(req,res,next){                        //for Category TAble Update
@@ -270,21 +275,23 @@ router.get('/add_product',async function(req,res,next){                        /
 });
 
 router.post('/add_product_form', uploadProduct.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
-  // for (let i = 0; i < req.files.length; i++) {
-  //   let file = req.files.image[i].location;
-  //   let fileImg = new Array(req.files.length);
-  //   fileImg[i] = file;
-  // }
+  const data = await category_db.find({'_id': req.body.category});
+  const sub_data = await subcategory_db.find({'_id': req.body.subcategory});
+  console.log(data[0].category_name);
+  console.log(sub_data[0].sub_category_name);
   await product_db.create({
       category: req.body.category,
-      image: req.files.image.filename,
       subcategory: req.body.subcategory,
+      category_name: data[0].category_name,
+      subcategory_name: sub_data[0].sub_category_name,
+      image: req.files.image[0].filename,
       price: req.body.price,
+      date: Date.now(),
       description: req.body.description,
       title:req.body.title,
       location: req.body.location,
       country: req.body.country,
-      state: req.body.sts,
+      state: req.body.stt,
       city: req.body.city,
       pin:req.body.pin,
       longitude: req.body.longitude,
@@ -294,11 +301,30 @@ router.post('/add_product_form', uploadProduct.fields([{name:'image', maxCount: 
   res.redirect('/products/');
 });
 
+
+router.get('/get_subcategory',async function(request, response, next){
+  const type = request.query.type;
+console.log(type);
+  const search_query = request.query.parent_value;
+console.log(search_query);
+  if(type == 'load_subcategory') {
+    var query =  await subcategory_db.find( { category_id: search_query },{sub_category_name: 1});
+  }
+ 
+  // let data_arr = [];
+  // for(var i=0; i < ; i++){
+  //   data_arr = query[i].sub_category_name;
+  // }
+  console.log(query);
+    response.json(query);
+  });
+
+
 router.get('/update_product/:id', async function(req,res,next ){
   let id= req.params.id
   const sub_data = await product_db.find({'_id':id});
   const data = await category_db.find().exec();
-  res.render('update_product', {data:data , id:id,sub_data:sub_data, title: 'Update Product' });
+  res.render('update_product', {data:data , id:id,sub_data: sub_data, title: 'Update Product' });
 });
 
 router.get('/update_product_form/:id', async function(req,res,next ){

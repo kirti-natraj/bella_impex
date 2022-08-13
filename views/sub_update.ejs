@@ -21,7 +21,7 @@
                 <div class="col-auto my-auto">
                   <div class="h-100">
                     <h5 class="mb-1">
-                  Update Subcategory
+                 Category:- <%= data[0].category_name %>
                     </h5>
                     
                   </div>
@@ -44,22 +44,7 @@
                   <div class="card-body">
                     <p class="text-uppercase text-sm">Enter Details</p>
                     <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Choice Category</label>
-                          <br>
-                          <select name="category_id" id="cars" class="datatables-responsive">
-                            <% if(data.length){
-                              for(var i = 0; i< data.length; i++) {%>  
-                        
-                          <option class="border-radius-lg list-group-item" value="<%= data[i]._id %>"><%= data[i].category_name %></option>
-                          <% } %> 
-                          <% } %> 
-
-                          </select>
-                        
-                        </div>
-                      </div>
+                      
                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Subcategory Name</label>

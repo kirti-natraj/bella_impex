@@ -15,10 +15,18 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    image: [ 
-        Object
-       
-    ],
+    category_name: {
+        type: String,
+        required: false
+    },
+    subcategory_name: {
+        type: String,
+        required: false
+    },
+    image: {
+        type: String,
+        required: false
+    },
     description: {
         type: String,
         required: false
@@ -38,10 +46,9 @@ const productSchema = new mongoose.Schema({
         required: false
     },
     date: {
-        type: String,
+        type: Date,
         required: false,
         default: Date.now()
-
     },
     status: {
         type: Boolean,

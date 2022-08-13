@@ -2,6 +2,24 @@
 <html lang="en">
 
   <%- include('admin/includes/header') %>
+  <style>
+    .btn1 {
+  background-color: #ddd;
+  border: none;
+  border-radius: 5%;
+  color: black;
+  padding: 12px 28px;
+  text-align: center;
+  font-size: 12px;
+  margin: 3px 1px;
+  transition: 0.3s;
+}
+
+.btn1:hover {
+  background-color: #3e57c8;
+  color: white;
+}
+  </style>
 <body>
   <div class="min-height-250 bg-primary position-absolute w-100"></div>
  <%- include('admin/includes/sidebar')%>
@@ -25,7 +43,7 @@
            <div class="col-2">
             <div class="card-header pb-0">
            <h6>
-            <a class="btn btn-info" id="action" style="display: none;">
+            <a class="btn1" id="action" style="display: none;" onchange="AnimationEffect">
               Update
            </a>
           
@@ -34,7 +52,7 @@
             </div>
             <div class="col-2">
               <div class="card-header pb-0">
-                <a class="btn btn-danger" id="delete" style="display: none;">
+                <a class="btn1" id="delete" style="display: none;" onchange="AnimationEffect">
                   Delete
                </a>
               </div>
@@ -47,7 +65,7 @@
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Catgory Name</th>
                       <th class="text-uppercase text-secondary font-weight-bolder opacity-7">Subcategory List</th>
-                     
+                      <th class="text-uppercase text-secondary font-weight-bolder opacity-7">Status</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -86,7 +104,7 @@
                                     
                                     <select class="form-control w-30"  name="subcategory" onchange="myFunction(this.value)">
                               
-
+                                   <option> Tap here </option>   
                                   <% 
                                     for(var j = 0; j< sub_data.length; j++) {%>  
                                      
@@ -105,21 +123,17 @@
                                       <% } %>
                                           </select>
                                         </td>
-                                
-                                
-                                
-                                <td >
-                                    <a class="form-control" id="action" style="display: none;">
-                                       Update
-                                    </a>
-                                    <a class="form-control" id="delete" style="display: none;">
-                                      Delete
-                                   </a>
-                                </td>
-                                  
-                             
-                                
+                                        <td class="align-middle">
+                       
 
+                                          <% if(data[i].status === true ){ %>
+                                            <div class="label text-dark onclick="active()">Activate</div>
+                                          <% }else{ %>
+                                            <div class="label text-dangeronclick="active()">Deactive</div>
+                                          <% } %>
+                  
+                  
+                                        </td>
                               </tr>
                             <% }
                                 
@@ -155,22 +169,26 @@
   <script>
   function myFunction(id) {
     var x = document.getElementById("action");
- 
+  
   if (x.style.display === 'none') {
     x.style.display = 'block';
   }
+ 
   var y = document.getElementById("delete");
   if (y.style.display === 'none') {
     y.style.display = 'block';
   } 
+
+
   document.getElementById("action").onclick = function()
   {
     location.href='/update_subcat/'+ id;
+    AnimationEffect;
     
   }
   document.getElementById("delete").onclick = function()
   {
-    location.href='/delete/'+ id;
+    location.href='/delete_subcat/'+ id;
     
   }
   

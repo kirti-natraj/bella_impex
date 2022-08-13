@@ -40,7 +40,7 @@
                      
                     </div>
                   </div>
-                <form action="/update_cat_form/<%= data[0]._id %>"  method="get" >
+                <form action="/update_cat_form/<%= data[0]._id %>"  method="get" enctype="multipart/form-data" >
                   <div class="card-body">
                     <p class="text-uppercase text-sm">Enter Details</p>
                     <div class="row">
@@ -55,10 +55,11 @@
                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Add Image </label>
+                          
+                          <input class="form-control" type="file" name="image">
                           <br>
+                         
                           <img src="..\assets\images\category\<%= data[0].image %>" class="avatar avatar-xl me-3" alt="user1">
-                          <input class="form-control" value="<%= data[0].image %>" type="file" name="image" >
-                       
                         </div>
                       </div>
                       

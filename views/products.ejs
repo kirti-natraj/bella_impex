@@ -63,13 +63,9 @@
                         </td>
                         <td>
                           <div>
-                            <% if(data.length){
-                              for(var j = 0; j< data[i].image.length; j++) {%> 
-                               <% console.log(data[i].image[j].filename) %>
-                              <img src="../assets/images/product/<%= data[i].image[j].filename %>" class=" avatar-lg me-3" alt="user1">
-                            
-                              <% } %> 
-                              <% } %> 
+                             
+                            <img src="../assets/images/products/<%= data[i].image %>" class=" avatar-lg me-3" alt="user1">
+                           
                             </div>
                         </td>
                       <td>
@@ -81,23 +77,25 @@
                       </td>
                      
                       <td>
-                      
-                        <p class="text-xs text-secondary mb-0"><%= data[i].category %></p>
+
+                        <div class="text-secondary text-xs font-weight-bold area"><%= data[i].category_name %></div>
+                       
                       </td>
                     
+                      <td>
+
+                        <div class="text-secondary text-xs font-weight-bold area"><%= data[i].subcategory_name %></div>
+                       
+                      </td>
                       <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success"><%= moment(data[i].date).format("MM Do YYYY") %></span>
+                        <span class="badge badge-sm bg-gradient-success"><%= moment(data[i].date).format('MMMM Do YYYY') %></span>
                       </td>
-                      <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold"><%= data[i].brand %></span>
-                      </td>
+                    
                     </td>
-                    <td class="align-middle text-center">
-                        <p class="text-secondary text-xs font-weight-bold"><%= data[i].description %></p>
+                    <td class="align-middle text-center mb-1">
+                        <div class="text-secondary text-xs font-weight-bold area"><%= data[i].description %></div>
                         <span class="text-secondary text-xs font-weight-bold">Price - <%= data[i].price %></span>
-                      </td>
-                      
-                      </td>
+                     
                      
                     </td>
                     <td class="align-middle text-center">

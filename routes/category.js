@@ -29,4 +29,32 @@ router.get('/category',async function(req,res,next){
     res.render('add_category',{title:'Add Category'});
   
   });  
+
+  router.post('/add_category_form', upload.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
+
+    await category_db.create({
+        category_name: req.body.category_name,
+        image: req.files.image[0].filename
+    });
+    res.redirect('/category/');
+  });
+
+  router.get('/update_category/:id', async function(req,res,next ){
+    let id= req.params.id
+    const data = await category_db.find({'_id':id});
+    
+    res.render('category_update', {data:data , id:id,title: 'Update Category' });
+  });
+  
+  router.get('/update_cat_form/:id', async function(req,res,next ){
+    let _id = req.params.id;
+  
+    const a1= await category_db.findByIdAndUpdate( _id, {
+        category_name: req.query.category_name,
+      
+      });
+    res.redirect('/category/');
+  });
+  
+
   module.exports = router;

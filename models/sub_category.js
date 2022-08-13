@@ -4,9 +4,14 @@ const subcategorySchema = new mongoose.Schema({
         type:mongoose.ObjectId,
     },
     category_id:{
-        type: mongoose.Schema.Types.ObjectId,
+
+        type: String,
         required: false,
 
+    },
+    category_name:{
+        type: String,
+        required: false,
     },
     sub_category_id:{
         type: String,

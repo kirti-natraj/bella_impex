@@ -34,8 +34,8 @@
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Select Category</label>
-                          <select class="form-control" name="category" id="category" onchange="myFunction()" >
-                            
+                          <select class="form-control" name="category" id="category" >
+                            <option class="border-radius-lg list-group-item" >Select Category</option>
                             <% if(data.length){
                               for(var i = 0; i< data.length; i++) {%>  
                         
@@ -50,15 +50,9 @@
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Select Subcategory</label>
-                          <select class="form-control" name="subcategory" id="cars">
+                          <select class="form-control" name="subcategory" id="subcategory">
                             
-                             <%  for(var i = 0; i< sub_data.length; i++) {%>
-                             <% if(sub_data[i].category_id === catId){ %>
-                              
-                          <option class="border-radius-lg list-group-item" value="<%= sub_data[i]._id %>"><%= sub_data[i].sub_category_name %></option>
-                          <% } %> 
-                          <% } %> 
-
+                     
                           </select>
                         </div>
                       </div>
@@ -97,7 +91,7 @@
                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Country</label>
-                          <select class="form-control">
+                          <select class="form-control" name="country">
                             <option value="Afghanistan">Afghanistan</option>
                         <option value="Albania">Albania</option>
                         <option value="Algeria">Algeria</option>
@@ -380,7 +374,7 @@
                       <div class="col-md-4">
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Post Image</label>
-                          <input class="form-control" type="file" name="image" multiple maxlength="5">
+                          <input class="form-control" type="file" name="image">
                         </div>
                       </div>
                       
@@ -412,11 +406,36 @@
     <script language="javascript">print_state("sts");</script>
     <script src="/assets/js/plugins/chartjs.min.js"></script>
     <script>
-      function myFunction(){
-        let catId = document.getElementsByName("category").value;
-        return catId;
+      function _(element){
+        return document.getElementById(element);
       }
-    </script>
+
+      function fetch_data(parent_element, child_element, type){
+        fetch('/get_subcategory?type='+type+'&parent_value='+parent_element.value+'').then(
+          function(response){
+            return response.json();
+          }).then(function(responseData){
+
+            var html = '';
+            if(type = 'load_subcategory')
+            {
+              html = '<option value="">Select Subcategory</option>';
+            }
+
+            for(var count = 0; count < responseData.length; count ++)
+            {
+              html += '<option value="'+responseData[count]._id+'">'+ responseData[count].sub_category_name+'</option>';
+            }
+
+            child_element.innerHTML = html;
+          })
+      };
+   
+   _('category').onchange = function(){
+
+    fetch_data(_('category'), _('subcategory'), 'load_subcategory');
+   };
+   </script>
     <script>
       var ctx1 = document.getElementById("chart-line").getContext("2d");
   
