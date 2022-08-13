@@ -12,14 +12,24 @@ const moment = require('moment');var express = require('express');
 
 router.get('/',async function (req, res, next) {
     const data = await category_db.find().exec();
-    if(!data) return res.json({response: false, postMessage:"No Categories"})
-    else res.json({ response: true ,data: data });
+    if(!data) 
+    {
+       
+        return res.json({response: false, msg:"Data not found"})
+    }    
+    else
+    {
+        
+        res.json({ response: true , msg: "Data Found", data: data });
+    } 
+
+ 
 });
 
 router.get('/subcategory/:id',async function (req, res, next) {
     const data = await subcategory_db.find({category_id: req.params.id});
-    if(!data) return res.json({response: false, postMessage:"No Categories"})
-    else res.json({ response: true ,data: data });
+    if(!data) return res.json({response: false, msg:"Data not found"})
+    else res.json({ response: true , msg: "Data Found",data: data });
 });
 
 module.exports = router;
