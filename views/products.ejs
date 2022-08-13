@@ -63,9 +63,11 @@
                         </td>
                         <td>
                           <div>
-                             
-                            <img src="../assets/images/products/<%= data[i].image %>" class=" avatar-lg me-3" alt="user1">
-                           
+                            <% if(data[i].image.length){
+                              for(var j = 0; j< data[i].image.length; j++) {%>  
+                            <img src="../assets/images/products/<%= data[i].image[j].filename %>" class=" avatar-lg me-3" alt="user1">
+                            <% } %> 
+                            <% } %> 
                             </div>
                         </td>
                       <td>

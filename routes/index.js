@@ -277,14 +277,14 @@ router.get('/add_product',async function(req,res,next){                        /
 router.post('/add_product_form', uploadProduct.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
   const data = await category_db.find({'_id': req.body.category});
   const sub_data = await subcategory_db.find({'_id': req.body.subcategory});
-  console.log(data[0].category_name);
-  console.log(sub_data[0].sub_category_name);
+  console.log(req.files.image);
+
   await product_db.create({
       category: req.body.category,
       subcategory: req.body.subcategory,
       category_name: data[0].category_name,
       subcategory_name: sub_data[0].sub_category_name,
-      image: req.files.image[0].filename,
+      image: req.files.image,
       price: req.body.price,
       date: Date.now(),
       description: req.body.description,

@@ -17,7 +17,7 @@ router.post('/login', function (req, res) {
         'email': req.body.email,
         'password': req.body.password
     }, function (err, user) {
-        if (!user) {
+        if (user == '') {
             return res.json({isAuth: false, message: ' Auth failed ,email not found'});
         }
         else
@@ -40,5 +40,10 @@ router.post('/login', function (req, res) {
     })
 
 
+});
+router.post('/getProfile',async function (req, res, next) {
+    const data = await user_db.findById(req.body.user_id);
+    if(data == '') return res.json({response: false, msg:"Data not found"})
+    else res.json({ response: true , msg: "Data Found", data: data });
 });
 module.exports = router;
