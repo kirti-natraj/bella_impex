@@ -24,6 +24,7 @@ const user_apiRouter = require('./apis/user');
 const category_apiRouter = require('./apis/category');
 const userRouter = require('./routes/user');
 const webview_apiRouter= require('./apis/webview');
+const productRouter = require('./apis/product');
 const categoryRouter = require('./routes/category');
 const vehicleRouter = require('./routes/vehicle');
 
@@ -62,6 +63,7 @@ app.use('/', indexRouter);
 app.use('/login', indexRouter);
 app.use('/api/user',user_apiRouter);
 app.use('/api/category',category_apiRouter);
+app.use('/api/product',productRouter);
 app.use('/webviewIndex',webview_apiRouter);
 app.use('/user', userRouter);
 
