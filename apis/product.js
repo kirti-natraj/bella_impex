@@ -59,5 +59,12 @@ router.post('/addProduct', uploadProduct.fields([{name:'image', maxCount: 5}]), 
     })
   });
   
+  router.post('/getVehicleForm',async function (req, res, next) {
+    const data = "https://bellaimpex.herokuapp.com/webviewIndex"
+    
+       
+        return res.json({response: false, msg:"Page found", data: data })
+   
+});
 
 module.exports = router;

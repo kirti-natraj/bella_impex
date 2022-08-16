@@ -226,37 +226,24 @@ input[type="radio"]{
             <hr>
         </div>
         
-        <form>
+        <form action="/webviewIndex/add_vehicle"  method="post" >
             <div class="row">
                 <div class="col">
                     <label for="brand-details">Brand*</label>
                     <div class="brand-container">
-                        <select name="brand-names" id="dropdown-brand">
-                            <option value="Mahendra">Mahendra</option>
-                            <option value="Maruti Suzuki">Maruti Suzuki</option>
-                            <option value="Hyundai">Hyundai</option>
-                            <option value="TATA">TATA</option>
-                            <option value="Volkswagen">Volkswagen</option>
-                            <option value="Honda">Honda</option>
-                            <option value="Audi">Audi</option>
-                            <option value="Ford">Ford</option>
-                            <option value="Skoda">Skoda</option>
-                            <option value="Nisaan">Nisaan</option>
-                            <option value="Renault">Renault</option>
-                            <option value="Datsum">Datsum</option>
-                            <option value="Mercedes">Mercedes</option>
-                            <option value="Porche">Porche</option>
-                            <option value="BMW">BMW</option>
-                            <option value="Jagur">Jagur</option>
-                            <option value="Kia">Kia</option>
-                            <option value="Toyota">Toyota</option>
-                            <option value="Other">Other</option>
+                        <select name="brand" id="dropdown-brand">
+                           
+                            <% if(brand.length){
+                                for(var i = 0; i< brand.length; i++) {%> 
+                              <option data-img-src="../assets/images/brand/<%= brand[i].image %>" value="<%= brand[i].brand_name %>"><%= brand[i].brand_name %></option>
+                              <% } %> 
+                              <% } %> 
                         </select>
                     </div>
                 </div>
                 <div class="col">
                     <label for="year">Year*</label>
-                    <input type="number" required id="year" placeholder="Year">
+                    <input type="number" required name="year" placeholder="Year">
                 </div>
             </div>
             <div class="row">
@@ -264,7 +251,7 @@ input[type="radio"]{
                     <div class="labelad">
                         <label>Fuel*</label>
                     </div>
-                    <div class="radiobtn" required>
+                    <div class="radiobtn" name="fuel" required>
                         <input type="radio" name="fuel" id="lpg">
                         <label for="lpg">LPG</label>
                         <input type="radio" name="fuel" id="electric">
@@ -281,7 +268,7 @@ input[type="radio"]{
                     <div class="labelad">
                         <label>Transmission*</label>
                     </div>
-                    <div class="trans-container" required>
+                    <div class="trans-container"  required>
                         <input type="radio" name="transmission" id="Automatic">
                         <label for="Automatic">Automatic</label>
                         <input type="radio" name="transmission" id="Manual">
@@ -292,22 +279,22 @@ input[type="radio"]{
             <div class="row">
                 <div class="col">
                     <label for="km-run">Km run*</label>
-                    <input type="number" required id="km-run" placeholder="Km run">
+                    <input type="number" name="km" required id="km-run" placeholder="Km run">
                 </div>
                 <div class="col">
                     <div class="labelad">
                         <label>Number Of Owner*</label>
                     </div>
-                    <div class="owner-con" required>
-                        <input type="radio" name="owner" id="1st">
+                    <div class="owner-con" class required>
+                        <input type="radio" name="owner" id="1st" value="1st" >
                         <label for="1st">1st</label>
-                        <input type="radio" name="owner" id="2nd">
+                        <input type="radio" name="owner" id="2nd" value="2nd">
                         <label for="2nd">2nd</label>
-                        <input type="radio" name="owner" id="3rd">
+                        <input type="radio" name="owner" id="3rd" value="3rd">
                         <label for="3rd">3rd</label>
-                        <input type="radio" name="owner" id="4th">
+                        <input type="radio" name="owner" id="4th"  value="4th">
                         <label for="4th">4th</label>
-                        <input type="radio" name="owner" id="4th+">
+                        <input type="radio" name="owner" id="4th+" value="4th+">
                         <label for="4th+">4th+</label>
                     </div>
                 </div>
@@ -318,28 +305,28 @@ input[type="radio"]{
                         <label>Insurance Type</label>
                     </div>
                     <div class="insurance-con" required>
-                        <input type="radio" name="insurance-type" id="comprehensive">
+                        <input type="radio" name="insurance_type" id="comprehensive">
                         <label for="comprehensive">Comprehensive</label>
-                        <input type="radio" name="insurance-type" id="third-party">
+                        <input type="radio" name="insurance_type" id="third-party">
                         <label for="third-party">Third Party</label>
-                        <input type="radio" name="insurance-type" id="zero-dep">
+                        <input type="radio" name="insurance_type" id="zero-dep">
                         <label for="zero-dep">Zero Dep</label>
                     </div>
                 </div>
                 <div class="col">
                     <label for="insurance-val">Insurance Validity</label>
-                    <input type="date" id="km-run" required  placeholder="Expiry date in DD.MM.YYYY" >
+                    <input type="date" id="km-run" name="insurance_valid" required  placeholder="Expiry date in DD.MM.YYYY" >
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <label for="ad-title">Ad title*</label>
-                    <textarea id="my-text" required  name="ad" placeholder="Heading of your Ad" id="" cols="68" rows="1"></textarea>
+                    <textarea id="my-text" required  name="title" placeholder="Heading of your Ad" id="" cols="68" rows="1"></textarea>
                     <p id="result"></p>
                 </div>
                 <div class="col">
                     <label for="other-info">Other Information*</label>
-                    <textarea id="my-text2"  required name="Other-information" placeholder="Any other information related to car" cols="1" rows="6"></textarea>
+                    <textarea id="my-text2"  required name="description" placeholder="Any other information related to car" cols="1" rows="6"></textarea>
                 <p id="result2"></p>
                 </div>
             </div>

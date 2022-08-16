@@ -226,17 +226,17 @@ input[type="radio"]{
             <hr>
         </div>
         
-        <form>
+        <form action="/webviewIndex/add_price/<%= id %>" method="post" >
             <div class="row">
                 <div class="col">
                     <label for="ad-title">Price*</label>
-                    <textarea id="my-text" required  name="ad" placeholder="price"></textarea>
+                    <textarea id="my-text" required  name="price" placeholder="price"></textarea>
                     <p id="result"></p>
                 </div>
             </div>
             <div class="btn-shadow">
-                <button type="submit" required  value="submit">
-                    <a href="/webviewIndex/location">Next</a></button>
+                <button type="submit" required  >
+                Next</button>
             </div>
         </form>
     </div>

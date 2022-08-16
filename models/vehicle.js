@@ -86,11 +86,18 @@ const vehicleSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    insurance: {
+    insurance_type: {
         type: String,
         required: false
     },
-
+    insurance_valid: {
+        type: String,
+        required: false
+    },
+    transmission: {
+        type: String,
+        required: false
+    },
 
 })
 
