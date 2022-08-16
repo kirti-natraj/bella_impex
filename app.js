@@ -5,7 +5,8 @@ var cookieParser = require('cookie-parser');
 var ejs = require('ejs');
 var logger = require('morgan');
 var session = require('express-session');
-var mongoose = require('mongoose');             //for mongodb
+var mongoose = require('mongoose');    
+var bodyParser = require('body-parser');         //for mongodb
 
 
 var mongoose = require('mongoose');
@@ -19,6 +20,7 @@ conn.on('disconnected',function(){
 })
 conn.on('error', console.error.bind(console, 'connection error:'));
 module.exports = conn;
+
 const indexRouter = require('./routes/index');
 const user_apiRouter = require('./apis/user');
 const category_apiRouter = require('./apis/category');
@@ -75,7 +77,9 @@ app.use('/budget', indexRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
-
+// foor json
+app.use(bodyParser.urlencoded({extended: false}));                       //added for image view
+app.use(bodyParser.json())
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development

@@ -15,7 +15,7 @@ router.get('/',async function (req, res, next) {
     if(data == '') 
     {
        
-        return res.json({response: false, msg:"Data not found"})
+        return res.json({response: false, msg:"Data not found", data: data })
     }    
     else
     {
@@ -27,9 +27,19 @@ router.get('/',async function (req, res, next) {
 });
 
 router.post('/subcategory',async function (req, res, next) {
-    const data = await subcategory_db.find({category_id: req.body.category_id});
-    if(data == '') return res.json({response: false, msg:"Data not found"})
-    else res.json({ response: true , msg: "Data Found",data: data });
+    const cat_id =  req.body.category_id;
+    console.log(cat_id)
+    const data = await subcategory_db.find({category_id: cat_id});
+    if(data == '') 
+    {
+       
+        return res.json({response: false, msg:"Data not found", data: data })
+    }    
+    else
+    {
+        console.log(data)
+        res.json({ response: true , msg: "Data Found", data: data });
+    } 
 });
 
 module.exports = router;

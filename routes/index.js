@@ -7,6 +7,7 @@ var subcategory_db = require('../models/sub_category');
 var properties_db= require('../models/properties');
 var vehicle_db= require('../models/vehicle');
 var product_db = require('../models/products');
+const noti_db = require('../models/noti');
 const brand_db = require('../models/brand');
 const year_db = require('../models/year');
 const budget_db = require('../models/budget');
@@ -145,7 +146,27 @@ router.post('/add_budget_form',  async function(req, res, next) {               
   });
   res.redirect('/budget/');
 });
+/////////////////////////////////////Notifiction
+router.get('/notification',async function(req,res,next){                        //for Category TAble Update
+  const data = await user_db.find().exec();
+  res.render('notification', {title:'Notification', data : data});
 
+});
+router.get('/notification_form/:id',async function(req,res,next){                        //for Category TAble Update
+  const data = await user_db.findById(req.params.id);
+  console.log(data.user_name); 
+  res.render('noti_form',{title:'Add Notification' , data: data});
+
+});
+router.post('/add_notification_form/:id',  async function(req, res, next) {                          //category add
+
+  await noti_db.create({
+      title: req.body.title,
+      msg: req.body.description,
+      user: req.params.id
+  });
+  res.redirect('/notification/');
+});
 /////////////////////////////////////index
 router.get('/index',async function(req,res,next){     
   const totalUser = await user_db.count();    
@@ -188,6 +209,10 @@ router.post('/add_category_form', upload.fields([{name:'image', maxCount: 1}]), 
       category_name: req.body.category_name,
       image: req.files.image[0].filename
   });
+  await noti_db.create({
+    title: 'New Course Added',
+    msg: 'Course'+req.body.category_name+'added'
+  })
   res.redirect('/category/');
 
 });

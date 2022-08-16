@@ -6,17 +6,27 @@
     .btn1 {
   background-color: #ddd;
   border: none;
-  border-radius: 5%;
+  border-radius: 5px;
   color: black;
-  padding: 12px 28px;
+  padding: 10px 26px;
   text-align: center;
   font-size: 12px;
   margin: 3px 1px;
   transition: 0.3s;
 }
-
+.btn2 {
+  background-color: #ddd;
+  border: none;
+  border-radius: 5px;
+  color: rgb(172, 29, 29);
+  padding: 10px 26px;
+  text-align: center;
+  font-size: 12px;
+  margin: 3px 1px;
+  transition: 0.3s;
+}
 .btn1:hover {
-  background-color: #3e57c8;
+  background-color: #3e5f8e;
   color: white;
 }
   </style>
@@ -42,17 +52,17 @@
            </div>
            <div class="col-2">
             <div class="card-header pb-0">
-           <h6>
-            <a class="btn1" id="action" style="display: none;" onchange="AnimationEffect">
+          
+            <a class="btn1" id="action" style="display: none;" >
               Update
            </a>
           
-           </h6>
+           
            </div>
             </div>
             <div class="col-2">
               <div class="card-header pb-0">
-                <a class="btn1" id="delete" style="display: none;" onchange="AnimationEffect">
+                <a class="btn1" id="delete" style="display: none;">
                   Delete
                </a>
               </div>
@@ -127,9 +137,9 @@
                        
 
                                           <% if(data[i].status === true ){ %>
-                                            <div class="label text-dark onclick="active()">Activate</div>
+                                            <div class="label text-secondary" onclick="active()">Active</div>
                                           <% }else{ %>
-                                            <div class="label text-dangeronclick="active()">Deactive</div>
+                                            <div class="label text-danger" onclick="active()">Deactive</div>
                                           <% } %>
                   
                   
@@ -179,11 +189,16 @@
     y.style.display = 'block';
   } 
 
-
+  document.getElementById("subcategory").onchange = function()
+  {
+    document.getElementById("action").class = "btn2";
+    document.getElementById("delete").class = "btn2";
+    
+  }
   document.getElementById("action").onclick = function()
   {
     location.href='/update_subcat/'+ id;
-    AnimationEffect;
+    
     
   }
   document.getElementById("delete").onclick = function()
