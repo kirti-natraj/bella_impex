@@ -152,6 +152,12 @@ router.get('/notification',async function(req,res,next){                        
   res.render('notification', {title:'Notification', data : data});
 
 });
+router.get('/notification_list',async function(req,res,next){                        //for Category TAble Update
+  const data = await noti_db.find().exec();
+  const user_data = await user_db.find().exec();
+  res.render('noti_list', {title:'Notification', data : data, user_data: user_data, moment:moment});
+
+});
 router.get('/notification_form/:id',async function(req,res,next){                        //for Category TAble Update
   const data = await user_db.findById(req.params.id);
   console.log(data.user_name); 
@@ -162,10 +168,10 @@ router.post('/add_notification_form/:id',  async function(req, res, next) {     
 
   await noti_db.create({
       title: req.body.title,
-      msg: req.body.description,
+      msg: req.body.msg,
       user: req.params.id
   });
-  res.redirect('/notification/');
+  res.redirect('/notification_list/');
 });
 /////////////////////////////////////index
 router.get('/index',async function(req,res,next){     

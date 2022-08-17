@@ -231,52 +231,13 @@ input[type="radio"]{
                 <div class="col">
                     <label for="brand-details">Select District*</label>
                     <div class="brand-container">
-                        <select name="brand-names" id="dropdown-brand">
-                            <option value="Mahendra">Amreli</option>
-                            <option value="Maruti Suzuki">anand</option>
-                            <option value="Hyundai">aravali</option>
-                            <option value="TATA">khargone</option>
-                            <option value="Volkswagen">banaskantha</option>
-                            <option value="Honda">bharush</option>
-                            <option value="Audi">bhavnagar</option>
-                            <option value="Ford">jamnagar</option>
-                            <option value="Skoda">khargone</option>
-                            <option value="Nisaan">khandwa</option>
-                            <option value="Renault">indore</option>
-                            <option value="Datsum">khargone</option>
-                            <option value="Mercedes">ujjain</option>
-                            <option value="Porche">nimach</option>
-                            <option value="BMW">Betul</option>
-                            <option value="Jagur">sanawad</option>
-                            <option value="Kia">bhanunagar</option>
-                            <option value="Toyota">tikamgadh</option>
-                            <option value="Other">Other</option>
-                        </select>
+                        <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" required></select>
+                       
                     </div>
                     <div class="col">
                         <label for="brand-details">Select City*</label>
                         <div class="brand-container">
-                            <select name="brand-names" id="dropdown-brand">
-                                <option value="Mahendra">Amreli</option>
-                                <option value="Maruti Suzuki">anand</option>
-                                <option value="Hyundai">aravali</option>
-                                <option value="TATA">khargone</option>
-                                <option value="Volkswagen">banaskantha</option>
-                                <option value="Honda">bharush</option>
-                                <option value="Audi">bhavnagar</option>
-                                <option value="Ford">jamnagar</option>
-                                <option value="Skoda">khargone</option>
-                                <option value="Nisaan">khandwa</option>
-                                <option value="Renault">indore</option>
-                                <option value="Datsum">khargone</option>
-                                <option value="Mercedes">ujjain</option>
-                                <option value="Porche">nimach</option>
-                                <option value="BMW">Betul</option>
-                                <option value="Jagur">sanawad</option>
-                                <option value="Kia">bhanunagar</option>
-                                <option value="Toyota">tikamgadh</option>
-                                <option value="Other">Other</option>
-                            </select>
+                            <select id ="state" name="city" class="form-control"  required></select>
                         </div>
                     </div>
     
@@ -291,5 +252,7 @@ input[type="radio"]{
         </form>
     </div>
     <script src="script.js"></script>
+    <script src="/public/assets/js/cities.js"></script>
+    <script language="javascript">print_state("sts");</script>
 </body>
 </html>

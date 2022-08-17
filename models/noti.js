@@ -15,6 +15,11 @@ const notiSchema = new mongoose.Schema({
 
     },
     msg:{
+        type: String,
+        required: false,
+
+    },
+    date:{
         type: Date,
         required: false,
        default: Date.now()

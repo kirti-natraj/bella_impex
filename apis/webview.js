@@ -36,7 +36,7 @@ router.get('/location', function (req, res) {
 
 });
 
-router.post('/add_vehicle',async function(req, res, next) {                          //category add
+router.post('/add_vehicle', async function(req, res, next) {                          //category add
 
     const data = await vehicle_db.create({
       
@@ -61,14 +61,14 @@ router.post('/add_vehicle',async function(req, res, next) {                     
       price: req.body.price
   
     });
-    res.render('web_page/drop',{id: req.params.id});
+    res.render('web_page/location',{id: req.params.id});
   });
   router.post('/add_drop/:id',uploadVehicle.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
-// console.log(req.files);
-//     await vehicle_db.findByIdAndUpdate(req.params.id, {
-//       image: req.files.image
+console.log(req.files);
+    await vehicle_db.findByIdAndUpdate(req.params.id, {
+      image: req.files
   
-//     });
+    });
     res.render('web_page/location');
   });
   
