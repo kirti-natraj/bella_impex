@@ -59,11 +59,14 @@ router.post('/addProduct', uploadProduct.fields([{name:'image', maxCount: 5}]), 
     })
   });
   
-  router.post('/getVehicleForm',async function (req, res, next) {
-    const data = "https://bellaimpex.herokuapp.com/webviewIndex"
+  router.post('/getWebviewData',async function (req, res, next) {
+
+   // if(req.body.subcategory_id == '')
     
+        const data = "https://bellaimpex.herokuapp.com/webviewIndex";
+   
        
-        return res.json({response: false, msg:"Page found", data: data })
+        return res.json({response: true, msg:"Page found", data: data })
    
 });
 

@@ -50,14 +50,8 @@
                         <div class="form-group">
                           <label for="example-text-input" class="form-control-label">Select Subcategory</label>
                           <select class="form-control" name="subcategory" id="cars">
-                            <% if(sub_data.length){
-                              for(var i = 0; i< data.length; i++) {%>  
-                        if(sub_data[i].category_id.equals(this.value)){ %>
-                          <option class="border-radius-lg list-group-item" value="<%= data[i]._id %>"><%= data[i].category_name %></option>
-                          <% } %> 
-                          <% } %> 
-                          <% } %> 
-
+                            <option class="border-radius-lg list-group-item" value="<%= data[i]._id %>"><%= data[i].category_name %></option>
+                           
                           </select>
                         </div>
                       </div>

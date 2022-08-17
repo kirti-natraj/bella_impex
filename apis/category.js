@@ -27,7 +27,7 @@ router.get('/',async function (req, res, next) {
 });
 
 router.post('/subcategory',async function (req, res, next) {
-    const cat_id =  req.body.category_id;
+    const cat_id =  req.category_id;
     console.log(cat_id)
     const data = await subcategory_db.find({category_id: cat_id});
     if(data == '') 

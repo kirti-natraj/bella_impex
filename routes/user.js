@@ -22,12 +22,7 @@ router.get('/user',async function(req,res,next){                        //for Us
   
   
   });
-  router.get('/test',async function(req,res,next){                        //for Category TAble Update
- 
-    res.render('test',{title:'Tset'});
-  
-  });
-  
+
   
 
   
