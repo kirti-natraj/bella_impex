@@ -4,8 +4,15 @@ const vehicle_db = require('../models/vehicle');
 const brand_db = require('../models/brand');
 const year_db = require('../models/year');
 const budget_db = require('../models/budget');
+const moment = require('moment');
+const aws = require('aws-sdk');
 const multer = require('multer');
+const multerS3 = require('multer-s3');
+const path = require('path');
+const s3 = new aws.S3({ accessKeyId: "***", secretAccessKey: "***" });
 const cors = require('cors')
+const app = express();
+app.use(cors());
 const storageVehicle = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/assets/images/vehicle/');
@@ -36,8 +43,8 @@ router.get('/location', function (req, res) {
 
 });
 
-router.post('/add_vehicle', async function(req, res, next) {                          //category add
-
+router.post('/add_vehicle',uploadVehicle.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
+console.log(req.file);
     const data = await vehicle_db.create({
       
         subcategory: 'Cars',
@@ -61,15 +68,24 @@ router.post('/add_vehicle', async function(req, res, next) {                    
       price: req.body.price
   
     });
-    res.render('web_page/location',{id: req.params.id});
+    res.render('web_page/drop',{id: req.params.id});
   });
-  router.post('/add_drop/:id',uploadVehicle.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
-console.log(req.files);
+  router.post('/add_drop/:id',uploadVehicle.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
+  
     await vehicle_db.findByIdAndUpdate(req.params.id, {
       image: req.files
   
     });
-    res.render('web_page/location');
+    res.render('web_page/location',{id: req.params.id});
+  });
+  router.post('/add_location/:id',async function(req, res, next) {                          //category add
+
+    await vehicle_db.findByIdAndUpdate(req.params.id, {
+      state: req.body.stt,
+      city: req.body.city,
+  
+    });
+    res.redirect('/vehicle/');
   });
   
 
