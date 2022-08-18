@@ -25,9 +25,9 @@
             <div class="col-2">
             <div class="card-header pb-0">
             <h6>
-            <a href="/notification" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Back</button>
-              </a>
+                <a href="/notification_form" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                    <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Send Notification</button>
+                  </a>
                 <!-- <a href="/add_category" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none">
                     <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Add Category</button>
                 </a> -->
@@ -43,7 +43,7 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">S.no.</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Title</th>
                       <th class="text-uppercase text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">Description</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sent to</th>
+                   
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sent on</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
@@ -78,24 +78,7 @@
                                       </div>
                                 </td>
                                
-                                <td class="align-middle text-center">
-                                   
-                                   
-                                                    <% 
-                                                    for(var j = 0; j< user_data.length; j++) {%>  
-                                                     
-                                                        <% var count =0 %>    
-                                                      
-                                                         
-                                                  <% if(user_data[j]._id.equals(data[i].user)){ %>  
-                                                    <span class="text-secondary text-xs font-weight-bold"><%= user_data[j].user_name %></span>
-                                                            
-                                                      <% count = count +1 %>
-                                                      <% }%>
-                                                  
-                                                      <% } %>
-                                 
-                                </td>
+                               
                                 <td class="align-middle text-center">
                                     <span class="text-secondary text-xs font-weight-bold"><%= moment(data[i].date).format('MMMM Do YYYY') %></span>
                                   </td>

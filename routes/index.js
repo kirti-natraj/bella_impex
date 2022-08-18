@@ -11,6 +11,8 @@ const noti_db = require('../models/noti');
 const brand_db = require('../models/brand');
 const year_db = require('../models/year');
 const budget_db = require('../models/budget');
+const banner_db = require('../models/banner');
+const alert = require('alert');
 
 
 const moment = require('moment');
@@ -35,7 +37,7 @@ const upload = multer({storage: storage});
 
 const storageVehicle = multer.diskStorage({
   destination: function (req, file, cb) {
-      cb(null, 'public/assets/images/vehicle/');
+      cb(null, 'public/assets/images/vehicles/');
   },
   filename: function (req, file, cb) {
       cb(null, Date.now()+ '__' + file.originalname);
@@ -72,6 +74,16 @@ const storageBrand = multer.diskStorage({
   }
 });
 const uploadBrand = multer({storage: storageBrand});
+
+const storageBanner = multer.diskStorage({
+  destination: function (req, file, cb) {
+      cb(null, 'public/assets/images/banner/');
+  },
+  filename: function (req, file, cb) {
+      cb(null, Date.now()+ '__' + file.originalname);
+  }
+});
+const uploadBanner = multer({storage: storageBanner});
 /* GET home page. */
 router.get('/',  function(req, res, next) {    
               //for login Page
@@ -147,32 +159,47 @@ router.post('/add_budget_form',  async function(req, res, next) {               
   res.redirect('/budget/');
 });
 /////////////////////////////////////Notifiction
-router.get('/notification',async function(req,res,next){                        //for Category TAble Update
-  const data = await user_db.find().exec();
-  res.render('notification', {title:'Notification', data : data});
+router.get('/notification',async function(req,res,next){  
+  const data = await noti_db.find().exec();                      //for Category TAble Update
+  res.render('noti_list', {title:'Notification', data : data, moment:moment});
 
 });
 router.get('/notification_list',async function(req,res,next){                        //for Category TAble Update
   const data = await noti_db.find().exec();
   const user_data = await user_db.find().exec();
-  res.render('noti_list', {title:'Notification', data : data, user_data: user_data, moment:moment});
+  res.render('noti_list', {title:'Notification', data : data,  moment:moment});
 
 });
-router.get('/notification_form/:id',async function(req,res,next){                        //for Category TAble Update
-  const data = await user_db.findById(req.params.id);
-  console.log(data.user_name); 
-  res.render('noti_form',{title:'Add Notification' , data: data});
+router.get('/notification_form',async function(req,res,next){                        //for Category TAble Update
+ 
+  res.render('noti_form',{title:'Add Notification'});
 
 });
-router.post('/add_notification_form/:id',  async function(req, res, next) {                          //category add
+router.post('/add_notification_form',  async function(req, res, next) {                          //category add
 
   await noti_db.create({
       title: req.body.title,
-      msg: req.body.msg,
-      user: req.params.id
+      msg: req.body.msg
   });
   res.redirect('/notification_list/');
 });
+/////////////////////////////////////Banner
+router.get('/banner',async function(req,res,next){                        //for Category TAble Update
+ 
+  res.render('banner',{title:'Add Notification'});
+
+});
+
+router.post('/add_banner', uploadBanner.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
+
+  await banner_db.create({
+     
+      image: req.files.image[0].filename
+  });
+  alert('Added Successfully');
+  res.redirect('/banner/');
+});
+
 /////////////////////////////////////index
 router.get('/index',async function(req,res,next){     
   const totalUser = await user_db.count();    

@@ -38,7 +38,7 @@ const vehicleSchema = new mongoose.Schema({
         required: false
     },
     date: {
-        type: String,
+        type: Date,
         required: false,
         default: Date.now()
 

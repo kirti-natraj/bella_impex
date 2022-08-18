@@ -15,7 +15,7 @@ const app = express();
 app.use(cors());
 const storageVehicle = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'public/assets/images/vehicle/');
+        cb(null, 'public/assets/images/vehicles/');
     },
     filename: function (req, file, cb) {
         cb(null, Date.now()+ '__' + file.originalname);
@@ -44,11 +44,12 @@ router.get('/location', function (req, res) {
 });
 
 router.post('/add_vehicle',uploadVehicle.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
-console.log(req.file);
+console.log(req.files.image);
     const data = await vehicle_db.create({
       
         subcategory: 'Cars',
         description: req.body.description,
+        image: req.files.image,
         title:req.body.title,
         km:req.body.km,
         year:req.body.year,

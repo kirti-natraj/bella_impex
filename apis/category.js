@@ -5,6 +5,7 @@ var admin_db = require('../models/adminlogin');
 var user_db = require('../models/user');
 var category_db = require('../models/category');
 var subcategory_db = require('../models/sub_category');
+var banner_db= require('../models/banner');
 var properties_db= require('../models/properties');
 var vehicle_db= require('../models/vehicle');
 var product_db = require('../models/products');
@@ -41,5 +42,17 @@ router.post('/subcategory',async function (req, res, next) {
         res.json({ response: true , msg: "Data Found", data: data });
     } 
 });
-
+ router.get('/getBanner', async function(req, res, next){
+     const data = await banner_db.find().select('image');
+     if(data == '') 
+     {
+        
+         return res.json({response: false, msg:"Data not found", data: data })
+     }    
+     else
+     {
+         console.log(data)
+         res.json({ response: true , msg: "Data Found", data: data});
+     } 
+ });
 module.exports = router;

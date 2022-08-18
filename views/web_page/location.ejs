@@ -216,7 +216,12 @@ input[type="radio"]{
     color: black;
     border-color: black;
 }
-
+/* Set the size of the div element that contains the map */
+#map-canvas {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
 </style>
 <body>
     <div class="container">
@@ -241,8 +246,13 @@ input[type="radio"]{
                         </div>
                     </div>
     
-                    <input type="checkbox"> <label for="Location"> Location</label>
-                    
+                    <label for="Location"> Location* </label>
+                    <input
+                    type="text"
+                    placeholder="Enter your address"
+                    id="autocomplete"
+                />
+
                 </div>
             </div>
             <div class="btn-shadow">
@@ -252,6 +262,14 @@ input[type="radio"]{
         </form>
     </div>
     <script src="script.js"></script>
+    <script>
+  new google.maps.places.Autocomplete(
+   document.getElementById("autocomplete"), {
+      bounds: new google.maps.LatLngBounds(45.4215296, -75.6971931)
+   }
+)
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <script >
         var state_arr = new Array("Andaman & Nicobar", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chandigarh", "Chhattisgarh", "Dadra & Nagar Haveli", "Daman & Diu", "Delhi", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu & Kashmir", "Jharkhand", "Karnataka", "Kerala", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Orissa", "Pondicherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Tripura", "Uttar Pradesh", "Uttaranchal", "West Bengal");
 

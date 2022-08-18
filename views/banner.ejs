@@ -21,7 +21,7 @@
                 <div class="col-auto my-auto">
                   <div class="h-100">
                     <h5 class="mb-1">
-                    Send Notification
+                   Add Category
                     </h5>
                     
                   </div>
@@ -33,30 +33,25 @@
           <div class="container-fluid py-4">
             <div class="row">
               <div class="col-md-12">
-                
-                <form action="/add_notification_form %>"  method="post" >
-                  <div class="card-body">
-                    <div class="row">
-                        <div class="card">
-                            <div class="card-header pb-0">
-                              <div class="d-flex align-items-center">
-                                <p class="mb-0">Add Notification Details</p>
-                               
-                              </div>
-                            </div>  
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Enter Title of notification</label>
-                          <input class="form-control" type="text" name="title" >
-                        </div>
-                      </div>
+                <div class="card">
+                  <div class="card-header pb-0">
+                    <div class="d-flex align-items-center">
+                      <p class="mb-0">Add Banner Details</p>
                      
-                      <div class="col-md-6">
+                    </div>
+                  </div>
+                <form action="/add_banner"  method="post" enctype="multipart/form-data" >
+                  <div class="card-body">
+                    <p class="text-uppercase text-sm">Enter Details</p>
+                    <div class="row">
+                      
+                      <div class="col-md-4">
                         <div class="form-group">
-                          <label for="example-text-input" class="form-control-label">Enter Description</label>
-                          <input class="form-control" type="text" name="msg" >
+                          <label for="example-text-input" class="form-control-label">Banner Image</label>
+                          <input class="form-control" type="file" name="image">
                         </div>
                       </div>
+                      
                       
                     </div>
                     
@@ -64,9 +59,9 @@
                    <div class="row">
                     <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
                         <div class="d-flex justify-content-between">
-                          <a href="/notification/" class="btn btn-sm btn-info mb-0 d-none d-lg-block">Cancel</a>
+                          <a href="/category/" class="btn btn-sm btn-info mb-0 d-none d-lg-block">Cancel</a>
                           <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-block d-lg-none"><i class="ni ni-collection"></i></a>
-                          <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Send</button>
+                          <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Add</button>
                           <a href="javascript:;" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none"><i class="ni ni-email-83"></i></a>
                         </div>
                     </div>

@@ -63,7 +63,11 @@
                         </td>
                         <td>
                           <div>
-                              <img src="../assets/images/vehicle/<%= data[i].image %>" class=" avatar-lg me-3" alt="user1">
+                             <% if(data[i].image.length){
+                            for(var j = 0; j< data[i].image.length; j++) {%>  
+                          <img src="../assets/images/vehicles/<%= data[i].image[j].filename %>" class=" avatar-lg me-3" alt="user1">
+                          <% } %> 
+                          <% } %> 
                             </div>
                         </td> 
                       <td>
@@ -81,7 +85,7 @@
                       </td>
                       
                       <td class="align-middle text-center text-sm">
-                        <p class="text-secondary text-xs font-weight-bold"><%= moment(data[i].date).format('dd mm yyyy') %></p>
+                        <p class="text-secondary text-xs font-weight-bold"><%= moment(data[i].date).format('MMMM Do YYYY') %></p>
                       </td>
                       
                  
