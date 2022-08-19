@@ -9,6 +9,7 @@ var banner_db= require('../models/banner');
 var properties_db= require('../models/properties');
 var vehicle_db= require('../models/vehicle');
 var product_db = require('../models/products');
+
 const moment = require('moment');var express = require('express');
 
 router.get('/',async function (req, res, next) {

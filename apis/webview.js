@@ -22,6 +22,7 @@ const storageVehicle = multer.diskStorage({
     }
   });
   const uploadVehicle= multer({storage: storageVehicle});
+  
 router.get('/', async function (req, res) {
     const brand = await brand_db.find().exec();
     res.render('web_page/index',{brand:brand});
