@@ -72,14 +72,16 @@ body{
 <body>
   <div class="drag-area">
     <form action="/webviewIndex/add_drop/<%= id %>" method="post" enctype="multipart/form-data" >
-      <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
-      <header>Drag & Drop to Upload File</header>
-      <span>OR</span>
-      <button type="button">Browse File</button>
-      <input type="file" multiple name="image" max="5" hidden>
-      <div class="btn-shadow">
-          <button style="padding:10px; margin-top: 10px;" type="submit" required >
-            Next</button>
+      <div class="drag-area">
+        <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+        <header>Drag & Drop to Upload File</header>
+        <span>OR</span>
+        <button>Browse File</button>
+        <input type="file" multiple name="image" max="5" accept="image/*" hidden>
+        <div class="btn-shadow">
+            <button style="padding:10px; margin-top: 10px;" type="submit" required  >
+                <a href=""></a>Next</button>
+        </div>
       </div>
     </form>
    
