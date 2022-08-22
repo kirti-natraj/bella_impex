@@ -64,22 +64,25 @@ console.log(req.files.image);
     });
     res.render('web_page/price',{id: data._id});
   });
+  
   router.post('/add_price/:id',async function(req, res, next) {                          //category add
 
     await vehicle_db.findByIdAndUpdate(req.params.id, {
       price: req.body.price
   
     });
+    res.render('web_page/drop',{id: req.params.id});
+  });
+
+   router.post('/add_drop/:id',uploadVehicle.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
+  
+    await vehicle_db.findByIdAndUpdate(req.params.id, {
+  image: req.files
+  
+   });
     res.render('web_page/location',{id: req.params.id});
   });
-  // router.post('/add_drop/:id',uploadVehicle.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
-  
-  //   await vehicle_db.findByIdAndUpdate(req.params.id, {
-  //     image: req.files
-  
-  //   });
-  //   res.render('web_page/location',{id: req.params.id});
-  // });
+
   router.post('/add_location/:id',async function(req, res, next) {                          //category add
 
     await vehicle_db.findByIdAndUpdate(req.params.id, {
