@@ -44,13 +44,12 @@ router.get('/location', function (req, res) {
 
 });
 
-router.post('/add_vehicle',uploadVehicle.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
-console.log(req.files.image);
+router.post('/add_vehicle', async function(req, res, next) {                          //category add
+
     const data = await vehicle_db.create({
       
         subcategory: 'Cars',
         description: req.body.description,
-        image: req.files.image,
         title:req.body.title,
         km:req.body.km,
         year:req.body.year,
@@ -73,9 +72,9 @@ console.log(req.files.image);
     res.render('web_page/drop',{id: req.params.id});
   });
   router.post('/add_drop/:id',uploadVehicle.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
-  
+  console.log(req.files.image);
     await vehicle_db.findByIdAndUpdate(req.params.id, {
-      image: req.files
+      image: req.files.image,
   
     });
     res.render('web_page/location',{id: req.params.id});
