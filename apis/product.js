@@ -58,7 +58,27 @@ router.post('/addProduct', uploadProduct.fields([{name:'image', maxCount: 5}]), 
         })
     })
   });
-  
+ /////////// getProduct
+ router.post('/getProduct',async function (req, res, next) {
+
+    const sub_id =  req.body.subcategory_id;
+    console.log(sub_id)
+    const data = await product_db.find({subcategory: sub_id});
+    if(data == '') 
+    {
+       
+        return res.json({response: false, msg:"Data not found", data: data })
+    }    
+    else
+    {
+        console.log(data)
+        res.json({ response: true , msg: "Data Found", data: data });
+    } 
+   
+
+}); 
+
+
   router.get('/getWebviewData',async function (req, res, next) {
 
         const data = "https://bellaimpex.herokuapp.com/webviewIndex";

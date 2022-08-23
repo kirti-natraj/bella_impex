@@ -184,9 +184,16 @@ router.post('/add_notification_form',  async function(req, res, next) {         
   res.redirect('/notification_list/');
 });
 /////////////////////////////////////Banner
+router.get('/banner_list',async function(req,res,next){                        //for UserTable Page
+  const data = await banner_db.find().exec();
+ 
+  res.render('banner_list',{title:'Banner List',data : data, moment: moment});
+
+
+});
 router.get('/banner',async function(req,res,next){                        //for Category TAble Update
  
-  res.render('banner',{title:'Add Notification'});
+  res.render('banner',{title:'Add Banner'});
 
 });
 
@@ -197,7 +204,7 @@ router.post('/add_banner', uploadBanner.fields([{name:'image', maxCount: 1}]), a
       image: req.files.image[0].filename
   });
   alert('Added Successfully');
-  res.redirect('/banner/');
+  res.redirect('/banner_list/');
 });
 
 /////////////////////////////////////index
@@ -581,6 +588,13 @@ router.get('/delete_budget/:id', async function(req,res,next ){
   await budget_db.deleteOne({ _id:id});
 
   res.redirect('/budget/');
+
+});
+router.get('/delete_product/:id', async function(req,res,next ){
+  let id= req.params.id;
+  await product_db.deleteOne({ _id:id});
+
+  res.redirect('/products/');
 
 });
 module.exports = router;
