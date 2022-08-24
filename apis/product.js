@@ -77,7 +77,25 @@ router.post('/addProduct', uploadProduct.fields([{name:'image', maxCount: 5}]), 
    
 
 }); 
+//////////////////////////////////////getVehicle
+router.post('/getVehicle',async function (req, res, next) {
 
+    const cat =  req.body.category;
+   
+    const data = await vehicle_db.find({category: cat});
+    if(data == '') 
+    {
+       
+        return res.json({response: false, msg:"Data not found", data: data })
+    }    
+    else
+    {
+        console.log(data)
+        res.json({ response: true , msg: "Data Found", data: data });
+    } 
+   
+
+}); 
 
   router.get('/getWebviewData',async function (req, res, next) {
 
