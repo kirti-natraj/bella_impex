@@ -8,42 +8,69 @@ var subcategory_db = require('../models/sub_category');
 var properties_db= require('../models/properties');
 var vehicle_db= require('../models/vehicle');
 var product_db = require('../models/products');
+var otpGenerator = require('otp-generator');
+var otp_db = require('../models/otp');
 const moment = require('moment');
 
+function AddMinutesToDate(date, minutes) {
+    return new Date(date.getTime() + minutes*60000);
+}
+router.post('/login',async function (req, res) {
 
-router.post('/login', function (req, res) {
+    const otp = otpGenerator.generate(6, { digits:true, upperCaseAlphabets:false, specialChars: false, lowerCaseAlphabets:false});
+    const now = new Date();
+    const expiration_time = AddMinutesToDate(now,10);
 
-    const user = user_db.findOne({
-        'email': req.body.email,
-        'password': req.body.password
-    }, function (err, user) {
-        if (user == '') {
-            return res.json({isAuth: false, message: ' Auth failed ,email not found'});
+    const data = await user_db.findOne({mobile: req.body.mobile });
+    console.log(data);
+    if(data == null) 
+    {
+        res.json({ response: false , msg: "User not exist"});
+      
+    }
+    else 
+    {
+        const geOtp = new otp_db({
+            "otp": otp,
+             "expiration_time": expiration_time,
+             "mobile_no": req.body.mobile
+         });
+        res.json({response: true, msg:"OTP Sent Successfully!"})
+    }
+   
+    
+   
+    
+
+
+});
+
+
+router.post('/checkUserExistApi',async function (req, res, next) {
+    const data = await user_db.findOne({email: req.body.user_data });
+    console.log(data);
+    if(data == null) 
+    {
+        res.json({ response: false , msg: "User not exist"});
+        const data = await user_db.findOne({user_name: req.body.user_data });
+    }
+  
+    else if(data == null)
+    {
+        res.json({ response: false , msg: "User not exist"});
+    }
+    else res.json({response: true, msg:"User exist"})
+});
+
+router.post('/getUserDataApi',async function (req, res, next) {
+    user_db.findById(req.body.user_id)
+    .then(result => {
+        if (!result) return res.json({response: false, msg: "User not exist"});
+        else {
+            result.fcmToken = req.body.fcmToken;
+            return res.json({response: true, msg:"User exist", data: result});
         }
-        else
-        {
-            res.json({response: true, data: user})
-               console.log("It matches!") 
-        }
-       
-        // bcrypt.compare(req.body.password, user.password, (err, result) => {
-        //     if (result) {
-        //         user.fcmToken = req.body.fcmToken;
-        //         res.json({response: true, data: user})
-        //         console.log("It matches!")
-        //     } else {
-        //         res.json({response: false, postMessage:"Incorrect Password"})
-        //         console.log("Invalid password!");
-        //     }
-
-        // });
     })
-
-
 });
-router.post('/getProfile',async function (req, res, next) {
-    const data = await user_db.findById(req.body.user_id);
-    if(data == '') return res.json({response: false, msg:"Data not found"})
-    else res.json({ response: true , msg: "Data Found", data: data });
-});
+
 module.exports = router;

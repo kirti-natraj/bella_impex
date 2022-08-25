@@ -79,7 +79,7 @@ app.use(function(req, res, next) {
 });
 // foor json
 app.use(bodyParser.urlencoded({extended: false}));                       //added for image view
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
