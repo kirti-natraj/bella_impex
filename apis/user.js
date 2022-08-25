@@ -35,17 +35,27 @@ router.post('/login',async function (req, res) {
              "expiration_time": expiration_time,
              "mobile_no": req.body.mobile
          });
-        res.json({response: true, msg:"OTP Sent Successfully!"})
+        res.json({response: true, msg:"OTP Sent Successfully!", data: otp})
     }
-   
-    
-   
-    
-
-
 });
 
+router.post('/verify_otp', async function(req, res){
+    
+    const data = await otp_db.findOne({otp: req.body.otp });
+    console.log(data);
+    if(data == null) 
+    {
+        res.json({ response: false , msg: "User not exist"});
+       
+    }
+    else
+    {
+        res.json({response: true, msg:"OTP Verified!"})
+        otp_db.deleteOne({otp: req.body.otp});
+    }
 
+
+ });
 router.post('/checkUserExistApi',async function (req, res, next) {
     const data = await user_db.findOne({email: req.body.user_data });
     console.log(data);
