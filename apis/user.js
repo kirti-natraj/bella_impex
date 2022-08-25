@@ -31,10 +31,17 @@ router.post('/login',async function (req, res) {
     else 
     {
         const geOtp = new otp_db({
-            "otp": otp,
-             "expiration_time": expiration_time,
-             "mobile_no": req.body.mobile
-         });
+            'otp': otp,
+            'expiration_time': expiration_time,
+            'mobile_no': req.body.mobile_no
+        });
+        geOtp.save().then(result => {
+           console.log(result);
+            }).catch(err => {
+               console.log(err)
+                })
+
+            
         res.json({response: true, msg:"OTP Sent Successfully!", data: otp})
     }
 });
@@ -50,8 +57,9 @@ router.post('/verify_otp', async function(req, res){
     }
     else
     {
+        await otp_db.deleteOne({otp: req.body.otp});
         res.json({response: true, msg:"OTP Verified!"})
-        otp_db.deleteOne({otp: req.body.otp});
+       
     }
 
 
@@ -61,15 +69,17 @@ router.post('/checkUserExistApi',async function (req, res, next) {
     console.log(data);
     if(data == null) 
     {
-        res.json({ response: false , msg: "User not exist"});
         const data = await user_db.findOne({user_name: req.body.user_data });
-    }
-  
-    else if(data == null)
-    {
-        res.json({ response: false , msg: "User not exist"});
+          
+ if(data == null)
+ {
+     res.json({ response: false , msg: "User not exist"});
+ }
+ else res.json({response: true, msg:"User exist"})
     }
     else res.json({response: true, msg:"User exist"})
+
+
 });
 
 router.post('/getUserDataApi',async function (req, res, next) {
