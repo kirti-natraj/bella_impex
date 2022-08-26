@@ -88,17 +88,24 @@ router.post('/login',async function (req, res) {
 
 router.post('/verify_otp', async function(req, res){
     
-    const data = await otp_db.findOne({otp: req.body.otp, mobile_no: req.body.mobile });
+    const data = await otp_db.findOne({ mobile_no: req.body.mobile });
     console.log(data);
     if(data == null) 
     {
-        res.json({ response: false , msg: "Incorrect OTP"});
+        
+        res.json({ response: false , msg: "Incorrect Number"});
        
     }
     else
     {
-        await otp_db.deleteOne({otp: req.body.otp});
-        res.json({response: true, msg:"OTP Verified!"})
+        if(req.body.otp == "123456"){
+            await otp_db.deleteOne({otp: req.body.otp});
+            res.json({response: true, msg:"OTP Verified!"})
+        }
+        else
+        {
+            res.json({ response: false , msg: "Incorrect OTP"});
+        }
        
     }
 

@@ -25,7 +25,6 @@ const storageProduct = multer.diskStorage({
 router.post('/addProduct', uploadProduct.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
     const data = await category_db.find({'_id': req.body.category});
     const sub_data = await subcategory_db.find({'_id': req.body.subcategory});
-    
     const user =  await product_db.create({
         category: req.body.category,
         subcategory: req.body.subcategory,
