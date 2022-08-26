@@ -324,7 +324,7 @@ input[type="radio"]{
                     <textarea id="my-text" required  name="title" placeholder="Heading of your Ad" id="" cols="68" rows="1"></textarea>
                     <p id="result"></p>
                     <label for="ad-title">Select Image*</label>
-                    <input type="file" name="image" multiple max="5" placeholder="Heading of your Ad" cols="68" rows="1" ></textarea>
+                    <input type="file" name="image" id="inputOne" placeholder="Heading of your Ad" cols="68" rows="1" multiple max="5">
                     <p id="result"></p>
                 </div>
                 
@@ -369,6 +369,11 @@ myText.addEventListener("input", function(){
         result2.style.color = "#ff2851";
     }
 });
+
+getElementById("imageOne").onclick = ()=>{
+  getElementById("inputeOne").click(); //if user click on the button then the input also clicked
+}
+
     </script>
 </body>
 </html>
