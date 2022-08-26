@@ -21,29 +21,69 @@ router.post('/login',async function (req, res) {
     const now = new Date();
     const expiration_time = AddMinutesToDate(now,10);
 
-    const data = await user_db.findOne({mobile: req.body.mobile });
-    console.log(data);
-    if(data == null) 
+    if(req.body.loginType === 'Mobile')
     {
-        res.json({ response: false , msg: "User not exist"});
-      
-    }
-    else 
-    {
-        const geOtp = new otp_db({
-            'otp': otp,
-            'expiration_time': expiration_time,
-            'mobile_no': req.body.mobile_no
-        });
-        geOtp.save().then(result => {
-           console.log(result);
-            }).catch(err => {
-               console.log(err)
-                })
+        const data = await user_db.findOne({mobile: req.body.user_name });
+        console.log(data);
+        if(data == null) 
+        {
+            const geOtp = new otp_db({
+                'otp': otp,
+                'expiration_time': expiration_time,
+                'mobile_no': req.body.user_name
+            });
+            geOtp.save().then(result => {
+               console.log(result);
+                }).catch(err => {
+                   console.log(err)
+                    })
 
+            await user_db.create({
+                mobile: req.body.user_name
+            })
+            res.json({ response: false , msg: "Mobile number not exist, OTP Sent Successfully!", data: otp});
             
-        res.json({response: true, msg:"OTP Sent Successfully!", data: otp})
+        }
+        else 
+        {
+            const geOtp = new otp_db({
+                'otp': otp,
+                'expiration_time': expiration_time,
+                'mobile_no': req.body.user_name
+            });
+            geOtp.save().then(result => {
+               console.log(result);
+                }).catch(err => {
+                   console.log(err)
+                    })
+    
+                
+            res.json({response: true, msg:"OTP Sent Successfully!", data: otp})
+        }
     }
+    else if(req.body.loginType === 'Gmail')
+    {
+        const data = await user_db.findOne({email: req.body.user_name });
+        console.log(data);
+        if(data == null) 
+        {
+           
+            await user_db.create({
+                email: req.body.user_name
+            })
+            res.json({ response: false , msg: "Gmail not exist, OTP Sent Successfully!", data: ''});
+            
+        }
+        else 
+        {
+            
+                
+            res.json({response: true, msg:"Gmail Exist", data: ''})
+        }
+    }
+    else  res.json({response: true, msg:"Invalid Login Type", data: ''})
+    
+
 });
 
 router.post('/verify_otp', async function(req, res){
@@ -52,7 +92,7 @@ router.post('/verify_otp', async function(req, res){
     console.log(data);
     if(data == null) 
     {
-        res.json({ response: false , msg: "User not exist"});
+        res.json({ response: false , msg: "Incorrect OTP"});
        
     }
     else
@@ -85,10 +125,10 @@ router.post('/checkUserExistApi',async function (req, res, next) {
 router.post('/getUserDataApi',async function (req, res, next) {
     user_db.findById(req.body.user_id)
     .then(result => {
-        if (!result) return res.json({response: false, msg: "User not exist"});
+        if (!result) return res.json({response: false, msg: "User not found"});
         else {
             result.fcmToken = req.body.fcmToken;
-            return res.json({response: true, msg:"User exist", data: result});
+            return res.json({response: true, msg:"User found", data: result});
         }
     })
 });
