@@ -10,6 +10,7 @@ var vehicle_db= require('../models/vehicle');
 var product_db = require('../models/products');
 const moment = require('moment');
 const multer = require('multer');
+
 const storageProduct = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/assets/images/products/');
@@ -24,7 +25,7 @@ const storageProduct = multer.diskStorage({
 router.post('/addProduct', uploadProduct.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
     const data = await category_db.find({'_id': req.body.category});
     const sub_data = await subcategory_db.find({'_id': req.body.subcategory});
-   
+    
     const user =  await product_db.create({
         category: req.body.category,
         subcategory: req.body.subcategory,

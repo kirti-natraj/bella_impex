@@ -88,7 +88,7 @@ router.post('/login',async function (req, res) {
 
 router.post('/verify_otp', async function(req, res){
     
-    const data = await otp_db.findOne({otp: req.body.otp });
+    const data = await otp_db.findOne({otp: req.body.otp, mobile_no: req.body.mobile });
     console.log(data);
     if(data == null) 
     {
