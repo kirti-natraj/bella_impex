@@ -47,25 +47,21 @@ router.post('/login',async function (req, res) {
 
     if(req.body.loginType === 'Mobile')
     {
-        const data = await user_db.findOne({mobile: req.body.user_name });
+        const data = await user_db.findOne({user_name: req.body.user_name });
         console.log(data);
         if(data == null) 
         {
-            const geOtp = new otp_db({
+             new otp_db({
                 'otp': otp,
                 'expiration_time': expiration_time,
                 'mobile_no': req.body.user_name
             });
-            geOtp.save().then(result => {
-               console.log(result);
-                }).catch(err => {
-                   console.log(err)
-                    })
-
+            
             await user_db.create({
                 user_name: req.body.user_name,
-                user_type: req.body.loginType
+                user_type: req.body.userType
             })
+
             res.json({ response: false , msg: "Mobile number not exist, OTP Sent Successfully!", data: otp});
             
         }
@@ -125,8 +121,16 @@ router.post('/verify_otp', async function(req, res){
     else
     {
         if(req.body.otp == "123456"){
-            await otp_db.deleteOne({mobile_no: req.body.mobile});
-            res.json({response: true, msg:"OTP Verified!", data: data})
+            await otp_db.deleteOne({user_name: req.body.mobile});
+            user_db.findOne({user_name: req.body.mobile})
+    .then(result => {
+        if (!result) return res.json({response: false, msg: "User not found"});
+        else {
+           
+            return res.json({response: true, msg:"OTP verified!", data: result});
+        }
+    })
+          
         }
         else
         {
