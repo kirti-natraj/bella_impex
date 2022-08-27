@@ -27,7 +27,7 @@ router.post('/updateProfile', async function (req, res){
         district: req.body.district,
         whatsapp:req.body.whatsappAllow,
         about_business: req.body.aboutYourBusiness,
-        reach: req.body.thisNoToReach,
+        toThisNoReach: req.body.thisNoToReach,
        
 
     })

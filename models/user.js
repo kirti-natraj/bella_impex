@@ -5,11 +5,13 @@ const userSchema = new mongoose.Schema({
     },
     name:{
         type: String,
-        required: false
+        required: false,
+        default:''
     },
     user_name:{
         type: String,
-        required: false
+        required: false,
+        default:''
     },
     image:{
         type: String,
@@ -17,15 +19,18 @@ const userSchema = new mongoose.Schema({
     },
     district:{
         type: String,
-        required: false
+        required: false,
+        default:''
     },
     address:{
         type: String,
-        required: false
+        required: false,
+        default:''
     },
     mobile:{
         type: String,
         required: false,
+        default:''
       
     },
     user_type:{
@@ -36,21 +41,25 @@ const userSchema = new mongoose.Schema({
     about_business:{
         type: String,
         required: false,
+        default:''
         
     },
     birthdate:{
         type: String,
         required: false,
+        default:''
        
     },
     whatsapp:{
         type: Boolean,
         required: false,
+        default:'false'
        
     },
-    reach:{
+    toThisNoReach:{
         type: Boolean,
         required: false,
+        default:'false'
        
     },
     status:{
