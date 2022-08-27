@@ -25,7 +25,10 @@ router.post('/updateProfile', async function (req, res){
         mobile: req.body.userMobile,
         address: req.body.address,
         district: req.body.district,
-        about_business: req.body.aboutYourBusiness
+        about_business: req.body.aboutYourBusiness,
+        reach: req.body.thisNoToReach,
+        whatsapp:req.body.whatsappAllow
+
     })
     if (!user) return res.json({response: false, postMessage: 'failed'});
     else {
@@ -59,7 +62,8 @@ router.post('/login',async function (req, res) {
                     })
 
             await user_db.create({
-                mobile: req.body.user_name
+                user_name: req.body.user_name,
+                user_type: req.body.loginType
             })
             res.json({ response: false , msg: "Mobile number not exist, OTP Sent Successfully!", data: otp});
             
@@ -89,7 +93,8 @@ router.post('/login',async function (req, res) {
         {
            
             await user_db.create({
-                email: req.body.user_name
+                user_name: req.body.user_name,
+                user_type: req.body.loginType
             })
             res.json({ response: false , msg: "Gmail not exist, OTP Sent Successfully!", data: ''});
             
@@ -120,7 +125,7 @@ router.post('/verify_otp', async function(req, res){
     {
         if(req.body.otp == "123456"){
             await otp_db.deleteOne({mobile_no: req.body.mobile});
-            res.json({response: true, msg:"OTP Verified!"})
+            res.json({response: true, msg:"OTP Verified!", data: data})
         }
         else
         {
