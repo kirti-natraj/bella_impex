@@ -3,10 +3,9 @@ const userSchema = new mongoose.Schema({
     user_id:{
         type:mongoose.ObjectId,
     },
-    password:{
+    name:{
         type: String,
-        required: false,
-        default:'123'
+        required: false
     },
     user_name:{
         type: String,
@@ -20,34 +19,39 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    city:{
+    address:{
         type: String,
         required: false
     },
     mobile:{
         type: String,
         required: false,
-        default: ''
+      
     },
-    email:{
+    user_type:{
         type: String,
         required: false,
-        default: ''
+        
+    },
+    about_business:{
+        type: String,
+        required: false,
+        
     },
     birthdate:{
         type: String,
         required: false,
-        default: ''
+       
     },
     buy_sell:{
         type: Boolean,
         required: false,
-        default: true
+       
     },
     reach:{
         type: Boolean,
         required: false,
-        default: true
+       
     },
     status:{
         type: Boolean,

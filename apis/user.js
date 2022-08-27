@@ -15,6 +15,26 @@ const moment = require('moment');
 function AddMinutesToDate(date, minutes) {
     return new Date(date.getTime() + minutes*60000);
 }
+
+router.post('/updateProfile', async function (req, res){
+
+    const user = await user_db.findByIdAndUpdate(req.body.userId, {
+        name: req.body.name,
+        user_name: req.body.userName,
+        user_type: req.body.userType,
+        mobile: req.body.userMobile,
+        address: req.body.address,
+        district: req.body.district,
+        about_business: req.body.aboutYourBusiness
+    })
+    if (!user) return res.json({response: false, postMessage: 'failed'});
+    else {
+        const data = await user_db.findOne({'_id':req.body.userId});
+        return res.json({response: true, data: data});
+    }
+
+})
+
 router.post('/login',async function (req, res) {
 
     const otp = otpGenerator.generate(6, { digits:true, upperCaseAlphabets:false, specialChars: false, lowerCaseAlphabets:false});
