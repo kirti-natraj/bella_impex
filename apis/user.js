@@ -59,7 +59,7 @@ router.post('/login',async function (req, res) {
             
             await user_db.create({
                 user_name: req.body.user_name,
-                user_type: req.body.userType
+                user_type: req.body.loginType
             })
 
             res.json({ response: false , msg: "Mobile number not exist, OTP Sent Successfully!", data: otp});
@@ -82,8 +82,9 @@ router.post('/login',async function (req, res) {
             res.json({response: true, msg:"OTP Sent Successfully!", data: otp})
         }
     }
+
     else if(req.body.loginType === 'Gmail')
-    {
+     {
         const data = await user_db.findOne({email: req.body.user_name });
         console.log(data);
         if(data == null) 
