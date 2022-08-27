@@ -15,7 +15,8 @@ const userSchema = new mongoose.Schema({
     },
     image:{
         type: String,
-        required: false
+        required: false,
+        default:''
     },
     district:{
         type: String,
@@ -33,9 +34,16 @@ const userSchema = new mongoose.Schema({
         default:''
       
     },
+    email:{
+        type: String,
+        required: false,
+        default:''
+      
+    },
     user_type:{
         type: String,
         required: false,
+        default:''
         
     },
     about_business:{
