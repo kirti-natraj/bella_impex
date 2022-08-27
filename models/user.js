@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema({
         required: false,
        
     },
-    buy_sell:{
+    whatsapp:{
         type: Boolean,
         required: false,
        

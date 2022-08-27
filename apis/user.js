@@ -25,9 +25,10 @@ router.post('/updateProfile', async function (req, res){
         mobile: req.body.userMobile,
         address: req.body.address,
         district: req.body.district,
+        whatsapp:req.body.whatsappAllow,
         about_business: req.body.aboutYourBusiness,
         reach: req.body.thisNoToReach,
-        whatsapp:req.body.whatsappAllow
+       
 
     })
     if (!user) return res.json({response: false, postMessage: 'failed'});
