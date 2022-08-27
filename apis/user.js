@@ -99,7 +99,7 @@ router.post('/verify_otp', async function(req, res){
     else
     {
         if(req.body.otp == "123456"){
-            await otp_db.deleteOne({otp: req.body.otp});
+            await otp_db.deleteOne({mobile_no: req.body.mobile});
             res.json({response: true, msg:"OTP Verified!"})
         }
         else
