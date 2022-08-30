@@ -12,14 +12,26 @@ var otpGenerator = require('otp-generator');
 var otp_db = require('../models/otp');
 const moment = require('moment');
 
+const multer = require('multer');
+
 function AddMinutesToDate(date, minutes) {
     return new Date(date.getTime() + minutes*60000);
 }
+const storageUser = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/assets/images/user/');
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now()+ '__' + file.originalname);
+    }
+  });
+  const uploadUser= multer({storage: storageUser});
 
-router.post('/updateProfile', async function (req, res){
+router.post('/updateProfile', uploadUser.fields([{name:'image', maxCount: 1}]), async function (req, res){
 
     const user = await user_db.findByIdAndUpdate(req.body.userId, {
         name: req.body.name,
+        image: req.files.image[0].filename,
         user_name: req.body.userName,
         user_type: req.body.userType,
         mobile: req.body.userMobile,
@@ -28,7 +40,7 @@ router.post('/updateProfile', async function (req, res){
         whatsapp:req.body.whatsappAllow,
         about_business: req.body.aboutYourBusiness,
         toThisNoReach: req.body.thisNoToReach,
-       
+      
 
     })
     if (!user) return res.json({response: false, postMessage: 'failed'});
@@ -57,12 +69,12 @@ router.post('/login',async function (req, res) {
                 'mobile_no': req.body.user_name
             });
             
-            await user_db.create({
+            const user_data = await user_db.create({
                 user_name: req.body.user_name,
                 user_type: req.body.loginType
             })
 
-            res.json({ response: false , msg: "Mobile number not exist, OTP Sent Successfully!", data: otp});
+            res.json({ response: false , msg: "Mobile number not exist, OTP Sent Successfully!", data: otp, user_id: user_data._id});
             
         }
         else 
@@ -79,29 +91,29 @@ router.post('/login',async function (req, res) {
                     })
     
                 
-            res.json({response: true, msg:"OTP Sent Successfully!", data: otp})
+            res.json({response: true, msg:"OTP Sent Successfully!", data: otp, user_id: data._id})
         }
     }
 
     else if(req.body.loginType === 'Gmail')
      {
-        const data = await user_db.findOne({email: req.body.user_name });
+        const data = await user_db.findOne({user_name: req.body.user_name });
         console.log(data);
         if(data == null) 
         {
            
-            await user_db.create({
+           const user_data = await user_db.create({
                 user_name: req.body.user_name,
                 user_type: req.body.loginType
             })
-            res.json({ response: false , msg: "Gmail not exist, OTP Sent Successfully!", data: ''});
+            res.json({ response: false , msg: "Gmail not exist, OTP Sent Successfully!", data: '', user_id: user_data._id});
             
         }
         else 
         {
             
                 
-            res.json({response: true, msg:"Gmail Exist", data: ''})
+            res.json({response: true, msg:"Gmail Exist", data: '', user_id: data._id})
         }
     }
     else  res.json({response: true, msg:"Invalid Login Type", data: ''})
