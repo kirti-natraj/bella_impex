@@ -28,21 +28,37 @@ const storageUser = multer.diskStorage({
   const uploadUser= multer({storage: storageUser});
 
 router.post('/updateProfile', uploadUser.fields([{name:'image', maxCount: 1}]), async function (req, res){
-
-    const user = await user_db.findByIdAndUpdate(req.body.userId, {
-        name: req.body.name,
-        image: req.files.image[0].filename,
-        user_name: req.body.userName,
-        user_type: req.body.userType,
-        mobile: req.body.userMobile,
-        address: req.body.address,
-        district: req.body.district,
-        whatsapp:req.body.whatsappAllow,
-        about_business: req.body.aboutYourBusiness,
-        toThisNoReach: req.body.thisNoToReach,
-      
-
-    })
+console.log(req.files.image);
+    if(req.files.image == undefined)
+    {
+        var user = await user_db.findByIdAndUpdate(req.body.userId, {
+            name: req.body.name,
+            user_name: req.body.userName,
+            user_type: req.body.userType,
+            mobile: req.body.userMobile,
+            address: req.body.address,
+            district: req.body.district,
+            whatsapp:req.body.whatsappAllow,
+            about_business: req.body.aboutYourBusiness,
+            toThisNoReach: req.body.thisNoToReach,
+        })
+    }
+    else
+    {
+        var user = await user_db.findByIdAndUpdate(req.body.userId, {
+            name: req.body.name,
+            image: req.files.image[0].filename,
+            user_name: req.body.userName,
+            user_type: req.body.userType,
+            mobile: req.body.userMobile,
+            address: req.body.address,
+            district: req.body.district,
+            whatsapp:req.body.whatsappAllow,
+            about_business: req.body.aboutYourBusiness,
+            toThisNoReach: req.body.thisNoToReach,
+        })
+    }
+ 
     if (!user) return res.json({response: false, postMessage: 'failed'});
     else {
         const data = await user_db.findOne({'_id':req.body.userId});
