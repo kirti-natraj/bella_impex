@@ -1,10 +1,13 @@
 var express = require('express');
 var router = express.Router();
+const alert = require('node-popup');
 const vehicle_db = require('../models/vehicle');
 const brand_db = require('../models/brand');
 const year_db = require('../models/year');
 const budget_db = require('../models/budget');
 const moment = require('moment');
+
+
 const aws = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
@@ -89,7 +92,7 @@ console.log(req.files.image);
       state: req.body.stt,
       city: req.body.city
     });
-    res.redirect('/vehicle/');
+    res.render('web_page/success',{title:"popup"} );
   });
   
 

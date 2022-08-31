@@ -26,6 +26,7 @@ const user_apiRouter = require('./apis/user');
 const category_apiRouter = require('./apis/category');
 const userRouter = require('./routes/user');
 const webview_apiRouter= require('./apis/webview');
+const dynamic_apiRouter= require('./apis/dynamic');
 const productRouter = require('./apis/product');
 const categoryRouter = require('./routes/category');
 const vehicleRouter = require('./routes/vehicle');
@@ -43,8 +44,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
-
-
 
 
 
@@ -67,8 +66,8 @@ app.use('/api/user',user_apiRouter);
 app.use('/api/category',category_apiRouter);
 app.use('/api/product',productRouter);
 app.use('/webviewIndex',webview_apiRouter);
+app.use('/dynamic',dynamic_apiRouter);
 app.use('/user', userRouter);
-
 app.use('/brand', indexRouter);
 app.use('/year', indexRouter);
 app.use('/budget', indexRouter);
