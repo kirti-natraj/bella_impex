@@ -27,14 +27,13 @@ const storageUser = multer.diskStorage({
   });
   const uploadUser= multer({storage: storageUser});
 
-router.post('/updateProfile', uploadUser.fields([{name:'image', maxCount: 1}]), async function (req, res){
-console.log(req.files.image);
+    router.post('/updateProfile', uploadUser.fields([{name:'image', maxCount: 1}]), async function (req, res){
+    console.log(req.files.image);
     if(req.files.image == undefined)
     {
         var user = await user_db.findByIdAndUpdate(req.body.userId, {
             name: req.body.name,
-            user_name: req.body.userName,
-            user_type: req.body.userType,
+            email: req.body.userEmail,
             mobile: req.body.userMobile,
             address: req.body.address,
             district: req.body.district,
@@ -48,8 +47,7 @@ console.log(req.files.image);
         var user = await user_db.findByIdAndUpdate(req.body.userId, {
             name: req.body.name,
             image: req.files.image[0].filename,
-            user_name: req.body.userName,
-            user_type: req.body.userType,
+            email: req.body.userEmail,
             mobile: req.body.userMobile,
             address: req.body.address,
             district: req.body.district,
