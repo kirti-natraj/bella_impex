@@ -7,6 +7,21 @@ const vehicleSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    user_name:{
+        type: String,
+        required: false,
+        default:''
+    },
+    user_image:{
+        type: String,
+        required: false,
+        default:''
+    },
+    since:{
+        type: String,
+        required: false,
+        default:''
+    },
     category: {
         type: String,
         required: false,
@@ -19,6 +34,7 @@ const vehicleSchema = new mongoose.Schema({
     image: [
         Object
     ],
+
     description: {
         type: String,
         required: false

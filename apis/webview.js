@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const alert = require('node-popup');
 const vehicle_db = require('../models/vehicle');
+const user_db = require('../models/user');
 const brand_db = require('../models/brand');
 const year_db = require('../models/year');
 const budget_db = require('../models/budget');
@@ -26,10 +27,11 @@ const storageVehicle = multer.diskStorage({
   });
   const uploadVehicle= multer({storage: storageVehicle});
   
-router.get('/', async function (req, res) {
+router.get('/:id', async function (req, res) {
+    console.log(req.params.id);
     const brand = await brand_db.find().exec();
-    res.render('web_page/index',{brand:brand});
-
+    const user = await user_db.findOne({ '_id': req.params.id });
+    res.render('web_page/index',{brand:brand, user: user});
 });
 
 router.get('/price', function (req, res) {
@@ -47,12 +49,19 @@ router.get('/location', function (req, res) {
 
 });
 
-router.post('/add_vehicle',uploadVehicle.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
-console.log(req.files.image);
+router.post('/add_vehicle/:id',uploadVehicle.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
+console.log(req.params.id);
+    const user = await user_db.findOne({ '_id': req.params.id });
+    console.log(user);
+
     const data = await vehicle_db.create({
       
         subcategory: 'Cars',
         description: req.body.description,
+        user_id: user.user_id,
+        user_name: user.name,
+        user_image: user.image,
+        since: user.added_on,
         image: req.files.image,
         title:req.body.title,
         km:req.body.km,

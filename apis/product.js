@@ -98,8 +98,8 @@ router.post('/getVehicle',async function (req, res, next) {
 }); 
 
   router.get('/getWebviewData',async function (req, res, next) {
-
-        const data = "https://bellaimpex.herokuapp.com/webviewIndex";
+          
+        const data = "https://bellaimpex.herokuapp.com/webviewIndex/{UserId}";
         return res.json({response: true, msg:"Page found", data: data })
     
        
