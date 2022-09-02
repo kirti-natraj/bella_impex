@@ -58,7 +58,7 @@ console.log(req.params.id);
       
         subcategory: 'Cars',
         description: req.body.description,
-        user_id: user.user_id,
+        user_id: user._id,
         user_name: user.name,
         user_image: user.image,
         since: user.added_on,
