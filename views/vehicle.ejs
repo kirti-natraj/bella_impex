@@ -45,7 +45,6 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Category Name</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date of Post</th>
-                 
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Description</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Price</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sold Out</th>
@@ -56,7 +55,7 @@
                   </thead>
                   <tbody>
                     <% if(data.length){
-                for(var i = data.length-1; i>= 0; i--) {%>  
+                for(var i = 0; i < data.length; i++) {%>  
                     <tr>
                         <td>
                             <p class="text-xs text-secondary mb-0">&nbsp;&nbsp; &nbsp;&nbsp;<%= i+1 %></p>

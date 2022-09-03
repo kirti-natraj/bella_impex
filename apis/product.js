@@ -96,11 +96,40 @@ router.post('/getVehicle',async function (req, res, next) {
    
 
 }); 
+////////////////////////////////////////////webview of add vehiv=cle post
 
-  router.get('/getWebviewData',async function (req, res, next) {
+  router.post('/getWebviewData',async function (req, res, next) {
           
+
+    
+    user_db.findById(req.body.userId)
+    .then(result => {
+        if(result.postCount >= 1) 
+    {
+         if(result.payment == true) 
+         {
+            const data = "https://bellaimpex.herokuapp.com/webviewIndex/{UserId}";
+         res.json({response: true, msg:"Page found", data: data })
+         }
+         else
+         {
+            
+         res.json({response: false, msg:"Subscription not taken" })
+         }
+       
+    }    
+    else
+    {
+      
         const data = "https://bellaimpex.herokuapp.com/webviewIndex/{UserId}";
         return res.json({response: true, msg:"Page found", data: data })
+    } 
+    })
+
+   
+   
+
+      
     
        
    

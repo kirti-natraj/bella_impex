@@ -51,7 +51,9 @@ router.get('/location', function (req, res) {
 
 router.post('/add_vehicle/:id',uploadVehicle.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
 console.log(req.params.id);
-    const user = await user_db.findOne({ '_id': req.params.id });
+    const user = await user_db.findByIdAndUpdate( req.params.id, {
+               $inc: {postCount: '1'} 
+    } );
     console.log(user);
 
     const data = await vehicle_db.create({

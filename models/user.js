@@ -80,6 +80,16 @@ const userSchema = new mongoose.Schema({
         required: false,
         default: Date.now()
     },
+    payment:{
+        type: Boolean,
+        required: false,
+        default:'false'
+    },
+    postCount:{
+        type: Number,
+        required: false,
+        default: '0'
+    }
     
 })
 
