@@ -96,9 +96,18 @@ router.post('/getVehicle',async function (req, res, next) {
    
 
 }); 
-////////////////////////////////////////////webview of add vehiv=cle post
+////////////////////////////////////////////webview of add vehicle post
 
-  router.post('/getWebviewData',async function (req, res, next) {
+  router.get('/getWebviewData',async function (req, res, next) {
+     
+        const data = "https://bellaimpex.herokuapp.com/webviewIndex/{UserId}";
+        return res.json({response: true, msg:"Page found", data: data })
+       
+   
+});
+
+
+router.post('/checkSubscription',async function (req, res, next) {
           
 
     
@@ -108,8 +117,8 @@ router.post('/getVehicle',async function (req, res, next) {
     {
          if(result.payment == true) 
          {
-            const data = "https://bellaimpex.herokuapp.com/webviewIndex/{UserId}";
-         res.json({response: true, msg:"Page found", data: data })
+            
+         res.json({response: true, msg:"Subcription Taken" })
          }
          else
          {
@@ -119,20 +128,22 @@ router.post('/getVehicle',async function (req, res, next) {
        
     }    
     else
-    {
-      
-        const data = "https://bellaimpex.herokuapp.com/webviewIndex/{UserId}";
-        return res.json({response: true, msg:"Page found", data: data })
+    { 
+        return res.json({response: true, msg:"Subscription Taken" })
     } 
-    })
-
-   
-   
-
-      
-    
-       
+    })      
    
 });
 
+router.post('/subscriptionPlan',async function (req, res, next) {
+     
+    var user = await user_db.findByIdAndUpdate(req.body.userId, {
+        payment: true,
+        receiptId: req.body.receiptId
+    })
+
+  
+   res.json({response:true, msg:"Subcription Plan Successfully applied, payment submitted", data:user});
+   
+});
 module.exports = router;
