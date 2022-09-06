@@ -113,6 +113,16 @@ const vehicleSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    approval:{
+        type: Boolean,
+        required: false,
+        default: false
+    },
+    reject:{
+        type: Boolean,
+        required: false,
+        default: false
+    }
 
 })
 

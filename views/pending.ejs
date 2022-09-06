@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <%- include('admin/includes/header') %>
+<body>
+  <div class="min-height-250 bg-primary position-absolute w-100"></div>
+ <%- include('admin/includes/sidebar')%>
+  <main class="main-content position-relative border-radius-lg ">
+    <!-- Navbar -->
+   <%- include('admin/includes/navbar')%>
+    <!-- End Navbar -->
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="row">
+
+              <div  class="col-10">
+               <div class="card-header pb-0">
+                   <h6>Vehicle table 
+                     </h6>
+                  
+                 </div>
+               </div>
+               <div class="col-2">
+               <div class="card-header pb-0">
+               <h6>
+               <a href="/add_vehicle" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                   <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Add Vehicle</button>
+                 </a>
+                   <!-- <a href="/add_category" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none">
+                       <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Add Category</button>
+                   </a> -->
+                  </h6>
+               </div>
+               </div>
+           </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">S.No.</th>  
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Category Name</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date of Post</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Description</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Price</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Location</th>
+                    
+                      <th class="text-secondary opacity-7"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% if(data.length){
+                for(var i = 0; i < data.length; i++) {%>  
+                  
+                    <tr>
+                        <td>
+                            <p class="text-xs text-secondary mb-0">&nbsp;&nbsp; &nbsp;&nbsp;<%= i+1 %></p>
+                        </td>
+                        <td>
+                          <div>
+                             <% if(data[i].image.length){
+                            for(var j = 0; j< data[i].image.length; j++) {%>  
+                          <img src="../assets/images/vehicles/<%= data[i].image[j].filename %>" class=" avatar-lg me-3" alt="user1">
+                          <% } %> 
+                          <% } %> 
+                            </div>
+                        </td> 
+                      <td>
+                       
+                          
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm"><%= data[i].title %></h6>
+                          </div>
+                      </td>
+                    
+                      <td>
+                      
+                        <p class="text-xs text-secondary mb-0">Category :- Vehicle</p>
+                        <p class="text-xs text-secondary mb-0">Subcategory :- Car</p>
+                      </td>
+                      
+                      <td class="align-middle text-center text-sm">
+                        <p class="text-secondary text-xs font-weight-bold"><%= moment(data[i].date).format('MMMM Do YYYY') %></p>
+                      </td>
+                      
+                 
+                    <td class="align-middle text-center">
+                        <div class="text-secondary text-xs font-weight-bold"><i class="text-dark">Brand -</i>  <%= data[i].brand %></div>
+                        <div class="text-secondary text-xs font-weight-bold"><i class="text-dark">Purchase Year -</i> <%= data[i].year %></div>
+                        <div class="text-secondary text-xs font-weight-bold"><i class="text-dark">Fuel -</i> <%= data[i].fuel %></div>
+                        <div class="text-secondary text-xs font-weight-bold"><i class="text-dark">Kilometer -</i> <%= data[i].km %></div>
+                        <p class="text-secondary text-xs font-weight-bold"><%= data[i].description %></p>
+                     
+                      </td>
+                      
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold"><%= data[i].price %></span>
+                      </td>
+                    </td>
+                    
+                    <td class="align-middle text-center">
+                      <span class="text-secondary text-xs font-weight-bold">State- <%= data[i].state %> City-  <%= data[i].city %> </span>
+                    </td>
+                    
+                     <td>
+                      <a href="/activate/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs text-end" data-toggle="tooltip" data-original-title="Edit user">
+                        <button class="btn btn-success btn-sm">Approve</button>
+                           </a>
+                           <a href="/reject/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs text-end" data-toggle="tooltip" data-original-title="Edit user">
+                            <button class="btn btn-dark btn-sm">Reject</button>
+                               </a>
+    
+                      </td>
+                    </tr>
+                    <% }
+                    
+                        
+                      }else{ %>
+                          <tr>
+                             <td colspan="3">No Products</td>
+                          </tr>
+                       <% } %> 
+                       
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+      <%- include('admin/includes/footer')%>
+    </div>
+  </main>
+  <div class="fixed-plugin">
+    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+      <i class="fa fa-cog py-2"> </i>
+    </a>
+  </div>
+
+
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+
+    function active(){
+        alert("Employee is active");
+      }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+</body>
+</html>

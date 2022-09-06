@@ -322,7 +322,31 @@ router.get('/update_subcat_form/:id', async function(req,res,next ){
     });
   res.redirect('/subcategory_list/');
 });
+//////////////////////////////////////////////////Pending
 
+router.get('/pending',async function(req, res, next) {  
+ 
+  const data = await vehicle_db.find({'approval': false, 'reject': false}).exec();                      
+  res.render('pending', { title: 'Pending' , data: data, moment: moment});
+});
+
+router.get('/activate/:id', async function(req,res,next ){
+  let _id = req.params.id;
+
+  const a1= await vehicle_db.findByIdAndUpdate( _id, {
+    approval: true
+    });
+  res.redirect('/vehicle/');
+});
+
+router.get('/reject/:id', async function(req,res,next ){
+  let _id = req.params.id;
+
+  const a1= await vehicle_db.findByIdAndUpdate( _id, {
+    reject: true
+    });
+  res.redirect('/pending/');
+});
 //////////////////////////////////////////////Products
 router.get('/products',async function(req, res, next) {  
   const category = await category_db.find().exec();
