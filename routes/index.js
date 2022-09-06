@@ -477,7 +477,7 @@ router.post('/add_properties_form', uploadProperties.fields([{name:'image', maxC
 });
 /////////////////////////////////////////vehicle
 router.get('/vehicle',async function(req, res, next) {  
-  const data = await vehicle_db.find().exec();                      
+  const data = await vehicle_db.find({'approval': true}).exec();                      
   res.render('vehicle', { title: 'Vehicle' , data: data, moment: moment });
 });
 

@@ -26,3 +26,17 @@ myText.addEventListener("input", function(){
         result2.style.color = "#ff2851";
     }
 });
+
+const findMyState = ()=>{
+   const status = document.querySelector('.status');
+
+   const success = (position)=> {
+    console.log(position)
+   }
+   const error = () => {
+    status.textContent = 'Unable to return your location';
+   }
+   navigator.geolocation.getCurrentPosition(success, error);
+}
+
+document.querySelector('.find-state').addEventListener('click', findMyState);

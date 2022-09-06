@@ -101,7 +101,10 @@ console.log(req.params.id);
 
     await vehicle_db.findByIdAndUpdate(req.params.id, {
       state: req.body.stt,
-      city: req.body.city
+      city: req.body.city,
+      location: req.body.location,
+      latitude: req.body.latitude,
+      longitude: req.body.longitude
     });
     res.render('web_page/success',{title:"popup"} );
   });

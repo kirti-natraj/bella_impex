@@ -247,22 +247,54 @@ input[type="radio"]{
                         </div>
                     </div>
     
-                    <label for="Location"> Location* </label>
-                    <input
-                    type="text"
-                    placeholder="Enter your address"
-                    id="autocomplete"
-                />
+                    <input  type="text" id="location" name="location" hidden/>
+                    <input  type="text" id="latitude" name="latitude" hidden/>
+                    <input  type="text" id="longitude" name="longitude" hidden/>
+                    <h1 class="status"></h1>
+                    <button type="button" class="find-state">Current Location</button>
                 
                 </div>
             </div>
             <div class="btn-shadow">
+                <br>
+                <br>
                 <button type="submit" required >
                     Next</button>
             </div>
         </form>
     </div>
     <script src="script.js"></script>
+    <script>
+        const findMyState = ()=>{
+   const status = document.querySelector('.status');
+
+   const success = (position)=> {
+    console.log(position);
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+
+    const geoApiUrl = 'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en'
+    document.getElementById("latitude").value = latitude;
+    document.getElementById("longitude").value = longitude;
+
+    fetch(geoApiUrl)
+    .then( res => res.json())
+    .then(data => {
+       console.log(data);
+       status.textContent = data.city +', '+ data.principalSubdivision + ', ' + data.countryName;
+       document.getElementById("location").value = data.city +', '+ data.principalSubdivision + ', ' + data.countryName;
+    })
+
+   }
+   const error = () => {
+    status.textContent = 'Unable to return your location';
+   }
+   navigator.geolocation.getCurrentPosition( success, error );
+
+}
+
+document.querySelector('.find-state').addEventListener('click', findMyState);
+    </script>
     <script>
         var success_popup=document.getElementById("success");
 var error_popup =document.getElementById("error");
