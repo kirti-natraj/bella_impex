@@ -100,10 +100,9 @@ router.post('/getVehicle',async function (req, res, next) {
 
   router.get('/getWebviewData',async function (req, res, next) {
      
-        const data = "https://bellaimpex.herokuapp.com/webviewIndex/{UserId}";
+        const data = "https://bellaimpex.herokuapp.com/webviewIndex";
         return res.json({response: true, msg:"Page found", data: data })
        
-   
 });
 
 
@@ -146,4 +145,39 @@ router.post('/subscriptionPlan',async function (req, res, next) {
    res.json({response:true, msg:"Subcription Plan Successfully applied, payment submitted", data:user});
    
 });
+
+router.post('/getAddedPost',async function (req, res, next) {
+
+    const user_id =  req.body.user_id;
+    
+    const data = await vehicle_db.find({user_id: user_id, approval: true});
+    if(data == '') 
+    {
+       
+        return res.json({response: false, msg:"Data not found", data: data })
+    }    
+    else
+    {
+        console.log(data)
+        res.json({ response: true , msg: "Data Found", data: data });
+    } 
+   
+
+}); 
+////////////////////////////get product by id
+router.post('/getVehicleById', async function(req, res, next){
+   
+  if( vehicle_db.find({viewer_id:[req.body.user_id]}) === true ){
+     const data = await vehicle_db.findById(req.body.post_id).exec();
+     res.json({ response: true , msg: "Data Found", data: data });
+  } else{
+     await vehicle_db.findByIdAndUpdate(req.body.post_id,{
+        $push:{viewer_id: req.body.user_id},
+        $inc:{view_count: 1}
+     }) 
+     const data = await vehicle_db.findById(req.body.post_id).exec();
+     res.json({ response: true , msg: "Data Found", data: data });
+  }
+
+})
 module.exports = router;

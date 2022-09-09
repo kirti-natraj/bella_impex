@@ -13,6 +13,7 @@ var otp_db = require('../models/otp');
 const moment = require('moment');
 
 const multer = require('multer');
+const { findById } = require('../models/vehicle');
 
 function AddMinutesToDate(date, minutes) {
     return new Date(date.getTime() + minutes*60000);
@@ -197,6 +198,50 @@ router.post('/getUserDataApi',async function (req, res, next) {
             return res.json({response: true, msg:"User found", data: result});
         }
     })
+});
+
+router.post('/likeIncr', async function (req, res, next){
+      await user_db.findByIdAndUpdate(req.body.user_id, {
+         
+      $push:{
+        liked_post_id: req.body.post_id
+      }
+
+      });
+
+      await vehicle_db.findByIdAndUpdate(req.body.post_id,{
+         
+       $inc:{
+         like_count: 1
+       } 
+
+      });
+      
+      const data = await vehicle_db.findById(req.body.post_id);
+        return res.json({response: true, msg:"Liked by user", data: data});
+        
+});
+
+router.post('/likeDecr', async function (req, res, next){
+    await user_db.findByIdAndUpdate(req.body.user_id, {
+       
+    $pull:{
+      liked_post_id: req.body.post_id
+    }
+
+    });
+
+    await vehicle_db.findByIdAndUpdate(req.body.post_id,{
+       
+     $inc:{
+       like_count: -1
+     } 
+
+    });
+    const data = await vehicle_db.findById(req.body.post_id);
+        return res.json({response: true, msg:"Unliked by user", data: data});
+       
+   
 });
 
 module.exports = router;

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <%- include('admin/includes/header') %>
+  <style>
+    .btn1 {
+  background-color: #ddd;
+  border: none;
+  border-radius: 5px;
+  color: black;
+  padding: 10px 26px;
+  text-align: center;
+  font-size: 12px;
+  margin: 3px 1px;
+  transition: 0.3s;
+}
+.btn2 {
+  background-color: #ddd;
+  border: none;
+  border-radius: 5px;
+  color: rgb(172, 29, 29);
+  padding: 10px 26px;
+  text-align: center;
+  font-size: 12px;
+  margin: 3px 1px;
+  transition: 0.3s;
+}
+.btn1:hover {
+  background-color: #3e5f8e;
+  color: white;
+}
+  </style>
+<body>
+  <div class="min-height-250 bg-primary position-absolute w-100"></div>
+ <%- include('admin/includes/sidebar')%>
+  <main class="main-content position-relative border-radius-lg ">
+    <!-- Navbar -->
+   <%- include('admin/includes/navbar')%>
+    <!-- End Navbar -->
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="row">
+
+           <div  class="col-10">
+            <div class="card-header pb-0">
+                <h6>Create table 
+                  </h6>
+               
+              </div>
+           </div>
+           <div class="col-2">
+            <div class="card-header pb-0">
+            <h6>
+            <a href="/view_forms" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">View Form</button>
+              </a>
+                <!-- <a href="/add_category" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none">
+                    <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Add Category</button>
+                </a> -->
+               </h6>
+            </div>
+            </div>
+          
+        </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Catgory Name</th>
+                      <th class="text-uppercase text-secondary font-weight-bolder opacity-7">Subcategory List</th>
+                    
+                    </tr>
+                  </thead>
+                  <tbody>
+                  
+
+                    <% if(data.length){
+                        for(var i = 0; i< data.length; i++) {%>  
+                        
+                            <tr>
+                              
+                                <td>
+                                    <div class="d-flex px-2 py-1">
+                                    
+                                      <div class="d-flex flex-column justify-content-center">
+                                        <div>
+                                          <img src="../assets/images/category/<%= data[i].image %>" class="avatar avatar-sm me-3" alt="user1">
+                                        </div>
+                                        <h6 class="mb-0 text-sm"></h6>
+                                        &nbsp;&nbsp;<%= data[i].category_name %>
+                                      </div>
+                                      
+                                    </div>
+                                  </td>  
+                                
+                                  <% var count = 1 %>    
+                                   
+                                  <% 
+                                  for(var j = 0; j< sub_data.length; j++) {%>  
+                                   
+                                      
+                                    
+                                       
+                                <% if(data[i]._id.equals(sub_data[j].category_id)){ %>  
+                                 
+                                  <td>
+                                    
+                                    
+                                
+                                   
+                                    <h6 value="<%= sub_data[j]._id %>">&nbsp;&nbsp;<%= count %>. <%= sub_data[j].sub_category_name %>
+                                              
+                                            </h6>  
+                                            
+                                     
+                                        
+                                        </td>
+                                        <td>
+                                            <div>
+          
+                                                <a href="/create_form/<%= sub_data[j]._id %>" class="btn1" id="action" >
+                                                  Create Form
+                                               </a>
+                                              
+                                            </div>
+                                        </td>
+                                        <% count = count +1 %>
+                                        <% }%>
+                                    
+                                        <% } %>
+                                      
+                              </tr>
+                            <% }
+                                
+                        }else{ %>
+                            <tr>
+                               <td colspan="3">No user</td>
+                            </tr>
+                         <% } %> 
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+      <%- include('admin/includes/footer')%>
+    </div>
+  </main>
+  <div class="fixed-plugin">
+    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+      <i class="fa fa-cog py-2"> </i>
+    </a>
+  </div>
+
+
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script>
+  function myFunction(id) {
+    var x = document.getElementById("action");
+  
+  if (x.style.display === 'none') {
+    x.style.display = 'block';
+  }
+ 
+  var y = document.getElementById("delete");
+  if (y.style.display === 'none') {
+    y.style.display = 'block';
+  } 
+
+  document.getElementById("action").onclick = function()
+  {
+    location.href='/update_subcat/'+ id;
+    
+    
+  }
+  document.getElementById("delete").onclick = function()
+  {
+    location.href='/delete_subcat/'+ id;
+    
+  }
+  
+}
+  </script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+</body>
+</html>

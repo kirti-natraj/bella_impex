@@ -322,6 +322,60 @@ router.get('/update_subcat_form/:id', async function(req,res,next ){
     });
   res.redirect('/subcategory_list/');
 });
+
+///////////////////////////////////////////////////Forms
+
+router.get('/forms',async function(req,res,next){                        //for SubCategory TAble Update
+  const data = await category_db.find().exec();
+  const sub_data = await subcategory_db.find().exec();
+  res.render('forms',{title:'Forms', data: data, sub_data: sub_data, moment: moment});
+
+});
+
+router.get('/create_form/:id', async function(req, res, next){
+
+   
+   res.render('create_form',{title:'Create Form', data: req.params.id });
+
+
+})
+
+router.post('/created_form/:id',async function(req,res,next){  
+  const brand = await brand_db.find().exec();
+  const year = await year_db.find().exec();
+  const budget = await budget_db.find().exec();
+  console.log(req.body.KM);
+  const km = req.body.KM;
+  await subcategory_db.findByIdAndUpdate(req.params.id,{
+             km: km,
+             fuel: req.body.FUEL,
+             form_created: true
+  });
+  const data = await subcategory_db.find({'_id': req.params.id});
+  const cat = await category_db.find({'_id': data[0].category_id}).exec();
+  console.log(data);
+  res.render('created_form',{title:'Created Form', data: data,  brand: brand, years: year,cat:cat, budget: budget});
+
+});
+
+router.get('/View_forms',async function(req,res,next){                        //for SubCategory TAble Update
+  const data = await category_db.find().exec();
+  const sub_data = await subcategory_db.find().exec();
+  res.render('View_forms',{title:'View Forms', data: data, sub_data: sub_data, moment: moment});
+
+});
+
+
+router.get('/view_form/:id',async function(req,res,next){  
+  const brand = await brand_db.find().exec();
+  const year = await year_db.find().exec();
+  const budget = await budget_db.find().exec();
+  const data = await subcategory_db.find({'_id': req.params.id});
+  const cat = await category_db.find({'_id': data[0].category_id}).exec();
+  console.log(data);
+  res.render('view_form',{title:'Created Form', data: data,  brand: brand, years: year,cat:cat, budget: budget});
+
+});
 //////////////////////////////////////////////////Pending
 
 router.get('/pending',async function(req, res, next) {  
@@ -334,7 +388,8 @@ router.get('/activate/:id', async function(req,res,next ){
   let _id = req.params.id;
 
   const a1= await vehicle_db.findByIdAndUpdate( _id, {
-    approval: true
+    approval: true,
+    approval_date: Date.now(),
     });
   res.redirect('/vehicle/');
 });
@@ -343,7 +398,8 @@ router.get('/reject/:id', async function(req,res,next ){
   let _id = req.params.id;
 
   const a1= await vehicle_db.findByIdAndUpdate( _id, {
-    reject: true
+    reject: true,
+    reject_date: Date.now()
     });
   res.redirect('/pending/');
 });

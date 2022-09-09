@@ -17,6 +17,11 @@ const vehicleSchema = new mongoose.Schema({
         required: false,
         default:''
     },
+    user_mobile:{
+        type: String,
+        required: false,
+        default:''
+    },
     since:{
         type: String,
         required: false,
@@ -132,7 +137,30 @@ const vehicleSchema = new mongoose.Schema({
         type: Boolean,
         required: false,
         default: false
+    },
+    like_count:{
+        type: Number,
+        required: false,
+        default: 0
+    },
+    approval_date:{
+        type: Date,
+        required: false
+    },
+    reject_date:{
+        type: Date,
+        required: false
+    },
+    view_count:{
+        type: Number,
+        required: false,
+        default: 0
+    },
+    viewer_id:{
+        type: Array,
+        required: false
     }
+    
 
 })
 

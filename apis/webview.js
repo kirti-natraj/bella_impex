@@ -63,6 +63,7 @@ console.log(req.params.id);
         user_id: user._id,
         user_name: user.name,
         user_image: user.image,
+        user_mobile: user.mobile,
         since: user.added_on,
         image: req.files.image,
         title:req.body.title,

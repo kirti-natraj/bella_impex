@@ -94,7 +94,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: false,
         default:''
-    }
+    },
+    liked_post_id: {
+            type: Array,
+            required: false,
+        }
+    
     
 })
 
