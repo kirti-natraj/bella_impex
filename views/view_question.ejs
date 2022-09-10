@@ -1,71 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-
-  <%- include('admin/includes/header') %>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belle Impex</title>
+      <!--     Fonts and icons     -->
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+      <!-- Nucleo Icons -->
+      <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+      <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+      <!-- Font Awesome Icons -->
+      <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+      <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+      <!-- CSS Files -->
+      <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+</head>
 <body>
-  <div class="min-height-250 bg-primary position-absolute w-100"></div>
- <%- include('admin/includes/sidebar')%>
-  <main class="main-content position-relative border-radius-lg ">
-    <!-- Navbar -->
-   <%- include('admin/includes/navbar')%>
-    <!-- End Navbar -->
-    <div class="container-fluid py-4">
-        <div class="card shadow-lg mx-4 card-profile">
-            <div class="card-body p-3">
-              <div class="row gx-4">
-                <div class="col-auto">
-                  <div class="avatar avatar-xl position-relative">
-                    <img src="../assets/img/jm-category.png" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
-                  </div>
-                </div>
-                <div class="col-auto my-auto">
-                  <div class="h-100">
-                    <h5 class="mb-1">
-                  Category Name :-   <%= category_name.category_name%>
-                    </h5>
-                    
-                  </div>
-                </div>
-                
-              </div>
-            </div>
-          </div>
-          <div class="container-fluid py-4">
+  <div class="content-wrapper">
+    <div class="card shadow-lg mx-12 card-profile" style="background-image: url('https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?w=2000'); image-resolution: unset; margin-top: 10%;">
+      <div class="container-fluid py-2">
+
+          <div class="container-fluid py-1">
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
-                  <div class="card-header pb-0">
-                    <div class="d-flex align-items-center">
-                      <p class="mb-0">Add Subategory Details</p>
-                     
-                    </div>
-                  </div>
-                <form action="/subcategory_form/<%= id%>"  method="post" >
+                  
+                <form action="/created_form/"  method="post" >
                   <div class="card-body">
                     <p class="text-uppercase text-sm">Enter Details</p>
                     <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <input value="<%= category_name.category_name %>" class="form-control" name="category_name" disabled >
-                          <label for="example-text-input" class="form-control-label">Enter Subcategory Name</label>
-                          <input class="form-control" type="text" name="sub_category_name" >
+                        <div class="col-md-5">
+                            <div class="form-group">
+                              
+                            <% for(var i = 0; i< data[0].length; i++) {%>  
+                            <label for="example-text-input" class="form-control-label"><%= data[0][i] %></label> &nbsp;&nbsp;
+                          
+                            <input class="form-control" type="text" name="field" />
+                           
+                            <% } %>    
+                      
+                            </div>
                         </div>
-                      </div>
+                      
                     </div>
-                    
                     <hr>
+
                    <div class="row">
-                    <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
-                        <div class="d-flex justify-content-between">
-                          <a href="/category/" class="btn btn-sm btn-info mb-0 d-none d-lg-block">Cancel</a>
-                          <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-block d-lg-none"><i class="ni ni-collection"></i></a>
-                          <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Next</button>
-                          <a href="javascript:;" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none"><i class="ni ni-email-83"></i></a>
-                        </div>
+                    <div class="d-flex justify-content-between">
+                      <a href="/vehicle/" class="btn btn-sm bg-gradient-secondary mb-0 d-none d-lg-block">Cancel</a>
+                      
+                      <button  type="submit" class="btn btn-sm btn-info float-right mb-0 d-none d-lg-block">Submit</button>
                     </div>
-                 </div>
+                   </div>
                     
-                  </div>
+                   </div>
                 </form>
                 </div>
               </div>
@@ -73,22 +62,52 @@
             </div>
             
         </div>
-     
-      <%- include('admin/includes/footer')%>
+   
     </div>
-  </main>
-  <div class="fixed-plugin">
-    <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-      <i class="fa fa-cog py-2"> </i>
-    </a>
+  
+  </div>
   </div>
 
-
-    <!--   Core JS Files   -->
-    <script src="/assets/js/core/popper.min.js"></script>
+  <script src="/assets/js/core/popper.min.js"></script>
     <script src="/assets/js/core/bootstrap.min.js"></script>
-  
+    <script src="/assets/js/cities.js"></script>
+    <script language="javascript">print_state("sts");</script>
     <script src="/assets/js/plugins/chartjs.min.js"></script>
+    <script>
+        const btn = document.getElementById('km');
+
+btn.addEventListener('click', function onClick() {
+    
+    if(btn.value == "true"){
+        btn.style.backgroundColor = '#344767';
+        btn.style.color = 'white';
+        document.getElementById('km').value = "false"
+    }else{
+        btn.style.backgroundColor = 'salmon';
+  btn.style.color = 'white';
+  document.getElementById('km').value = "true"
+    }
+
+});
+
+const btn2 = document.getElementById('fuel');
+
+btn2.addEventListener('click', function onClick() {
+    
+    if(btn2.value == "true"){
+        btn2.style.backgroundColor = '#344767';
+        btn2.style.color = 'white';
+        document.getElementById('fuel').value = "false"
+    }else{
+        btn2.style.backgroundColor = 'salmon';
+  btn2.style.color = 'white';
+  document.getElementById('fuel').value = "true"
+    }
+
+});
+
+    </script>
+    
     <script>
       var ctx1 = document.getElementById("chart-line").getContext("2d");
   

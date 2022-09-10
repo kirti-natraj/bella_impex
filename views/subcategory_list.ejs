@@ -43,7 +43,7 @@
           <div class="card mb-4">
             <div class="row">
 
-           <div  class="col-8">
+           <div  class="col-4">
             <div class="card-header pb-0">
                 <h6>Category table 
                   </h6>
@@ -59,6 +59,20 @@
           
            
            </div>
+            </div>
+            <div class="col-2">
+              <div class="card-header pb-0">
+                <a class="btn1" id="form" style="display: none;">
+                  Add Form
+               </a>
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="card-header pb-0">
+                <a class="btn1" id="viewform" style="display: none;">
+                  View Form
+               </a>
+              </div>
             </div>
             <div class="col-2">
               <div class="card-header pb-0">
@@ -183,7 +197,14 @@
   if (x.style.display === 'none') {
     x.style.display = 'block';
   }
- 
+  var y = document.getElementById("form");
+  if (y.style.display === 'none') {
+    y.style.display = 'block';
+  } 
+  var y = document.getElementById("viewform");
+  if (y.style.display === 'none') {
+    y.style.display = 'block';
+  } 
   var y = document.getElementById("delete");
   if (y.style.display === 'none') {
     y.style.display = 'block';
@@ -198,6 +219,16 @@
   document.getElementById("delete").onclick = function()
   {
     location.href='/delete_subcat/'+ id;
+    
+  }
+  document.getElementById("form").onclick = function()
+  {
+    location.href='/question/'+ id;
+    
+  }
+  document.getElementById("viewform").onclick = function()
+  {
+    location.href='/view_question/'+ id;
     
   }
   

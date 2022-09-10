@@ -293,17 +293,28 @@ router.get('/add_subcategory/:id',async function(req,res,next){                 
 });
 router.post('/subcategory_form/:id', async function(req,res,next ){                          //for updating subcategory info
   let _id = req.params.id;
-  await subcategory_db.create({
+ const data = await subcategory_db.create({
       category_name: req.body.category,
       sub_category_name: req.body.sub_category_name,
       created_on: Date.now(),
       category_id: _id,
     
   });
+  
  
-  res.redirect('/subcategory_list/');
+  res.render('question',{title:"Create Form", data: data});
 });
 
+router.get('/question/:id', async function(req,res, next){
+  const data = await subcategory_db.findOne({'_id': req.params.id});
+  res.render('question',{title:"Create Form", data: data});
+})
+
+router.get('/view_question/:id', async function(req,res, next){                    ////view Question
+  const data = await subcategory_db.findOne({'_id': req.params.id});
+  console.log(data.question);
+  res.render('View_question',{title:"View Form", data: data.question});
+})
 
 router.get('/update_subcat/:id', async function(req,res,next ){
   let id= req.params.id
@@ -325,7 +336,7 @@ router.get('/update_subcat_form/:id', async function(req,res,next ){
 
 ///////////////////////////////////////////////////Forms
 
-router.get('/forms',async function(req,res,next){                        //for SubCategory TAble Update
+router.get('/forms',async function(req,res,next){                        
   const data = await category_db.find().exec();
   const sub_data = await subcategory_db.find().exec();
   res.render('forms',{title:'Forms', data: data, sub_data: sub_data, moment: moment});
@@ -333,11 +344,7 @@ router.get('/forms',async function(req,res,next){                        //for S
 });
 
 router.get('/create_form/:id', async function(req, res, next){
-
-   
    res.render('create_form',{title:'Create Form', data: req.params.id });
-
-
 })
 
 router.post('/created_form/:id',async function(req,res,next){  
@@ -376,6 +383,28 @@ router.get('/view_form/:id',async function(req,res,next){
   res.render('view_form',{title:'Created Form', data: data,  brand: brand, years: year,cat:cat, budget: budget});
 
 });
+
+
+router.post('/submit_form/:id', async function(req, res, next){
+
+  const data = await subcategory_db.findByIdAndUpdate(req.params.id,{
+    $push:{ question: [req.body.first,req.body.second, req.body.third]},
+    form_created: true
+});
+
+console.log(data);
+  res.redirect('/subcategory_list/');
+})
+
+router.post('/add_more/:id', async function(req, res, next){
+
+  const data = await subcategory_db.findByIdAndUpdate(req.params.id,{
+    $push:{ question: req.body.extra},
+});
+
+console.log(data);
+  res.redirect('/subcategory_list/');
+})
 //////////////////////////////////////////////////Pending
 
 router.get('/pending',async function(req, res, next) {  

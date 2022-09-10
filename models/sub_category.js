@@ -26,27 +26,20 @@ const subcategorySchema = new mongoose.Schema({
     created_on:{
         type: Date,
         required: false,
-
     },
     status:{
         type: Boolean,
         required: false,
         default: true
     },
-    km:{
-        type: String,
-        required: false,
-        default: 'false'
-    },
-    fuel:{
-        type: String,
-        required: false,
-        default: 'false'
-    },
     form_created:{
         type: Boolean,
         required: false,
         default: false
+    },
+    question:{
+        type: Array,
+        required:false,
     }
   
 })
