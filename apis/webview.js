@@ -67,6 +67,7 @@ console.log(req.params.id);
         since: user.added_on,
         image: req.files.image,
         title:req.body.title,
+        date: moment(Date.now()).format("YYYY-MM-DD"),
         km:req.body.km,
         year:req.body.year,
         fuel:req.body.fuel,

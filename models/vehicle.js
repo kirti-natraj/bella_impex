@@ -58,11 +58,9 @@ const vehicleSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    date: {
-        type: Date,
-        required: false,
-        default: Date.now()
-
+    created_on: {
+        type: String,
+        required: false
     },
     year:{
         type: String,
@@ -143,13 +141,10 @@ const vehicleSchema = new mongoose.Schema({
         required: false,
         default: 0
     },
-    approval_date:{
-        type: Date,
-        required: false
-    },
-    reject_date:{
-        type: Date,
-        required: false
+    approved_on:{
+        type: String,
+        required: false,
+        default:""
     },
     view_count:{
         type: Number,

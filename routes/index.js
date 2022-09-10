@@ -389,7 +389,7 @@ router.get('/activate/:id', async function(req,res,next ){
 
   const a1= await vehicle_db.findByIdAndUpdate( _id, {
     approval: true,
-    approval_date: Date.now(),
+    approval_date: moment(Date.now()).format("YYYY-MM-DD"),
     });
   res.redirect('/vehicle/');
 });
@@ -399,7 +399,7 @@ router.get('/reject/:id', async function(req,res,next ){
 
   const a1= await vehicle_db.findByIdAndUpdate( _id, {
     reject: true,
-    reject_date: Date.now()
+    approval_date: moment(Date.now()).format("YYYY-MM-DD"),
     });
   res.redirect('/pending/');
 });
