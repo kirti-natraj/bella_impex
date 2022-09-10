@@ -334,7 +334,7 @@ router.get('/update_subcat_form/:id', async function(req,res,next ){
   res.redirect('/subcategory_list/');
 });
 
-///////////////////////////////////////////////////Forms
+/////////////////////////////////////////////////// Forms
 
 router.get('/forms',async function(req,res,next){                        
   const data = await category_db.find().exec();
@@ -398,12 +398,10 @@ console.log(data);
 
 router.post('/add_more/:id', async function(req, res, next){
 
-  const data = await subcategory_db.findByIdAndUpdate(req.params.id,{
-    $push:{ question: req.body.extra},
-});
+  const data = await subcategory_db.findById(req.params.id);
 
-console.log(data);
-  res.redirect('/subcategory_list/');
+  res.render('add_more',{title:'Add More', data: data});
+  
 })
 //////////////////////////////////////////////////Pending
 
