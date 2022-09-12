@@ -12,6 +12,8 @@ const brand_db = require('../models/brand');
 const year_db = require('../models/year');
 const budget_db = require('../models/budget');
 const banner_db = require('../models/banner');
+const state_db = require('../models/state');
+const city_db = require('../models/city');
 const alert = require('alert');
 
 
@@ -88,6 +90,20 @@ const uploadBanner = multer({storage: storageBanner});
 router.get('/',  function(req, res, next) {    
               //for login Page
   res.render('login', { title: '' });
+});
+//////////////////////////////////////////////state nd city
+
+router.get('/setState',async function (req, res, next) {
+     
+ 
+  const city =  await city_db.create(
+    {
+      state_id: "631f0a71e1f8c2ee994f012e",
+      city_name: "Ahmedabad"
+    }
+  );
+  return res.json({response: true, msg:"Page found",  city: city })
+ 
 });
 
 ///////////////////////////////////////brand

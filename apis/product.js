@@ -8,6 +8,8 @@ var subcategory_db = require('../models/sub_category');
 var properties_db= require('../models/properties');
 var vehicle_db= require('../models/vehicle');
 var product_db = require('../models/products');
+const state_db = require('../models/state');
+const city_db = require('../models/city');
 const moment = require('moment');
 const multer = require('multer');
 
@@ -98,6 +100,24 @@ router.post('/getVehicle',async function (req, res, next) {
    
 
 }); 
+///////////////////////////////////////state and city
+
+router.get('/getState',async function (req, res, next) {
+   const data = await state_db.find().exec();
+   return res.json({response: true, msg:"Page found", data: data })
+});
+
+router.post('/getCity',async function (req, res, next) {
+    city_db.find({state_id: req.body.state_id})
+    .then(result => {
+        if (!result) return res.json({response: false, msg: "User not found"});
+        else {
+            result.fcmToken = req.body.fcmToken;
+            return res.json({response: true, msg:"User found", data: result});
+        }
+    })
+});
+
 ////////////////////////////////////////////webview of add vehicle post
 
   router.get('/getWebviewData',async function (req, res, next) {
