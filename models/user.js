@@ -18,7 +18,22 @@ const userSchema = new mongoose.Schema({
         required: false,
         default:''
     },
-    district:{
+    cityId:{
+        type: String,
+        required: false,
+        default:''
+    },
+    stateId:{
+        type: String,
+        required: false,
+        default:''
+    },
+    stateName:{
+        type: String,
+        required: false,
+        default:''
+    },
+    cityName:{
         type: String,
         required: false,
         default:''

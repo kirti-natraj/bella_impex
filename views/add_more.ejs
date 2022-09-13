@@ -26,7 +26,7 @@
               <div class="col-md-12">
                 <div class="card">
                   
-                <form action="/add_more/<%= data._id %>"  method="post" >
+                <form action="/add_more_submit/<%= data._id %>"  method="post" >
                   <div class="card-body">
                     <p class="text-uppercase text-sm">Enter Form Field Name for Subcategory <%= data.sub_category_name %></p>
                     <div class="row">
@@ -42,12 +42,14 @@
 
                    <div class="row">
                     <div class="d-flex justify-content-between">
-                      <a href="/subcategory_list/" class="btn btn-sm bg-gradient-secondary mb-0 d-none d-lg-block">Cancel</a>
+                      <a href="/subcategory_list/" class="btn btn-sm bg-gradient-secondary ">Cancel</a>
                      
-                      <a href="/add_more/<%= data._id %>" class="btn btn-sm bg-gradient-secondary mb-0 d-none d-lg-block">Add More</a>
+                      <a href="/add_more_one/<%= data._id %>" class="btn btn-sm btn-dark ">Add More</a>
                       
-                      
-                      <button  type="submit" class="btn btn-sm btn-info float-right mb-0 d-none d-lg-block">Submit</button>
+                      <a href="/view_question/<%= data._id %>" class="btn btn-success btn-sm" id="viewform" >
+                        View Form
+                     </a>
+                      <button  type="submit" class="btn btn-sm btn-info float-right">Submit</button>
                     </div>
                    </div>
                     

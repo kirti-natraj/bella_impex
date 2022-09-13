@@ -95,11 +95,12 @@ router.get('/',  function(req, res, next) {
 
 router.get('/setState',async function (req, res, next) {
      
- 
+
+  
   const city =  await city_db.create(
     {
-      state_id: "631f0a71e1f8c2ee994f012e",
-      city_name: "Ahmedabad"
+      state_id: "631f0f7a3df6bbab862ad51b",
+      city_name: "Bhopal"
     }
   );
   return res.json({response: true, msg:"Page found",  city: city })
@@ -316,21 +317,10 @@ router.post('/subcategory_form/:id', async function(req,res,next ){             
       category_id: _id,
     
   });
-  
- 
-  res.render('question',{title:"Create Form", data: data});
+  const sub_data = await subcategory_db.find().exec();
+ res.redirect('/subcategory_list');
+
 });
-
-router.get('/question/:id', async function(req,res, next){
-  const data = await subcategory_db.findOne({'_id': req.params.id});
-  res.render('question',{title:"Create Form", data: data});
-})
-
-router.get('/view_question/:id', async function(req,res, next){                    ////view Question
-  const data = await subcategory_db.findOne({'_id': req.params.id});
-  console.log(data.question);
-  res.render('View_question',{title:"View Form", data: data.question});
-})
 
 router.get('/update_subcat/:id', async function(req,res,next ){
   let id= req.params.id
@@ -352,71 +342,125 @@ router.get('/update_subcat_form/:id', async function(req,res,next ){
 
 /////////////////////////////////////////////////// Forms
 
-router.get('/forms',async function(req,res,next){                        
-  const data = await category_db.find().exec();
-  const sub_data = await subcategory_db.find().exec();
-  res.render('forms',{title:'Forms', data: data, sub_data: sub_data, moment: moment});
+// router.get('/forms',async function(req,res,next){                        
+//   const data = await category_db.find().exec();
+//   const sub_data = await subcategory_db.find().exec();
+//   res.render('forms',{title:'Forms', data: data, sub_data: sub_data, moment: moment});
 
-});
+// });
 
-router.get('/create_form/:id', async function(req, res, next){
-   res.render('create_form',{title:'Create Form', data: req.params.id });
+// router.get('/create_form/:id', async function(req, res, next){
+ 
+//    res.render('create_form',{title:'Create Form', data: req.params.id });
+// })
+
+// router.post('/created_form/:id',async function(req,res,next){  
+//   const brand = await brand_db.find().exec();
+//   const year = await year_db.find().exec();
+//   const budget = await budget_db.find().exec();
+//   console.log(req.body.KM);
+//   const km = req.body.KM;
+//   await subcategory_db.findByIdAndUpdate(req.params.id,{
+//              km: km,
+//              fuel: req.body.FUEL,
+//              form_created: true
+//   });
+//   const data = await subcategory_db.find({'_id': req.params.id});
+//   const cat = await category_db.find({'_id': data[0].category_id}).exec();
+//   console.log(data);
+//   res.render('created_form',{title:'Created Form', data: data,  brand: brand, years: year,cat:cat, budget: budget});
+
+// });
+
+// router.get('/View_forms',async function(req,res,next){                        //for SubCategory TAble Update
+//   const data = await category_db.find().exec();
+//   const sub_data = await subcategory_db.find().exec();
+//   res.render('View_forms',{title:'View Forms', data: data, sub_data: sub_data, moment: moment});
+
+// });
+
+
+
+
+
+// router.get('/view_form/:id',async function(req,res,next){  
+//   const brand = await brand_db.find().exec();
+//   const year = await year_db.find().exec();
+//   const budget = await budget_db.find().exec();
+//   const data = await subcategory_db.find({'_id': req.params.id});
+//   const cat = await category_db.find({'_id': data[0].category_id}).exec();
+//   console.log(data);
+//   res.render('view_form',{title:'Created Form', data: data,  brand: brand, years: year,cat:cat, budget: budget});
+
+// });
+
+router.get('/question/:id', async function(req,res, next){
+  const data = await subcategory_db.findOne({'_id': req.params.id});
+  console.log(data.form_created);
+  res.render('question',{title:"Create Form", data: data});
 })
 
-router.post('/created_form/:id',async function(req,res,next){  
-  const brand = await brand_db.find().exec();
-  const year = await year_db.find().exec();
-  const budget = await budget_db.find().exec();
-  console.log(req.body.KM);
-  const km = req.body.KM;
-  await subcategory_db.findByIdAndUpdate(req.params.id,{
-             km: km,
-             fuel: req.body.FUEL,
-             form_created: true
-  });
-  const data = await subcategory_db.find({'_id': req.params.id});
-  const cat = await category_db.find({'_id': data[0].category_id}).exec();
-  console.log(data);
-  res.render('created_form',{title:'Created Form', data: data,  brand: brand, years: year,cat:cat, budget: budget});
-
-});
-
-router.get('/View_forms',async function(req,res,next){                        //for SubCategory TAble Update
-  const data = await category_db.find().exec();
-  const sub_data = await subcategory_db.find().exec();
-  res.render('View_forms',{title:'View Forms', data: data, sub_data: sub_data, moment: moment});
-
-});
-
-
-router.get('/view_form/:id',async function(req,res,next){  
-  const brand = await brand_db.find().exec();
-  const year = await year_db.find().exec();
-  const budget = await budget_db.find().exec();
-  const data = await subcategory_db.find({'_id': req.params.id});
-  const cat = await category_db.find({'_id': data[0].category_id}).exec();
-  console.log(data);
-  res.render('view_form',{title:'Created Form', data: data,  brand: brand, years: year,cat:cat, budget: budget});
-
-});
-
-
+router.get('/view_question/:id', async function(req,res, next){                   ////////////////view Question
+ 
+  const data = await subcategory_db.findOne({'_id': req.params.id});
+  console.log(data.question);
+  res.render('View_question',{title:"View Form", id: data._id, data: data.question});
+})
 router.post('/submit_form/:id', async function(req, res, next){
-
-  const data = await subcategory_db.findByIdAndUpdate(req.params.id,{
-    $push:{ question: [req.body.first,req.body.second, req.body.third]},
-    form_created: true
-});
-
-console.log(data);
-  res.redirect('/subcategory_list/');
+  console.log(req.body.indicator);
+  if(req.body.indicator == 'yes'){
+    await subcategory_db.findByIdAndUpdate(req.params.id,{
+      $push:{ question: req.body.first},
+      form_created: true
+    })
+     await subcategory_db.findByIdAndUpdate(req.params.id,{
+      $push:{ question: req.body.second},
+      
+    })
+    const data = await subcategory_db.findByIdAndUpdate(req.params.id,{
+      $push:{ question: req.body.third},
+     
+    })
+    res.redirect('/subcategory_list/');
+  }else{
+    await subcategory_db.findByIdAndUpdate(req.params.id,{
+      $push:{ question: req.body.first},
+      form_created: true
+    })
+     await subcategory_db.findByIdAndUpdate(req.params.id,{
+      $push:{ question: req.body.second},
+      
+    })
+    await subcategory_db.findByIdAndUpdate(req.params.id,{
+      $push:{ question: req.body.third},
+     
+    })
+    const data = await subcategory_db.findById(req.params.id);
+    res.render('add_more',{title:'Add More', data: data});
+  }
+  
+ 
+ 
 })
 
-router.post('/add_more/:id', async function(req, res, next){
-
+router.get('/add_more/:id', async function(req, res, next){
   const data = await subcategory_db.findById(req.params.id);
-
   res.render('add_more',{title:'Add More', data: data});
+})
+router.get('/add_more_one/:id', async function(req, res, next){
+   await subcategory_db.findByIdAndUpdate(req.params.id,{
+    $push:{ question: req.body.extra},
+  });
+  const data = await subcategory_db.findById(req.params.id);
+  res.render('add_more',{title:'Add More', data: data});
+})
+router.post('/add_more_submit/:id', async function(req, res, next){
+
+  await subcategory_db.findByIdAndUpdate(req.params.id,{
+    $push:{ question: req.body.extra},
+  });
+  const data = await subcategory_db.findById(req.params.id);
+  res.render('View_question',{title:"View Form", id: data._id, data: data.question});
   
 })
 //////////////////////////////////////////////////Pending
@@ -718,6 +762,15 @@ router.get('/delete_product/:id', async function(req,res,next ){
   await product_db.deleteOne({ _id:id});
 
   res.redirect('/products/');
+
+});
+
+router.get('/delete_question/:id', async function(req,res,next ){
+  let id= req.params.id;
+  await subcategory_db.findByIdAndUpdate({ _id:id}, {$unset: {question:1},
+  form_created: false
+  }, {multi:true});
+  res.redirect('/subcategory_list/');
 
 });
 module.exports = router;

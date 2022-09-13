@@ -43,37 +43,25 @@
           <div class="card mb-4">
             <div class="row">
 
-           <div  class="col-4">
+           <div  class="col-8">
             <div class="card-header pb-0">
                 <h6>Category table 
                   </h6>
                
               </div>
            </div>
-           <div class="col-2">
-            <div class="card-header pb-0">
-          
-            <a class="btn1" id="action" style="display: none;" >
-              Update
-           </a>
-          
            
-           </div>
-            </div>
+           
             <div class="col-2">
               <div class="card-header pb-0">
-                <a class="btn1" id="form" style="display: none;">
-                  Add Form
-               </a>
+            
+              <a class="btn1" id="action" style="display: none;" >
+                Update
+             </a>
+            
+             
+             </div>
               </div>
-            </div>
-            <div class="col-2">
-              <div class="card-header pb-0">
-                <a class="btn1" id="viewform" style="display: none;">
-                  View Form
-               </a>
-              </div>
-            </div>
             <div class="col-2">
               <div class="card-header pb-0">
                 <a class="btn1" id="delete" style="display: none;">
@@ -90,6 +78,7 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Catgory Name</th>
                       <th class="text-uppercase text-secondary font-weight-bolder opacity-7">Subcategory List</th>
                       <th class="text-uppercase text-secondary font-weight-bolder opacity-7">Status</th>
+                      <th class="text-uppercase text-secondary font-weight-bolder opacity-7" id="formCol" style="display: none;">Form List</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -120,10 +109,6 @@
                                     </div>
                                   </td>  
                                 
-                          
-                                   
-    
-                                 
                                   <td>
                                     
                                     <select class="form-control w-30"  name="subcategory" onchange="myFunction(this.value)">
@@ -138,15 +123,17 @@
                                   <% if(data[i]._id.equals(sub_data[j].category_id)){ %>  
                                    
                                             <option value="<%= sub_data[j]._id %>"> <%= sub_data[j].sub_category_name %>
-                                              
-                                            </option>  
-                                            
+                                       </option>  
+                                        
                                       <% count = count +1 %>
                                       <% }%>
                                   
                                       <% } %>
                                           </select>
+                                       
+
                                         </td>
+                                       
                                         <td class="align-middle">
                        
 
@@ -158,6 +145,18 @@
                   
                   
                                         </td>
+                                        <td>
+                                         
+                                          <a class="btn btn-dark btn-sm" id="form" style="display: none;">
+                                            Add Form
+                                         </a>
+                                       
+                                    
+                                          <a class="btn btn-success btn-sm" id="viewform" style="display: none;">
+                                            View Form
+                                         </a>
+                                       
+                                    </td>
                               </tr>
                             <% }
                                 
@@ -197,18 +196,28 @@
   if (x.style.display === 'none') {
     x.style.display = 'block';
   }
-  var y = document.getElementById("form");
+
+  var z = document.getElementById("delete");
+  if (z.style.display === 'none') {
+    z.style.display = 'block';
+  } 
+  var y = document.getElementById("formCol");
   if (y.style.display === 'none') {
     y.style.display = 'block';
   } 
-  var y = document.getElementById("viewform");
+ 
+    var y = document.getElementById("viewform");
   if (y.style.display === 'none') {
     y.style.display = 'block';
   } 
-  var y = document.getElementById("delete");
+ 
+    var y = document.getElementById("form");
   if (y.style.display === 'none') {
     y.style.display = 'block';
   } 
+ 
+ 
+ 
 
   document.getElementById("action").onclick = function()
   {

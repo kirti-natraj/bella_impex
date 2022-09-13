@@ -22,19 +22,29 @@
       <div class="container-fluid py-2">
 
           <div class="container-fluid py-1">
+
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
                   
                 <form action="/created_form/"  method="post" >
                   <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-2">
+                        <a href="/delete_question/<%= id %>" class="btn btn-sm bg-gradient-secondary mb-0 d-none d-lg-block">Delete</a>
+                      </div>
+                      <div class="col-md-4">
+                        <a href="/add_more/<%= id %>" class="btn btn-info">Add More Field</a>
+                      </div>
+                   
+                    </div>
                     <p class="text-uppercase text-sm">Enter Details</p>
                     <div class="row">
                         <div class="col-md-5">
                             <div class="form-group">
                               
-                            <% for(var i = 0; i< data[0].length; i++) {%>  
-                            <label for="example-text-input" class="form-control-label"><%= data[0][i] %></label> &nbsp;&nbsp;
+                            <% for(var i = 0; i< data.length; i++) {%>  
+                            <label for="example-text-input" class="form-control-label"><%= data[i] %></label> &nbsp;&nbsp;
                           
                             <input class="form-control" type="text" name="field" />
                            
