@@ -44,7 +44,7 @@
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Category Name</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date of Post</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date of Approval</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Description</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Price</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sold Out</th>
@@ -55,16 +55,17 @@
                   </thead>
                   <tbody>
                     <% if(data.length){
-                for(var i = 0; i < data.length; i++) {%>  
+                for(var i = (data.length - 1); i >= 0; i--) {%> 
+                 
                     <tr>
                         <td>
-                            <p class="text-xs text-secondary mb-0">&nbsp;&nbsp; &nbsp;&nbsp;<%= i+1 %></p>
+                            <p class="text-xs text-secondary mb-0">&nbsp;&nbsp; &nbsp;&nbsp;<%= data.length - i %></p>
                         </td>
                         <td>
                           <div>
                              <% if(data[i].image.length){
                             for(var j = 0; j< data[i].image.length; j++) {%>  
-                          <img src="../assets/images/vehicles/<%= data[i].image[j].filename %>" class=" avatar-lg me-3" alt="user1">
+                          <img src="../assets/images/vehicles/<%= data[i].image[j].filename %>" class=" avatar-lg me-3" >
                           <% } %> 
                           <% } %> 
                             </div>
@@ -84,7 +85,7 @@
                       </td>
                       
                       <td class="align-middle text-center text-sm">
-                        <p class="text-secondary text-xs font-weight-bold"><%= moment(data[i].date).format('MMMM Do YYYY') %></p>
+                        <p class="text-secondary text-xs font-weight-bold"><%= data[i].approved_on %></p>
                       </td>
                       
                  
@@ -125,6 +126,7 @@
 
                       </td>
                     </tr>
+                   
                     <% }
                         
                       }else{ %>
