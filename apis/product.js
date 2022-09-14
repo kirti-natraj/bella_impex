@@ -86,7 +86,7 @@ router.post('/getVehicle',async function (req, res, next) {
 
     const cat =  req.body.category;
    
-    const data = await vehicle_db.find({category: cat});
+    const data = await vehicle_db.find({category: cat, approval: true});
     if(data == '') 
     {
        
