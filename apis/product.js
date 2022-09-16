@@ -139,7 +139,7 @@ router.post('/checkSubscription',async function (req, res, next) {
          if(result.payment == true) 
          {
             
-         res.json({response: true, msg:"Subcription Taken" })
+         res.json({response: true, msg:"Subcription Taken", remainingDays: '15'  })
          }
          else
          {
