@@ -249,7 +249,7 @@ router.post('/likeDecr', async function (req, res, next){
 
 
 ////notification
-router.post('/getNotification',async function (req, res, next) {
+router.get('/getNotification',async function (req, res, next) {
     vehicle_db.find({user_id: req.body.user_id})
     .then(result => {
         if (!result) return res.json({response: false, msg: "Data not found"});
@@ -259,6 +259,14 @@ router.post('/getNotification',async function (req, res, next) {
         }
     })
 });
+router.get('/deleteAllNotification',async function (req, res, next) {
+  
+            return res.json({response: true, msg:"All notification deleted..."});
+      
+});
+router.get('/deleteNotification',async function (req, res, next) {
+  
+    return res.json({response: true, msg:"Notification deleted..."});
 
-
+});
 module.exports = router;
