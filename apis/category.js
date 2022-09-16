@@ -45,15 +45,16 @@ router.post('/subcategory',async function (req, res, next) {
 });
  router.get('/getBanner', async function(req, res, next){
      const data = await banner_db.find().select('image');
+     const totalUserCount = await user_db.count(); 
      if(data == '') 
      {
         
-         return res.json({response: false, msg:"Data not found", data: data })
+         return res.json({response: false, msg:"Data not found", totalUserCount :totalUserCount , data: data })
      }    
      else
      {
          console.log(data)
-         res.json({ response: true , msg: "Data Found", data: data});
+         res.json({ response: true , msg: "Data Found", totalUserCount :totalUserCount, data: data});
      } 
  });
 module.exports = router;

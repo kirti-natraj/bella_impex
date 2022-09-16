@@ -202,4 +202,20 @@ router.post('/getVehicleById', async function(req, res, next){
   }
 
 })
+
+router.post('/getProductDetails',async function (req, res, next) {
+    vehicle_db.findById( req.body.product_id)
+    .then(result => {
+        if (!result) return res.json({response: false, msg: "Data not found"});
+        else {
+            result.fcmToken = req.body.fcmToken;
+            return res.json({response: true, msg:"Data found", data: result});
+        }
+    })
+});
+router.get('/getAllProduct',async function (req, res, next) {
+    const data = await vehicle_db.find().exec();
+    res.json({ response: true , msg: "Data Found", data: data });
+});
+
 module.exports = router;
