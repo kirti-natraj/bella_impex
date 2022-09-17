@@ -24,6 +24,7 @@
 		"express-session": "^1.17.3",
 		"express-validator": "^6.14.2",
 		"http-errors": "^2.0.0",
+		"map": "^1.0.1",
 		"moment": "^2.29.4",
 		"mongodb": "^4.8.0",
 		"mongoose": "^6.4.6",

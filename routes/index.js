@@ -175,23 +175,28 @@ router.post('/add_budget_form',  async function(req, res, next) {               
   });
   res.redirect('/budget/');
 });
+
 /////////////////////////////////////Notifiction
+
 router.get('/notification',async function(req,res,next){  
   const data = await noti_db.find().exec();                      //for Category TAble Update
   res.render('noti_list', {title:'Notification', data : data, moment:moment});
 
 });
+
 router.get('/notification_list',async function(req,res,next){                        //for Category TAble Update
   const data = await noti_db.find().exec();
   const user_data = await user_db.find().exec();
   res.render('noti_list', {title:'Notification', data : data,  moment:moment});
 
 });
+
 router.get('/notification_form',async function(req,res,next){                        //for Category TAble Update
  
   res.render('noti_form',{title:'Add Notification'});
 
 });
+
 router.post('/add_notification_form',  async function(req, res, next) {                          //category add
 
   await noti_db.create({
@@ -200,7 +205,9 @@ router.post('/add_notification_form',  async function(req, res, next) {         
   });
   res.redirect('/notification_list/');
 });
+
 /////////////////////////////////////Banner
+
 router.get('/banner_list',async function(req,res,next){                        //for UserTable Page
   const data = await banner_db.find().exec();
  
@@ -478,6 +485,16 @@ router.get('/activate/:id', async function(req,res,next ){
     approval: true,
     approved_on: moment(Date.now()).format("YYYY-MM-DD"),
     });
+   
+    await user_db.updateMany({
+    $push:{
+      notification:{
+        product_id: a1._id,
+        description: a1.description,
+        created_on: moment(Date.now()).format("YYYY-MM-DD")
+      }
+    }
+    })
   res.redirect('/vehicle/');
 });
 

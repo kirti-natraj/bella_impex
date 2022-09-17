@@ -33,6 +33,7 @@ const userSchema = new mongoose.Schema({
         required: false,
         default:''
     },
+    
     cityName:{
         type: String,
         required: false,
@@ -113,8 +114,15 @@ const userSchema = new mongoose.Schema({
     liked_post_id: {
             type: Array,
             required: false,
+        },
+    notification:[
+        {
+            noti_id:{   type:mongoose.ObjectId},
+            product_id:{ type:String, required: false},
+            description:{type:String, required: false},
+            created_on:{type:String, required: false}
         }
-    
+    ]
     
 })
 

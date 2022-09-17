@@ -249,24 +249,39 @@ router.post('/likeDecr', async function (req, res, next){
 
 
 ////notification
-router.get('/getNotification',async function (req, res, next) {
-    vehicle_db.find({user_id: req.body.user_id})
+router.post('/getNotification',async function (req, res, next) {
+
+    user_db.findById(req.body.user_id)
     .then(result => {
-        if (!result) return res.json({response: false, msg: "Data not found"});
-        else {
-            result.fcmToken = req.body.fcmToken;
-            return res.json({response: true, msg:"Data found", data: result});
+        if (!result) 
+        {
+            return res.json({response: false, msg: "Data not found"});
+        }else {
+          
+            return res.json({response: true, msg:"Data found", data: result.notification});
         }
     })
 });
-router.get('/deleteAllNotification',async function (req, res, next) {
+router.post('/deleteAllNotification',async function (req, res, next) {
   
-            return res.json({response: true, msg:"All notification deleted..."});
+           await user_db.findByIdAndUpdate(req.body.user_id, {$set: {notification: [] }});
+          const data = await user_db.findById(req.body.user_id);
+            return res.json({response: true, msg:"All notification deleted...", data: data.notification});
       
 });
-router.get('/deleteNotification',async function (req, res, next) {
+router.post('/deleteNotification',async function (req, res, next) {
   
-    return res.json({response: true, msg:"Notification deleted..."});
+   await user_db.findByIdAndUpdate(req.body.user_id,{ 
+    $pull:{
+        notification:{
+          product_id: req.body.product_id
+          
+        }
+      }
+    })
+    console.log(data);
+    const data = await user_db.findById(req.body.user_id);
+    return res.json({response: true, msg:"Notification deleted...", data: data.notification});
 
 });
 module.exports = router;

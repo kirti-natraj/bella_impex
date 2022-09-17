@@ -78,6 +78,11 @@ console.log(req.params.id);
         transmission: req.body.transmission
   
     });
+    await user_db.updateMany({
+      $pull:{
+        Notification: req.body.post_id
+      }
+    })
     res.render('web_page/price',{id: data._id});
   });
   
