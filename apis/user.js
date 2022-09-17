@@ -279,7 +279,7 @@ router.post('/deleteNotification',async function (req, res, next) {
         }
       }
     })
-    console.log(data);
+   
     const data = await user_db.findById(req.body.user_id);
     return res.json({response: true, msg:"Notification deleted...", data: data.notification});
 
