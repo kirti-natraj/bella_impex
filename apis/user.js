@@ -203,6 +203,12 @@ router.post('/getUserDataApi',async function (req, res, next) {
     })
 });
 
+router.post('/getLike', async function (req, res, next){
+    const data = await user_db.findById(req.body.user_id);
+      return res.json({response: true, msg:"Liked by user", data: data.liked_post_id});
+      
+});
+
 router.post('/likeIncr', async function (req, res, next){
       await user_db.findByIdAndUpdate(req.body.user_id, {
          
@@ -246,8 +252,6 @@ router.post('/likeDecr', async function (req, res, next){
        
    
 });
-
-
 ////notification
 router.post('/getNotification',async function (req, res, next) {
 

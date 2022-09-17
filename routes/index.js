@@ -485,13 +485,17 @@ router.get('/activate/:id', async function(req,res,next ){
     approval: true,
     approved_on: moment(Date.now()).format("YYYY-MM-DD"),
     });
-   
+   const data = await vehicle_db.findById(_id);
+   await user_db.updateMany({
+    $set:{notification: []}
+   });
     await user_db.updateMany({
     $push:{
       notification:{
-        product_id: a1._id,
-        description: a1.description,
-        created_on: moment(Date.now()).format("YYYY-MM-DD")
+        product_id: data._id,
+        title: data.title,
+        description: data.description,
+        created_on: data.created_on
       }
     }
     })

@@ -101,6 +101,16 @@ const userSchema = new mongoose.Schema({
         required: false,
         default:'false'
     },
+    sub_left_day:{
+        type: Number,
+        required: false,
+        default: '1826'
+    },
+    yesterday:{
+        type: String,
+        required: false
+    },
+  
     postCount:{
         type: Number,
         required: false,
@@ -119,6 +129,7 @@ const userSchema = new mongoose.Schema({
         {
             noti_id:{   type:mongoose.ObjectId},
             product_id:{ type:String, required: false},
+            title:{  type:String, required: false}, 
             description:{type:String, required: false},
             created_on:{type:String, required: false}
         }

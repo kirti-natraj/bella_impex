@@ -160,7 +160,8 @@ router.post('/subscriptionPlan',async function (req, res, next) {
      
     var user = await user_db.findByIdAndUpdate(req.body.userId, {
         payment: true,
-        receiptId: req.body.receiptId
+        receiptId: req.body.receiptId,
+        yesterday:moment(Date.now()).format("DD")
     })
 
   
