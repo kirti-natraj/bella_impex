@@ -8,7 +8,11 @@ const userBillSchema = new mongoose.Schema({
         required: false,
         default:''
     },
-   
+   name:{
+        type: String,
+        required: false,
+        default:''
+   },
     stateName:{
         type: String,
         required: false,
