@@ -61,7 +61,7 @@ const storageUser = multer.diskStorage({
             about_business: req.body.aboutYourBusiness,
             toThisNoReach: req.body.thisNoToReach,
         })
-   
+    
  
     if (!user) return res.json({response: false, postMessage: 'failed'});
     else {
@@ -93,8 +93,8 @@ router.post('/login',async function (req, res) {
                 user_name: req.body.user_name,
                 user_type: req.body.loginType
             })
-
-            res.json({ response: false , msg: "Mobile number not exist, OTP Sent Successfully!", data: otp, user_id: user_data._id});
+            data.fcmToken = req.body.fcmToken;
+            res.json({ response: false , msg: "Mobile number not exist, OTP Sent Successfully!", data: otp, user_id: user_data._id, fcmToken: user_data.fcmToken});
             
         }
         else 
@@ -110,8 +110,8 @@ router.post('/login',async function (req, res) {
                    console.log(err)
                     })
     
-                
-            res.json({response: true, msg:"OTP Sent Successfully!", data: otp, user_id: data._id})
+                data.fcmToken = req.body.fcmToken;
+            res.json({response: true, msg:"OTP Sent Successfully!", data: otp, user_id: data._id, fcmToken: data.fcmToken})
         }
     }
 
@@ -126,14 +126,15 @@ router.post('/login',async function (req, res) {
                 user_name: req.body.user_name,
                 user_type: req.body.loginType
             })
-            res.json({ response: false , msg: "Gmail not exist, OTP Sent Successfully!", data: '', user_id: user_data._id});
+            user_data.fcmToken = req.body.fcmToken;
+            res.json({ response: false , msg: "Gmail not exist, OTP Sent Successfully!", data: '', user_id: user_data._id, fcmToken: user_data.fcmToken});
             
         }
         else 
         {
             
-                
-            res.json({response: true, msg:"Gmail Exist", data: '', user_id: data._id})
+            data.fcmToken = req.body.fcmToken;    
+            res.json({response: true, msg:"Gmail Exist", data: '', user_id: data._id, fcmToken: data.fcmToken})
         }
     }
     else  res.json({response: true, msg:"Invalid Login Type", data: ''})
@@ -159,7 +160,7 @@ router.post('/verify_otp', async function(req, res){
     .then(result => {
         if (!result) return res.json({response: false, msg: "User not found"});
         else {
-           
+            result.fcmToken = req.body.fcmToken;
             return res.json({response: true, msg:"OTP verified!", data: result});
         }
     })

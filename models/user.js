@@ -133,7 +133,12 @@ const userSchema = new mongoose.Schema({
             description:{type:String, required: false},
             created_on:{type:String, required: false}
         }
-    ]
+    ],
+    fcmToken:{
+        type: String,
+        required: false,
+        default:''
+    }
     
 })
 
