@@ -138,6 +138,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: false,
         default:''
+    },
+    gst:{
+        type: String,
+        required: false,
+        default: 'no'
+    },
+    gstNo:{
+        type: String,
+        required: false,
+        default: ''
     }
     
 })

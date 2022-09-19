@@ -7,9 +7,11 @@ var category_db = require('../models/category');
 var subcategory_db = require('../models/sub_category');
 var properties_db= require('../models/properties');
 var vehicle_db= require('../models/vehicle');
+var user_bill_db = require('../models/user_billing');
 var product_db = require('../models/products');
 var otpGenerator = require('otp-generator');
 var otp_db = require('../models/otp');
+
 const moment = require('moment');
 
 const multer = require('multer');
@@ -289,4 +291,33 @@ router.post('/deleteNotification',async function (req, res, next) {
     return res.json({response: true, msg:"Notification deleted...", data: data.notification});
 
 });
+
+
+/////////////////////billing
+
+router.post('/customerBillingInformation',async function (req, res, next) {
+    user_bill_db.find({user_id:req.body.user_id})
+    .then(result => {
+        if (!result) return res.json({response: false, msg: "User not found"});
+        else {
+           
+            return res.json({response: true, msg:"User found",data: result});
+        }
+    })
+});
+
+router.post('/setCustomerBillingInformation',async function (req, res, next) {
+    const user_data = await user_bill_db.create({
+        user_id: req.body.user_id,
+        address: req.body.address,
+        stateName: req.body.state,
+        cityName: req.body.city,
+        gst: req.body.gst,
+        gstNo: req.body.gstNo
+    });
+
+    return res.json({response: true, msg:"Data found", data: user_data });
+
+});
+
 module.exports = router;
