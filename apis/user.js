@@ -301,7 +301,7 @@ router.post('/customerBillingInformation',async function (req, res, next) {
         if (!result) return res.json({response: false, msg: "User not found"});
         else {
            
-            return res.json({response: true, msg:"User found",data: result});
+            return res.json({response: true, msg:"User found", data: result});
         }
     })
 });
@@ -309,6 +309,7 @@ router.post('/customerBillingInformation',async function (req, res, next) {
 router.post('/setCustomerBillingInformation',async function (req, res, next) {
     const user_data = await user_bill_db.create({
         user_id: req.body.user_id,
+        name: req.body.name,
         address: req.body.address,
         stateName: req.body.state,
         cityName: req.body.city,
