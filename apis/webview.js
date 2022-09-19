@@ -78,11 +78,7 @@ console.log(req.params.id);
         transmission: req.body.transmission
   
     });
-    await user_db.updateMany({
-      $pull:{
-        Notification: req.body.post_id
-      }
-    })
+   
     res.render('web_page/price',{id: data._id});
   });
   
@@ -106,14 +102,14 @@ console.log(req.params.id);
 
   router.post('/add_location/:id',async function(req, res, next) {                          //category add
 
-    await vehicle_db.findByIdAndUpdate(req.params.id, {
+    const data = await vehicle_db.findByIdAndUpdate(req.params.id, {
       state: req.body.stt,
       city: req.body.city,
       location: req.body.location,
       latitude: req.body.latitude,
       longitude: req.body.longitude
     });
-    res.render('web_page/success',{title:"popup"} );
+    res.render('web_page/success',{title:"popup", data : data} );
   });
   
 
