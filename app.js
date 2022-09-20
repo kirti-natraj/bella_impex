@@ -13,6 +13,7 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority', {useNewUrlParser: true});
 var conn = mongoose.connection;
 conn.on('connected', function() {
+  
     console.log('database is connected successfully');
 });
 conn.on('disconnected',function(){
@@ -26,6 +27,7 @@ const user_apiRouter = require('./apis/user');
 const category_apiRouter = require('./apis/category');
 const userRouter = require('./routes/user');
 const webview_apiRouter= require('./apis/webview');
+const webview_user_router =require('./apis/user');
 const dynamic_apiRouter= require('./apis/dynamic');
 const productRouter = require('./apis/product');
 const categoryRouter = require('./routes/category');
@@ -66,6 +68,7 @@ app.use('/api/user',user_apiRouter);
 app.use('/api/category',category_apiRouter);
 app.use('/api/product',productRouter);
 app.use('/webviewIndex',webview_apiRouter);
+app.use('/userWebview', webview_user_router);
 app.use('/dynamic',dynamic_apiRouter);
 app.use('/user', userRouter);
 app.use('/brand', indexRouter);

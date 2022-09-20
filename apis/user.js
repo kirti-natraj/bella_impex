@@ -8,6 +8,7 @@ var subcategory_db = require('../models/sub_category');
 var properties_db= require('../models/properties');
 var vehicle_db= require('../models/vehicle');
 var user_bill_db = require('../models/user_billing');
+var invoice_db = require('../models/invoice');
 var product_db = require('../models/products');
 var otpGenerator = require('otp-generator');
 var otp_db = require('../models/otp');
@@ -295,12 +296,23 @@ router.post('/deleteNotification',async function (req, res, next) {
 
 /////////////////////billing
 
+router.get('/:id', async function (req, res) {
+    const data = await user_bill_db.find({user_id:req.params.id});
+    const invoice = await invoice_db.create({
+        user_id: req.params.id,
+        created_on: moment(Date.now()).format("YYYY-MM-DD"),
+    });
+    console.log(invoice);
+    res.render('web_page/invoice', {data: data, invoice: invoice});
+});
+
 router.post('/customerBillingInformation',async function (req, res, next) {
     user_bill_db.find({user_id:req.body.user_id})
     .then(result => {
         if (!result) return res.json({response: false, msg: "User not found"});
         else {
            
+
             return res.json({response: true, msg:"User found", data: result});
         }
     })
