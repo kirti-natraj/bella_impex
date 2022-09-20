@@ -11,6 +11,7 @@ var product_db = require('../models/products');
 const state_db = require('../models/state');
 const city_db = require('../models/city');
 const moment = require('moment');
+var user_bill_db = require('../models/user_billing');
 const multer = require('multer');
 const puppeteer = require('puppeteer');
 
