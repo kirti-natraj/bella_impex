@@ -225,7 +225,7 @@ router.get('/getAllProduct',async function (req, res, next) {
 
 router.post('/getInvoice',async function (req, res, next) {
 
-    user_bill_db.find({user_id:req.body.user_id})
+    user_bill_db.findOne({user_id:req.body.user_id})
     .then(result => {
         if (!result) return res.json({response: false, msg: "Billing Info not"});
         else {
