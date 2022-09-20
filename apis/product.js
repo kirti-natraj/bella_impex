@@ -14,6 +14,10 @@ const moment = require('moment');
 const multer = require('multer');
 const puppeteer = require('puppeteer');
 var user_bill_db = require('../models/user_billing');
+const { GridFsStorage } = require("multer-gridfs-storage");
+
+
+
 
 const storageProduct = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -223,52 +227,60 @@ router.get('/getAllProduct',async function (req, res, next) {
 
 ////////////////////////////////////////// Invoice
 
-router.get('/getInvoice/:id',async function (req, res, next) {
+// router.post('/getInvoice',async function (req, res, next) {
 
-    user_bill_db.findOne({user_id:req.params.id})
+//     user_bill_db.findOne({user_id:req.body.user_id})
+//     .then(result => {
+//         if (!result) return res.json({response: false, msg: "Billing Info not"});
+//         else {
+//             (async () => {
+
+//             const user = req.body.user_id;
+
+//             // Create a browser instance
+//             const browser = await puppeteer.launch();
+          
+//             // Create a new page
+//             const page = await browser.newPage();
+          
+//             // Website URL to export as pdf
+//             const website_url = 'http://localhost:8080/userWebview/'+user; 
+          
+//             // Open URL in current page
+//             await page.goto(website_url, { waitUntil: 'networkidle0' }); 
+          
+//             //To reflect CSS used for screens instead of print
+//             await page.emulateMediaType('screen');
+          
+//           // Downlaod the PDF
+//             const pdf = await page.pdf({
+//               path: 'public/assets/pdf/result_'+user+ '.pdf',
+//               margin: { top: '100px', right: '50px', bottom: '100px', left: '50px' },
+//               printBackground: true,
+//               format: 'A4',
+//             });
+          
+//             // Close the browser instance
+//             await browser.close();
+//             res.json({ response: true , msg: "Data Found", pdf: 'http://localhost:8080/assets/pdf/result_'+user+'.pdf'});
+//         })();
+
+//         }
+//     })
+ 
+// });
+
+router.post('/invoice',async function (req, res, next) {
+    const user = req.body.user_id;
+    user_bill_db.find({user_id:req.body.user_id})
     .then(result => {
-        if (!result) return res.json({response: false, msg: "Billing Info not"});
+        if (!result) return res.json({response: false, msg: "User not found"});
         else {
-            (async () => {
+           
 
-            const user = req.params.id;
-
-            // Create a browser instance
-            const browser = await puppeteer.launch();
-          
-            // Create a new page
-            const page = await browser.newPage();
-          
-            // Website URL to export as pdf
-            const website_url = 'http://localhost:8080/userWebview/'+user; 
-          
-            // Open URL in current page
-            await page.goto(website_url, { waitUntil: 'networkidle0' }); 
-          
-            //To reflect CSS used for screens instead of print
-            await page.emulateMediaType('screen');
-          
-          // Downlaod the PDF
-            const pdf = await page.pdf({
-              path: 'public/assets/pdf/result_'+user+ '.pdf',
-              margin: { top: '100px', right: '50px', bottom: '100px', left: '50px' },
-              printBackground: true,
-              format: 'A4',
-            });
-          
-            // Close the browser instance
-            await browser.close();
-            res.json({ response: true , msg: "Data Found", pdf: 'http://localhost:8080/assets/pdf/result_'+user+'.pdf'});
-        })();
-
+            return res.json({response: true, msg:"User found", data: 'http://localhost:8080/userWebview/'+user});
         }
     })
-
-
-
-
- 
 });
-
 
 module.exports = router;

@@ -10,6 +10,10 @@
    <%- include('admin/includes/navbar')%>
     <!-- End Navbar -->
     <div class="container-fluid py-4">
+      <form action="/fileUpload/upload"  method="post" enctype="multipart/form-data" >
+<input type="file" name="file"/>
+<button type="submit">Done</button>
+      </form>
       <div class="row">
         <div class="col-12">
           <div class="card mb-4">

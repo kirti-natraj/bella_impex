@@ -27,6 +27,7 @@ const user_apiRouter = require('./apis/user');
 const category_apiRouter = require('./apis/category');
 const userRouter = require('./routes/user');
 const webview_apiRouter= require('./apis/webview');
+const fileUpload= require('./apis/fileUpload');
 const webview_user_router =require('./apis/user');
 const dynamic_apiRouter= require('./apis/dynamic');
 const productRouter = require('./apis/product');
@@ -74,6 +75,7 @@ app.use('/user', userRouter);
 app.use('/brand', indexRouter);
 app.use('/year', indexRouter);
 app.use('/budget', indexRouter);
+app.use('/fileUpload', fileUpload);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
