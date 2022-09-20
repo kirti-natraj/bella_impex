@@ -223,15 +223,15 @@ router.get('/getAllProduct',async function (req, res, next) {
 
 ////////////////////////////////////////// Invoice
 
-router.post('/getInvoice',async function (req, res, next) {
+router.get('/getInvoice/:id',async function (req, res, next) {
 
-    user_bill_db.findOne({user_id:req.body.user_id})
+    user_bill_db.findOne({user_id:req.params.id})
     .then(result => {
         if (!result) return res.json({response: false, msg: "Billing Info not"});
         else {
             (async () => {
 
-            const user = req.body.user_id;
+            const user = req.params.id;
 
             // Create a browser instance
             const browser = await puppeteer.launch();
