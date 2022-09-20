@@ -11,9 +11,9 @@ var product_db = require('../models/products');
 const state_db = require('../models/state');
 const city_db = require('../models/city');
 const moment = require('moment');
-var user_bill_db = require('../models/user_billing');
 const multer = require('multer');
 const puppeteer = require('puppeteer');
+var user_bill_db = require('../models/user_billing');
 
 const storageProduct = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -227,7 +227,7 @@ router.post('/getInvoice',async function (req, res, next) {
 
     user_bill_db.find({user_id:req.body.user_id})
     .then(result => {
-        if (!result) return res.json({response: false, msg: "Billing Info not shared"});
+        if (!result) return res.json({response: false, msg: "Billing Info not"});
         else {
             (async () => {
 
