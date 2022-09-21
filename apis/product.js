@@ -71,6 +71,7 @@ router.post('/addProduct', uploadProduct.fields([{name:'image', maxCount: 5}]), 
  router.post('/getProduct',async function (req, res, next) {
 
     const sub_id =  req.body.subcategory_id;
+  
     console.log(sub_id)
     const data = await product_db.find({subcategory: sub_id});
     if(data == '') 
@@ -80,7 +81,9 @@ router.post('/addProduct', uploadProduct.fields([{name:'image', maxCount: 5}]), 
     }    
     else
     {
-        console.log(data)
+        console.log(data);
+       
+        const data = await vehicle_db.findById(req.body.post_id).exec();
         res.json({ response: true , msg: "Data Found", data: data });
     } 
    
@@ -100,6 +103,20 @@ router.post('/getVehicle',async function (req, res, next) {
     else
     {
         console.log(data)
+        
+     const user = req.body.user_id;
+     const user_data = await user_db.findById(user);
+     console.log(user_data);
+     for(var j=0; j < data.length; j++)
+     {
+        for(var i=0;i < user_data.liked_post_id.length ;i++){
+            console.log(data[j]);
+            if(user_data.liked_post_id[i] == data[j]._id){
+                data[j].likeFlag = true
+            }
+        }
+     }
+    
         res.json({ response: true , msg: "Data Found", data: data });
     } 
    
@@ -204,70 +221,108 @@ router.post('/getVehicleById', async function(req, res, next){
         $inc:{view_count: 1}
      }) 
      const data = await vehicle_db.findById(req.body.post_id).exec();
-     res.json({ response: true , msg: "Data Found", data: data });
+     const user = req.body.user_id;
+     var likeFlag = false;
+     const user_data = await user_db.findById(user);
+     console.log(user_data);
+     for(var i=0;i < user_data.liked_post_id.length ;i++){
+         if(user_data.liked_post_id[i] == req.body.post_id){
+             likeFlag = true
+         }
+     }
+    
+    
+     res.json({ response: true , msg: "Data Found", likeFlag: likeFlag, data: data});
   }
 
 })
 
 router.post('/getProductDetails',async function (req, res, next) {
-    vehicle_db.findById( req.body.product_id)
-    .then(result => {
-        if (!result) return res.json({response: false, msg: "Data not found"});
+             const user = req.body.user_id;
+  
+            const user_data = await user_db.findById(user);
+   const data = await vehicle_db.findById( req.body.product_id);
+   
+        if(data == null) return res.json({response: false, msg: "Data not found"});
         else {
-            result.fcmToken = req.body.fcmToken;
-            return res.json({response: true, msg:"Data found", data: result});
+            
+            console.log(user_data);
+          
+               for(var i=0;i < user_data.liked_post_id.length ;i++){
+                   console.log(data);
+                   if(user_data.liked_post_id[i] == data._id){
+                       data.likeFlag = true
+                   }
+                }
+            
+
+            data.fcmToken = req.body.fcmToken;
+           
+            return res.json({response: true, msg:"Data found", data: data});
         }
-    })
+   
 });
-router.get('/getAllProduct',async function (req, res, next) {
+router.post('/getAllProduct',async function (req, res, next) {
     const data = await vehicle_db.find().exec();
+    const user = req.body.user_id;
+    const user_data = await user_db.findById(user);
+    console.log(user_data);
+    for(var j=0; j < data.length; j++)
+    {
+       for(var i=0;i < user_data.liked_post_id.length ;i++){
+           console.log(data[j]);
+           if(user_data.liked_post_id[i] == data[j]._id){
+               data[j].likeFlag = true
+           }
+       }
+    }
     res.json({ response: true , msg: "Data Found", data: data });
 });
 
 ////////////////////////////////////////// Invoice
 
-// router.post('/getInvoice',async function (req, res, next) {
+router.post('/getInvoice',async function (req, res, next) {
 
-//     user_bill_db.findOne({user_id:req.body.user_id})
-//     .then(result => {
-//         if (!result) return res.json({response: false, msg: "Billing Info not"});
-//         else {
-//             (async () => {
+    user_bill_db.findOne({user_id:req.body.user_id})
+    .then(result => {
+        if (!result) return res.json({response: false, msg: "Billing Info not"});
+        else {
+            (async () => {
 
-//             const user = req.body.user_id;
+            const user = req.body.user_id;
 
-//             // Create a browser instance
-//             const browser = await puppeteer.launch();
+            // Create a browser instance
+            const browser = await puppeteer.launch();
           
-//             // Create a new page
-//             const page = await browser.newPage();
+            // Create a new page
+            const page = await browser.newPage();
           
-//             // Website URL to export as pdf
-//             const website_url = 'http://localhost:8080/userWebview/'+user; 
+            // Website URL to export as pdf
+            const website_url = 'http://localhost:8080/userWebview/'+user; 
           
-//             // Open URL in current page
-//             await page.goto(website_url, { waitUntil: 'networkidle0' }); 
+            // Open URL in current page
+            await page.goto(website_url, { waitUntil: 'networkidle0' }); 
           
-//             //To reflect CSS used for screens instead of print
-//             await page.emulateMediaType('screen');
+            //To reflect CSS used for screens instead of print
+            await page.emulateMediaType('screen');
           
-//           // Downlaod the PDF
-//             const pdf = await page.pdf({
-//               path: 'public/assets/pdf/result_'+user+ '.pdf',
-//               margin: { top: '100px', right: '50px', bottom: '100px', left: '50px' },
-//               printBackground: true,
-//               format: 'A4',
-//             });
+          // Downlaod the PDF
+            const pdf = await page.pdf({
+              path: 'public/assets/pdf/result_'+user+ '.pdf',
+              margin: { top: '100px', right: '50px', bottom: '100px', left: '50px' },
+              printBackground: true,
+              format: 'A4',
+            });
           
-//             // Close the browser instance
-//             await browser.close();
-//             res.json({ response: true , msg: "Data Found", pdf: 'http://localhost:8080/assets/pdf/result_'+user+'.pdf'});
-//         })();
+            // Close the browser instance
+            await browser.close();
+            res.json({ response: true , msg: "Data Found", pdf: 'http://localhost:8080/assets/pdf/result_'+user+'.pdf'});
+        })();
 
-//         }
-//     })
+        }
+    })
  
-// });
+});
 
 router.post('/invoice',async function (req, res, next) {
     const user = req.body.user_id;

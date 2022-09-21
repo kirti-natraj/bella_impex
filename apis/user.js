@@ -231,7 +231,7 @@ router.post('/likeIncr', async function (req, res, next){
       });
       
       const data = await vehicle_db.findById(req.body.post_id);
-        return res.json({response: true, msg:"Liked by user", data: data});
+        return res.json({response: true, msg:"Liked by user"});
         
 });
 
@@ -305,6 +305,8 @@ router.get('/:id', async function (req, res) {
     console.log(invoice);
     res.render('web_page/invoice', {data: data, invoice: invoice});
 });
+
+
 
 router.post('/customerBillingInformation',async function (req, res, next) {
     user_bill_db.find({user_id:req.body.user_id})

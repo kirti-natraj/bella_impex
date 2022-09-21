@@ -154,6 +154,11 @@ const vehicleSchema = new mongoose.Schema({
     viewer_id:{
         type: Array,
         required: false
+    },
+    likeFlag:{
+        type: Boolean,
+        required: false,
+        default: false
     }
     
 
