@@ -209,34 +209,24 @@ router.post('/getUserDataApi',async function (req, res, next) {
 
 router.post('/getLike', async function (req, res, next){
     const data = await user_db.findById(req.body.user_id);
-      return res.json({response: true, msg:"Liked by user", data: data.liked_post_id});
+    const user = await vehicle_db.find({_id: {$in: data.liked_post_id}}).exec();
+      return res.json({response: true, msg:"Liked by user", data: user});
       
 });
 
 router.post('/likeIncr', async function (req, res, next){
-      await user_db.findByIdAndUpdate(req.body.user_id, {
-         
-      $push:{
-        liked_post_id: req.body.post_id
-      }
 
-      });
+    const user = req.body.user_id;
+    const user_data = await user_db.findById(user);
+    var flag = false;
+    console.log(user_data);
+   
+       for(var i=0;i < user_data.liked_post_id.length ;i++){
+          
+           if(user_data.liked_post_id[i] == req.body.post_id ){
 
-      await vehicle_db.findByIdAndUpdate(req.body.post_id,{
-         
-       $inc:{
-         like_count: 1
-       } 
-
-      });
-      
-      const data = await vehicle_db.findById(req.body.post_id);
-        return res.json({response: true, msg:"Liked by user"});
-        
-});
-
-router.post('/likeDecr', async function (req, res, next){
-    await user_db.findByIdAndUpdate(req.body.user_id, {
+            flag = true;
+             await user_db.findByIdAndUpdate(req.body.user_id, {
        
     $pull:{
       liked_post_id: req.body.post_id
@@ -254,8 +244,55 @@ router.post('/likeDecr', async function (req, res, next){
     const data = await vehicle_db.findById(req.body.post_id);
         return res.json({response: true, msg:"Unliked by user", data: data});
        
-   
+           }
+       }
+   if(flag == false){
+    await user_db.findByIdAndUpdate(req.body.user_id, {
+         
+        $push:{
+          liked_post_id: req.body.post_id
+        }
+  
+        });
+  
+        await vehicle_db.findByIdAndUpdate(req.body.post_id,{
+           
+         $inc:{
+           like_count: 1
+         } 
+  
+        });
+        
+        const data = await vehicle_db.findById(req.body.post_id);
+          return res.json({response: true, msg:"Liked by user"});
+   }
+
+
+    
+        
 });
+
+// router.post('/likeDecr', async function (req, res, next){
+//     await user_db.findByIdAndUpdate(req.body.user_id, {
+       
+//     $pull:{
+//       liked_post_id: req.body.post_id
+//     }
+
+//     });
+
+//     await vehicle_db.findByIdAndUpdate(req.body.post_id,{
+       
+//      $inc:{
+//        like_count: -1
+//      } 
+
+//     });
+//     const data = await vehicle_db.findById(req.body.post_id);
+//         return res.json({response: true, msg:"Unliked by user", data: data});
+       
+   
+// });
 ////notification
 router.post('/getNotification',async function (req, res, next) {
 

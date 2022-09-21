@@ -82,6 +82,11 @@ const productSchema = new mongoose.Schema({
     latitude: {
         type: String,
         required: false
+    },
+    likeFlag:{
+        type: Boolean,
+        required: false,
+        default: false
     }
 
 })

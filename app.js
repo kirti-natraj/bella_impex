@@ -8,7 +8,7 @@ var session = require('express-session');
 var mongoose = require('mongoose');    
 var bodyParser = require('body-parser');         //for mongodb
 
-
+const fileUpload = require('express-fileupload')
 var mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority', {useNewUrlParser: true});
 var conn = mongoose.connection;
