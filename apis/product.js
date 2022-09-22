@@ -152,7 +152,7 @@ router.post('/getCity',async function (req, res, next) {
 
 router.get('/getPDF',async function (req, res, next) {
      
-    const data = "http://localhost:8080/assets/images/result.pdf";
+    const data = "https://bellaimpex.herokuapp.com/assets/images/result.pdf";
     return res.json({response: true, msg:"PDF found", data: data })
    
 });
