@@ -138,18 +138,39 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: false,
         default:''
-    },
-    gst:{
-        type: String,
-        required: false,
-        default: 'no'
-    },
-    gstNo:{
-        type: String,
-        required: false,
-        default: ''
     }
     
 })
+
+userSchema.methods.generateToken = function (cb) {
+    var user = this;
+    var token = jwt.sign(user._id.toHexString(), confiq.SECRET);
+
+    user.token = token;
+    user.save(function (err, user) {
+        if (err) return cb(err);
+        cb(null, user);
+    })
+}
+userSchema.statics.findByToken = function (token, cb) {
+    var user = this;
+
+    jwt.verify(token, confiq.SECRET, function (err, decode) {
+        user.findOne({"_id": decode, "token": token}, function (err, user) {
+            if (err) return cb(err);
+            cb(null, user);
+        })
+    })
+};
+userSchema.methods.deleteToken = function (token, cb) {
+    var user = this;
+
+    user.update({$unset: {token: 1}}, function (err, user) {
+        if (err) return cb(err);
+        cb(null, user);
+    })
+}
+
+userSchema.set('timestamps', true);
 
 module.exports = mongoose.model('user',userSchema,'user');

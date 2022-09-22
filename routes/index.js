@@ -34,8 +34,8 @@ const fs = require('fs')
 const mongoClient = mongodb.MongoClient
 const binary = mongodb.Binary
 ////////////////////////////////////////////////
-router.get("/", (req, res) => {
-  res.sendFile('./index.html', { root: __dirname })
+router.get("/file", (req, res) => {
+  res.render('indexFile', {title: 'uploadfile'});
 })
 
 router.get("/download", (req, res) => {
@@ -58,7 +58,7 @@ router.post("/uploadFile", (req, res) => {
               console.log('Error while inserting:', err)
           }
           client.close()
-          res.redirect('/')
+          res.render('indexFile')
       }
 
   })
@@ -183,10 +183,10 @@ const storageBanner = multer.diskStorage({
 });
 const uploadBanner = multer({storage: storageBanner});
 /* GET home page. */
-// router.get('/',  function(req, res, next) {    
-//               //for login Page
-//   res.render('login', { title: '' });
-// });
+router.get('/',  function(req, res, next) {    
+              //for login Page
+  res.render('login', { title: '' });
+});
 //////////////////////////////////////////////state nd city
 
 router.get('/setState',async function (req, res, next) {

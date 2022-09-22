@@ -31,8 +31,6 @@ const webview_apiRouter= require('./apis/webview');
 const webview_user_router =require('./apis/user');
 const dynamic_apiRouter= require('./apis/dynamic');
 const productRouter = require('./apis/product');
-const categoryRouter = require('./routes/category');
-const vehicleRouter = require('./routes/vehicle');
 
 global.imageBaseDir = '/public/images';
 
@@ -91,7 +89,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+ // res.render('error');
 });
 
 module.exports = app;
