@@ -153,7 +153,7 @@ router.post('/getCity',async function (req, res, next) {
 router.post('/getPDF',async function (req, res, next) {
      
     const data = "https://bellaimpex.herokuapp.com/assets/images/result.pdf";
-    return res.json({response: true, msg:"PDF found", data: data, user_id: req.body.user_id })
+    return res.json({response: true, msg:"PDF found", data: data, user_id: req.body.user_id, invoiceNo: '218y63981ksdjbfskj',price:'20,000/-', date: '22/09/22' })
    
 });
 router.post('/checkSubscription',async function (req, res, next) {

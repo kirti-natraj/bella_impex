@@ -39,8 +39,6 @@ const userBillSchema = new mongoose.Schema({
         required: false,
         default:''
     }
-
-
     
 })
 
