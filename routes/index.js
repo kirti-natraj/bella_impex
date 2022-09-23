@@ -26,6 +26,10 @@ const s3 = new aws.S3({ accessKeyId: "***", secretAccessKey: "***" });
 const cors = require('cors')
 const app = express();
 app.use(cors());
+
+var FCM = require('fcm-node');
+var serverKey = '	AAAAP6Bdr-Y:APA91bEAKk8D9UpPF5O4KHZR9WkbW5sfaJL7hOF3Yjpb7cHADxrG4cteVRbjbizcMk0V2uJNCeuqdGut00lncrzv3HDTv8j2Fdj4AhrL-XvvUsHSCsyEQqXFJsQID_t-cMBTMfA3oB71';
+var fcm = new FCM(serverKey);
 //////////////////////////////
 
 const fileUpload = require('express-fileupload')
@@ -408,6 +412,7 @@ router.get('/subcategory_list',async function(req,res,next){                    
 router.get('/add_subcategory/:id',async function(req,res,next){                        //for Category TAble Update
   let _id = req.params.id;
   const category_name = await category_db.findById(_id);
+  
   res.render('add_subcategory',{title:'Add Subcategory', id: _id, category_name: category_name});
 
 });
@@ -594,6 +599,37 @@ router.get('/activate/:id', async function(req,res,next ){
         created_on: data.created_on
       }
     }
+
+  });
+
+    var message = {
+      to: "ci9arx8Mizk:APA91bFiMGRQIs-glSL6hZfRXCumXBDuGL1LXRoYj-7jY6kPesrAxXy7KaOlbvYTWJllj1tqKSl7XuxbHBErOU-s_z45abHma6Zttm8HjXX_f1tNFNNuP0U9y-RWWieFZkiLt5kJGFDU",
+          notification: {
+              title: 'NotifcatioTestAPP',
+              body: '{"Message from node js app"}',
+          },
+      
+          data: { //you can send only notification or only data(or include both)
+              title: 'ok cdfsdsdfsd',
+              body: '{"name" : "okg ooggle ogrlrl","product_id" : "123","final_price" : "0.00035"}'
+          }
+      
+      };
+      
+      fcm.send(message, function(err, response) {
+          if (err) {
+              console.log("Something has gone wrong!"+err);
+              console.log("Respponse:! "+response);
+          } else {
+              // showToast("Successfully sent with response");
+              console.log("Successfully sent with response: ", response);
+          }
+      
+     
+
+
+
+
     })
   res.redirect('/vehicle/');
 });

@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var ejs = require('ejs');
+const cors = require("cors");
 var logger = require('morgan');
 var session = require('express-session');
 var mongoose = require('mongoose');    
@@ -27,8 +28,7 @@ const user_apiRouter = require('./apis/user');
 const category_apiRouter = require('./apis/category');
 const userRouter = require('./routes/user');
 const webview_apiRouter= require('./apis/webview');
-
-const webview_user_router =require('./apis/user');
+const webview_user_router = require('./apis/user');
 const dynamic_apiRouter= require('./apis/dynamic');
 const productRouter = require('./apis/product');
 
@@ -38,6 +38,29 @@ global.imageBaseDir = '/public/images';
 
 var app = express();
 
+////////////////////////////////////////fb
+
+
+
+
+const fbAuth = require('./config/fbconfig')
+const {
+   login,
+   userBasedFunc
+} = require('./config/user')
+app.post('/login', login);
+//app.get('/userBasedFunc', fbAuth, userBasedFunc);
+
+
+
+
+
+
+
+
+
+/////////////
+app.use(cors());
 
 
 // view engine setup

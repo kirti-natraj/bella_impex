@@ -12,7 +12,7 @@ var invoice_db = require('../models/invoice');
 var product_db = require('../models/products');
 var otpGenerator = require('otp-generator');
 var otp_db = require('../models/otp');
-
+const { firebase, admin } = require("../config/fbconfig");
 const moment = require('moment');
 
 const multer = require('multer');
@@ -65,12 +65,9 @@ const storageUser = multer.diskStorage({
             toThisNoReach: req.body.thisNoToReach,
         })
     
- 
-    if (!user) return res.json({response: false, postMessage: 'failed'});
-    else {
         const data = await user_db.findOne({'_id':req.body.userId});
         return res.json({response: true, data: data});
-    }
+
 
 })
 
@@ -189,7 +186,7 @@ router.post('/checkUserExistApi',async function (req, res, next) {
  {
      res.json({ response: false , msg: "User not exist"});
  }
- else res.json({response: true, msg:"User exist"})
+ else res.json({response: true, msg:"User exist", data: data})
     }
     else res.json({response: true, msg:"User exist"})
 
@@ -197,14 +194,14 @@ router.post('/checkUserExistApi',async function (req, res, next) {
 });
 
 router.post('/getUserDataApi',async function (req, res, next) {
-    user_db.findById(req.body.user_id)
-    .then(result => {
-        if (!result) return res.json({response: false, msg: "User not found"});
-        else {
-            result.fcmToken = req.body.fcmToken;
-            return res.json({response: true, msg:"User found", data: result});
-        }
-    })
+   
+         await user_db.findByIdAndUpdate(req.body.user_id,{
+                fcmToken:  req.body.fcmToken
+            });
+            const data = await user_db.findById(req.body.user_id);
+            return res.json({response: true, msg:"User found", data: data});
+     
+
 });
 
 router.post('/getLike', async function (req, res, next){
@@ -372,4 +369,24 @@ router.post('/setCustomerBillingInformation',async function (req, res, next) {
 
 });
 
+router.post('/sendNotification',async function (req, res, next) {
+    const data = req.body;
+   await Notification.add({ data });
+    res.send({ msg: "User Added" });
+});
+
+
+router.get('/generateToken',async function (req, res, next) {
+    firebase.auth().signInWithEmailAndPassword(req.body.email, req.body.password)
+.then(function () {
+     firebase.auth().currentUser.getIdToken(true).then(function          (idToken){
+            res.send(idToken)
+            res.end()
+         }).catch(function (error) {
+             //Handle error
+         });
+}).catch(function (error) {
+      //Handle error
+});
+});
 module.exports = router;

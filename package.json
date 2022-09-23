@@ -9,7 +9,9 @@
   "license": "ISC",
   "dependencies": {
     "alert": "^5.1.1",
+    "app": "^0.1.0",
     "aws-sdk": "^2.1190.0",
+    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
     "cookie-parser": "^1.4.6",
@@ -24,6 +26,9 @@
     "express-fileupload": "^1.4.0",
     "express-session": "^1.17.3",
     "express-validator": "^6.14.2",
+    "fcm-node": "^1.6.1",
+    "firebase": "^9.10.0",
+    "firebase-admin": "^11.0.1",
     "formidable": "^2.0.1",
     "fs": "^0.0.1-security",
     "gridfs": "^1.0.0",
@@ -57,6 +62,5 @@
     "url": "https://github.com/kirti-natraj/bella_impex/issues"
   },
   "homepage": "https://github.com/kirti-natraj/bella_impex#readme",
-  "devDependencies": {},
   "description": ""
 }
