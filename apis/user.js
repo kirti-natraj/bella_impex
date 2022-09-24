@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var FCM = require('fcm-node');
 var bcrypt = require('bcrypt');
 var admin_db = require('../models/adminlogin');
 var user_db = require('../models/user');
@@ -389,4 +390,33 @@ router.get('/generateToken',async function (req, res, next) {
       //Handle error
 });
 });
+
+router.post('/senFCMNoti', async function(req,res,next){
+  
+    var serverKey = 'key=AAAAP6Bdr-Y:APA91bEAKk8D9UpPF5O4KHZR9WkbW5sfaJL7hOF3Yjpb7cHADxrG4cteVRbjbizcMk0V2uJNCeuqdGut00lncrzv3HDTv8j2Fdj4AhrL-XvvUsHSCsyEQqXFJsQID_t-cMBTMfA3oB71';
+    var fcm = new FCM(serverKey);
+    
+    var message = {
+    "to":"dvTxmeoi5Sw:APA91bEEcXu8v1YFldcUtE7iUvba4m5knANvD6CG9f1xS8MjBLiAM7aM_JpEIQSQcpHlU1Vd8lBD_VlRGfSlsZFub_XrboCFFRktLYFWsD3zWs8hgCAoWgg4kwZyzrtykEiNQU1mTSio",
+        "notification": {
+           "title": "NotifcatioTestAPP",
+            "body": "Message from node js app",
+        },
+    
+    };
+    
+    fcm.send(message, function(err, response) {
+        if (err) {
+            console.log("Something has gone wrong!"+err);
+            console.log("Respponse:! "+response);
+        } else {
+            // showToast("Successfully sent with response");
+            console.log("Successfully sent with response: ", response);
+          
+        }
+    
+    });
+   
+});
+
 module.exports = router;

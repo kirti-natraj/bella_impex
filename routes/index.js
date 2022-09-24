@@ -16,6 +16,8 @@ const state_db = require('../models/state');
 const city_db = require('../models/city');
 const alert = require('alert');
 
+let fetch = import('node-fetch');
+
 
 const moment = require('moment');
 const aws = require('aws-sdk');
@@ -28,8 +30,7 @@ const app = express();
 app.use(cors());
 
 var FCM = require('fcm-node');
-var serverKey = '	AAAAP6Bdr-Y:APA91bEAKk8D9UpPF5O4KHZR9WkbW5sfaJL7hOF3Yjpb7cHADxrG4cteVRbjbizcMk0V2uJNCeuqdGut00lncrzv3HDTv8j2Fdj4AhrL-XvvUsHSCsyEQqXFJsQID_t-cMBTMfA3oB71';
-var fcm = new FCM(serverKey);
+
 //////////////////////////////
 
 const fileUpload = require('express-fileupload')
@@ -298,13 +299,49 @@ router.get('/notification_form',async function(req,res,next){                   
 });
 
 router.post('/add_notification_form',  async function(req, res, next) {                          //category add
+ 
+  
+ const user = await user_db.find().exec();
+  /////////////////////firebase
+ 
+  var FCM = require('fcm-node');
+  var serverKey = 'AAAAP6Bdr-Y:APA91bEAKk8D9UpPF5O4KHZR9WkbW5sfaJL7hOF3Yjpb7cHADxrG4cteVRbjbizcMk0V2uJNCeuqdGut00lncrzv3HDTv8j2Fdj4AhrL-XvvUsHSCsyEQqXFJsQID_t-cMBTMfA3oB71';
+  var fcm = new FCM(serverKey);
+  var success = 0;
+for(var i = 0; i < user.length;i++){
+ if(user[i].fcmToken.length > 10 ){
+  var message = {  
+    "to": user[i].fcmToken,
+      "notification": {
+         "title":req.body.title,
+          "body":req.body.msg
+      }
+  }
+  fcm.send(message, function(err, response) {
+    if (err) {
+        console.log("Something has gone wrong!"+err);
+        console.log("Respponse:! "+response);
+    } else {
+        // showToast("Successfully sent with response");
+        console.log("Successfully sent with response: ", response);
+        
+    }
 
-  await noti_db.create({
-      title: req.body.title,
-      msg: req.body.msg
-  });
-  res.redirect('/notification_list/');
 });
+success = success + 1;
+}
+}
+await noti_db.create({
+  title: req.body.title,
+  msg: req.body.msg,
+  successCount: success
+});
+const data = await noti_db.find().exec();                      //for Category TAble Update
+  res.render('noti_list', {title:'Notification', data : data, moment:moment});
+
+  
+});
+
 
 /////////////////////////////////////Banner
 

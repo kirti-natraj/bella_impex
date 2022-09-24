@@ -30,6 +30,11 @@ const notiSchema = new mongoose.Schema({
         required: false,
         default: true
     },
+    successCount:{
+        type: String,
+        required: false,
+        default: '0'
+    }
 })
 
 module.exports = mongoose.model('noti',notiSchema,'noti');

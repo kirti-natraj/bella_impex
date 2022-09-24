@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>JavaScript Set Header in Ajax POST Request</title>
+<script>
+function addSubscriber() {
+    // Creating the XMLHttpRequest object
+    var request = new XMLHttpRequest();
+
+    // Instantiating the request object
+    request.open("POST", "https://fcm.googleapis.com/fcm/send");
+    
+    // Specifying the MIME type of the request body
+    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded", "Authentication","key=AAAAP6Bdr-Y:APA91bEAKk8D9UpPF5O4KHZR9WkbW5sfaJL7hOF3Yjpb7cHADxrG4cteVRbjbizcMk0V2uJNCeuqdGut00lncrzv3HDTv8j2Fdj4AhrL-XvvUsHSCsyEQqXFJsQID_t-cMBTMfA3oB71");
+
+    // Defining event listener for readystatechange event
+    request.onreadystatechange = function() {
+        // Check if the request is compete and was successful
+        if(this.readyState === 4 && this.status === 200) {
+            // Inserting the response from server into an HTML element
+            document.getElementById("result").innerHTML = this.responseText;
+        }
+    };
+
+    // Retrieving the form data
+    var email = document.getElementById("title").value;
+    console.log(email);
+
+    // Sending the request to the server
+    request.send("title=" + titile);
+}
+</script>
+</head>
+<body>
+    <form id="myForm">
+        <h2>Subscribe to our newsletter</h2>
+        <p>Enter a dummy email address to see how it works.</p>
+        <label>Email:</label>
+        <div><input type="text" id="title"></div>
+        <div><input type="text" id="body"></div>
+        <p><button type="button" onclick="addSubscriber()">Subscribe</button></p>
+    </form>
+    <div id="result">
+        <p>Content of the result DIV box will be replaced by the server response</p>
+    </div>
+</body>
+</html>

@@ -43,7 +43,7 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">S.no.</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Title</th>
                       <th class="text-uppercase text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">Description</th>
-                   
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Success Count</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sent on</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
@@ -77,7 +77,12 @@
                                         
                                       </div>
                                 </td>
-                               
+                                <td>
+                                  <div class="align-middle text-center">
+                                      <h6 class="mb-0 text-sm"><%= data[i].successCount %></h6>
+                                      
+                                    </div>
+                              </td>
                                
                                 <td class="align-middle text-center">
                                     <span class="text-secondary text-xs font-weight-bold"><%= moment(data[i].date).format('MMMM Do YYYY') %></span>
