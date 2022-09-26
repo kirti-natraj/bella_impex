@@ -13,7 +13,7 @@ var invoice_db = require('../models/invoice');
 var product_db = require('../models/products');
 var otpGenerator = require('otp-generator');
 var otp_db = require('../models/otp');
-const { firebase, admin } = require("../config/fbconfig");
+// const { firebase, admin } = require("../config/fbconfig");
 const moment = require('moment');
 
 const multer = require('multer');

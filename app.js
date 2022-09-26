@@ -43,12 +43,12 @@ var app = express();
 
 
 
-const fbAuth = require('./config/fbconfig')
-const {
-   login,
-   userBasedFunc
-} = require('./config/user')
-app.post('/login', login);
+// const fbAuth = require('./config/fbconfig')
+// const {
+//    login,
+//    userBasedFunc
+// } = require('./config/user')
+// app.post('/login', login);
 //app.get('/userBasedFunc', fbAuth, userBasedFunc);
 
 
