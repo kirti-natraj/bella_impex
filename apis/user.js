@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var FCM = require('fcm-node');
-var bcrypt = require('bcrypt');
 var admin_db = require('../models/adminlogin');
 var user_db = require('../models/user');
 var category_db = require('../models/category');

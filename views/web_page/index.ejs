@@ -346,9 +346,9 @@ input[type="radio"]{
     </div>
     <script>
         var myText = document.getElementById("my-text");
-var result = document.getElementById("result");
-var limit = 60;
-result.textContent = 0 + "/" + limit;
+        var result = document.getElementById("result");
+        var limit = 60;
+        result.textContent = 0 + "/" + limit;
 
 myText.addEventListener("input", function(){
     var textlength = myText.value.length;
@@ -373,11 +373,6 @@ myText.addEventListener("input", function(){
         result2.style.color = "#ff2851";
     }
 });
-
-getElementById("imageOne").onclick = ()=>{
-  getElementById("inputeOne").click(); //if user click on the button then the input also clicked
-}
-
     </script>
 </body>
 </html>

@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-const alert = require('node-popup');
 const vehicle_db = require('../models/vehicle');
 const user_db = require('../models/user');
 const brand_db = require('../models/brand');
@@ -9,11 +8,7 @@ const budget_db = require('../models/budget');
 const moment = require('moment');
 
 
-const aws = require('aws-sdk');
 const multer = require('multer');
-const multerS3 = require('multer-s3');
-const path = require('path');
-const s3 = new aws.S3({ accessKeyId: "***", secretAccessKey: "***" });
 const cors = require('cors')
 const app = express();
 app.use(cors());

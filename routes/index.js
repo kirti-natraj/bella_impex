@@ -14,17 +14,12 @@ const budget_db = require('../models/budget');
 const banner_db = require('../models/banner');
 const state_db = require('../models/state');
 const city_db = require('../models/city');
-const alert = require('alert');
 
-let fetch = import('node-fetch');
+
 
 
 const moment = require('moment');
-const aws = require('aws-sdk');
 const multer = require('multer');
-const multerS3 = require('multer-s3');
-const path = require('path');
-const s3 = new aws.S3({ accessKeyId: "***", secretAccessKey: "***" });
 const cors = require('cors')
 const app = express();
 app.use(cors());
@@ -33,7 +28,6 @@ var FCM = require('fcm-node');
 
 //////////////////////////////
 
-const fileUpload = require('express-fileupload')
 const mongodb = require('mongodb')
 const fs = require('fs')
 const mongoClient = mongodb.MongoClient
@@ -364,7 +358,7 @@ router.post('/add_banner', uploadBanner.fields([{name:'image', maxCount: 1}]), a
      
       image: req.files.image[0].filename
   });
-  alert('Added Successfully');
+
   res.redirect('/banner_list/');
 });
 
