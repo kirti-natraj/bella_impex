@@ -6,21 +6,46 @@ const brand_db = require('../models/brand');
 const year_db = require('../models/year');
 const budget_db = require('../models/budget');
 const moment = require('moment');
-
-
+const path = require('path');
+const crypto = require('crypto');
+const mongoose = require('mongoose');
 const multer = require('multer');
+const {GridFsStorage} = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
 const cors = require('cors')
 const app = express();
 app.use(cors());
-const storageVehicle = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'public/assets/images/vehicles/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now()+ '__' + file.originalname);
+const mongoURI = 'mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority';
+
+// Create mongo connection
+const conn = mongoose.createConnection(mongoURI);
+
+// Init gfs
+let gfs;
+conn.once('open', () => {
+  // Init stream
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection('uploads');
+});
+const storage = new GridFsStorage({
+    url: mongoURI,
+    file: (req, file) => {
+      return new Promise((resolve, reject) => {
+        crypto.randomBytes(16, (err, buf) => {
+          if (err) {
+            return reject(err);
+          }
+          const filename = buf.toString('hex') + path.extname(file.originalname);
+          const fileInfo = {
+            filename: filename,
+            bucketName: 'uploads'
+          };
+          resolve(fileInfo);
+        });
+      });
     }
   });
-  const uploadVehicle= multer({storage: storageVehicle});
+  const upload = multer({ storage });
   
 router.get('/:id', async function (req, res) {
     console.log(req.params.id);
@@ -44,7 +69,7 @@ router.get('/location', function (req, res) {
 
 });
 
-router.post('/add_vehicle/:id',uploadVehicle.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
+router.post('/add_vehicle/:id',upload.single('image') , async function(req, res, next) {                          //category add
 console.log(req.params.id);
     const user = await user_db.findByIdAndUpdate( req.params.id, {
                $inc: {postCount: '1'} 
@@ -60,7 +85,7 @@ console.log(req.params.id);
         user_image: user.image,
         user_mobile: user.mobile,
         since: user.added_on,
-        image: req.files.image,
+         image: req.file.filename,
         title:req.body.title,
         created_on: moment(Date.now()).format("YYYY-MM-DD"),
         km:req.body.km,
@@ -86,25 +111,16 @@ console.log(req.params.id);
     res.render('web_page/location',{id: req.params.id});
   });
 
-  //  router.post('/add_drop/:id',uploadVehicle.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
-  
-  //   await vehicle_db.findByIdAndUpdate(req.params.id, {
-  // image: req.files
-  
-  //  });
-  //   res.render('',{id: req.params.id});
-  // });
-
+ 
   router.post('/add_location/:id',async function(req, res, next) {                          //category add
 
     const data = await vehicle_db.findByIdAndUpdate(req.params.id, {
       state: req.body.stt,
-      city: req.body.city,
-      location: req.body.location,
-      latitude: req.body.latitude,
-      longitude: req.body.longitude
+      city: req.body.city
+    
     });
-    res.render('web_page/success',{title:"popup", data : data} );
+   
+    res.json('Successfully Product Addded'); //,{title:"popup", data : data} );
   });
   
 
