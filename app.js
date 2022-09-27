@@ -60,7 +60,6 @@ const category_apiRouter = require('./apis/category');
 const userRouter = require('./routes/user');
 const webview_apiRouter= require('./apis/webview');
 const webview_user_router = require('./apis/user');
-const dynamic_apiRouter= require('./apis/dynamic');
 const productRouter = require('./apis/product');
 
 global.imageBaseDir = '/public/images';
@@ -123,7 +122,6 @@ app.use('/api/category',category_apiRouter);
 app.use('/api/product',productRouter);
 app.use('/webviewIndex',webview_apiRouter);
 app.use('/userWebview', webview_user_router);
-app.use('/dynamic',dynamic_apiRouter);
 app.use('/user', userRouter);
 app.use('/brand', indexRouter);
 app.use('/year', indexRouter);

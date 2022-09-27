@@ -85,7 +85,7 @@ console.log(req.params.id);
         user_image: user.image,
         user_mobile: user.mobile,
         since: user.added_on,
-         image: req.file.filename,
+        image: req.file.filename,
         title:req.body.title,
         created_on: moment(Date.now()).format("YYYY-MM-DD"),
         km:req.body.km,
