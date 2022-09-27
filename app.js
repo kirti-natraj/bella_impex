@@ -6,17 +6,18 @@ var ejs = require('ejs');
 const cors = require("cors");
 var logger = require('morgan');
 var session = require('express-session');
-var mongoose = require('mongoose');    
+var mongoose = require('mongoose');  
 const Grid = require('gridfs-stream');
 const {GridFsStorage} = require('multer-gridfs-storage');
 var bodyParser = require('body-parser');    
 const methodOverride = require('method-override');
-const multer = require('multer');   
-    //for mongodb
-var mongoose = require('mongoose');
+const multer = require('multer');              //for mongodb
 
 var mongoURI = 'mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority';
-mongoose.connect(mongoURI, {useNewUrlParser: true});
+
+
+
+mongoose.connect(mongoURI, {useNewUrlParser: true, useUnifiedTopology: true});
 var conn = mongoose.connection;
 let gfs;
 conn.on('connected', function() {
