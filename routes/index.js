@@ -33,82 +33,84 @@ const fs = require('fs')
 const mongoClient = mongodb.MongoClient
 const binary = mongodb.Binary
 ////////////////////////////////////////////////
-router.get("/file", (req, res) => {
-  res.render('indexFile', {title: 'uploadfile'});
-})
 
-router.get("/download", (req, res) => {
-  getFiles(res)
-})
-router.post("/uploadFile", (req, res) => {
-  let file = { name: req.body.name, file: binary(req.files.uploadedFile.data) }
-  mongoClient.connect('mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority', { useNewUrlParser: true }, (err, client) => {
-      if (err) {
-          return err
-      }
-      else {
-          let db = client.db('uploadDB')
-          let collection = db.collection('files')
-          try {
-              collection.insertOne(file)
-              console.log('File Inserted')
-          }
-          catch (err) {
-              console.log('Error while inserting:', err)
-          }
-          client.close()
-          res.render('indexFile')
-      }
+////////////////////////////////////////////////
+// router.get("/file", (req, res) => {
+//   res.render('indexFile', {title: 'uploadfile'});
+// })
 
-  })
-})
+// router.get("/download", (req, res) => {
+//   getFiles(res)
+// })
+// router.post("/uploadFile", (req, res) => {
+//   let file = { name: req.body.name, file: binary(req.files.uploadedFile.data) }
+//   mongoClient.connect('mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority', { useNewUrlParser: true }, (err, client) => {
+//       if (err) {
+//           return err
+//       }
+//       else {
+//           let db = client.db('uploadDB')
+//           let collection = db.collection('files')
+//           try {
+//               collection.insertOne(file)
+//               console.log('File Inserted')
+//           }
+//           catch (err) {
+//               console.log('Error while inserting:', err)
+//           }
+//           client.close()
+//           res.render('indexFile')
+//       }
 
-function insertFile(file, res) {
-  mongoClient.connect('mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority', { useNewUrlParser: true }, (err, client) => {
-      if (err) {
-          return err
-      }
-      else {
-          let db = client.db('uploadDB')
-          let collection = db.collection('files')
-          try {
-              collection.insertOne(file)
-              console.log('File Inserted')
-          }
-          catch (err) {
-              console.log('Error while inserting:', err)
-          }
-          client.close()
-          res.redirect('/')
-      }
+//   })
+// })
 
-  })
-}
+// function insertFile(file, res) {
+//   mongoClient.connect('mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority', { useNewUrlParser: true }, (err, client) => {
+//       if (err) {
+//           return err
+//       }
+//       else {
+//           let db = client.db('uploadDB')
+//           let collection = db.collection('files')
+//           try {
+//               collection.insertOne(file)
+//               console.log('File Inserted')
+//           }
+//           catch (err) {
+//               console.log('Error while inserting:', err)
+//           }
+//           client.close()
+//           res.redirect('/')
+//       }
+
+//   })
+// }
 
 
-function getFiles(res) {
-  mongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true }, (err, client) => {
-      if (err) {
-          return err
-      }
-      else {
-          let db = client.db('uploadDB')
-          let collection = db.collection('files')
-          collection.find({}).toArray((err, doc) => {
-              if (err) {
-                  console.log('err in finding doc:', err)
-              }
-              else {
-                  let buffer = doc[0].file.buffer
-                  fs.writeFileSync('uploadedImage.jpg', buffer)
-              }
-          })
-          client.close()
-          res.redirect('/')
-      }
+// function getFiles(res) {
+//   mongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true }, (err, client) => {
+//       if (err) {
+//           return err
+//       }
+//       else {
+//           let db = client.db('uploadDB')
+//           let collection = db.collection('files')
+//           collection.find({}).toArray((err, doc) => {
+//               if (err) {
+//                   console.log('err in finding doc:', err)
+//               }
+//               else {
+//                   let buffer = doc[0].file.buffer
+//                   fs.writeFileSync('uploadedImage.jpg', buffer)
+//               }
+//           })
+//           client.close()
+//           res.redirect('/')
+//       }
 
-  })
-}
+//   })
+// }
 
 
 

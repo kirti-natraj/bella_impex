@@ -7,12 +7,21 @@ const cors = require("cors");
 var logger = require('morgan');
 var session = require('express-session');
 var mongoose = require('mongoose');    
-var bodyParser = require('body-parser');         //for mongodb
+const Grid = require('gridfs-stream');
+const {GridFsStorage} = require('multer-gridfs-storage');
+var bodyParser = require('body-parser');    
+const methodOverride = require('method-override');
+const multer = require('multer');   
+    //for mongodb
 var mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority', {useNewUrlParser: true});
+
+var mongoURI = 'mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority';
+mongoose.connect(mongoURI, {useNewUrlParser: true});
 var conn = mongoose.connection;
+let gfs;
 conn.on('connected', function() {
-  
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection('uploads');
     console.log('database is connected successfully');
 });
 conn.on('disconnected',function(){
@@ -20,6 +29,29 @@ conn.on('disconnected',function(){
 })
 conn.on('error', console.error.bind(console, 'connection error:'));
 module.exports = conn;
+
+
+// Create storage engine
+const storage = new GridFsStorage({
+  url: mongoURI,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = buf.toString('hex') + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'uploads'
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
+});
+const upload = multer({ storage });
+module.exports = upload;
 
 const indexRouter = require('./routes/index');
 const user_apiRouter = require('./apis/user');
@@ -60,6 +92,7 @@ var app = express();
 /////////////
 app.use(cors());
 
+app.use(methodOverride('_method'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -113,4 +146,4 @@ app.use(function(err, req, res, next) {
  // res.render('error');
 });
 
-module.exports = app;
+module.exports = app, gfs;

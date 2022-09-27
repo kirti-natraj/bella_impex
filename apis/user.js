@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var fs = require('fs');
 var FCM = require('fcm-node');
 var admin_db = require('../models/adminlogin');
 var user_db = require('../models/user');
@@ -9,44 +10,90 @@ var properties_db= require('../models/properties');
 var vehicle_db= require('../models/vehicle');
 var user_bill_db = require('../models/user_billing');
 var invoice_db = require('../models/invoice');
+var imageDB = require('../models/upload');
 var product_db = require('../models/products');
 var otpGenerator = require('otp-generator');
 var otp_db = require('../models/otp');
-// const { firebase, admin } = require("../config/fbconfig");
-const moment = require('moment');
+////
 
+const path = require('path');
+const crypto = require('crypto');
+const mongoose = require('mongoose');
 const multer = require('multer');
-const { findById } = require('../models/vehicle');
+const {GridFsStorage} = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const methodOverride = require('method-override');
+///
+const moment = require('moment');
+const { ResultStorage } = require('firebase-functions/v1/testLab');
+
 
 function AddMinutesToDate(date, minutes) {
     return new Date(date.getTime() + minutes*60000);
 }
-const storageUser = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'public/assets/images/user/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now()+ '__' + file.originalname);
+
+/////////////////////////mongogrid
+const mongoURI = 'mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority';
+
+// Create mongo connection
+const conn = mongoose.createConnection(mongoURI);
+
+// Init gfs
+let gfs;
+conn.once('open', () => {
+  // Init stream
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection('uploads');
+});
+const storage = new GridFsStorage({
+    url: mongoURI,
+    file: (req, file) => {
+      return new Promise((resolve, reject) => {
+        crypto.randomBytes(16, (err, buf) => {
+          if (err) {
+            return reject(err);
+          }
+          const filename = buf.toString('hex') + path.extname(file.originalname);
+          const fileInfo = {
+            filename: filename,
+            bucketName: 'uploads'
+          };
+          resolve(fileInfo);
+        });
+      });
     }
   });
-  const uploadUser= multer({storage: storageUser});
+  const upload = multer({ storage });
 
-    router.post('/updateProfileImage', uploadUser.fields([{name:'image', maxCount: 1}]), async function (req, res){
-    console.log(req.files.image);
-    
-        var user = await user_db.findByIdAndUpdate(req.body.userId, {
-           
-            image: req.files.image[0].filename,
-           
-        })
-    
-    if (!user) return res.json({response: false, postMessage: 'failed'});
-    else {
-        const data = await user_db.findOne({'_id':req.body.userId});
-        return res.json({response: true, data: data});
-    }
+// //////////////////////////////////
 
-})
+router.post('/upload', upload.single('image'), async(req, res) => {
+    // res.json({ file: req.file });
+    console.log(req.file.filename);
+    var user = await user_db.findByIdAndUpdate(req.body.userId, {
+           
+               image: req.file.filename
+                   
+              })
+    return res.json({response: true, data: user});
+  });
+
+//     router.post('/updateProfileImage', uploadUser.fields([{name:'image', maxCount: 1}]), async function (req, res){
+//     console.log(req.files.image);
+    
+//         var user = await user_db.findByIdAndUpdate(req.body.userId, {
+           
+//             image: req.files.image[0].filename,
+           
+//         })
+    
+//     if (!user) return res.json({response: false, postMessage: 'failed'});
+//     else {
+//         const data = await user_db.findOne({'_id':req.body.userId});
+//         return res.json({response: true, data: data});
+//     }
+
+// })
 
     router.post('/updateProfile',  async function (req, res){
     
