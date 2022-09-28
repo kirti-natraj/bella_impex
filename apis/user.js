@@ -10,7 +10,6 @@ var properties_db= require('../models/properties');
 var vehicle_db= require('../models/vehicle');
 var user_bill_db = require('../models/user_billing');
 var invoice_db = require('../models/invoice');
-var imageDB = require('../models/upload');
 var product_db = require('../models/products');
 var otpGenerator = require('otp-generator');
 var otp_db = require('../models/otp');

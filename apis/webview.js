@@ -69,13 +69,17 @@ router.get('/location', function (req, res) {
 
 });
 
-router.post('/add_vehicle/:id',upload.single('image') , async function(req, res, next) {                          //category add
+router.post('/add_vehicle/:id',upload.array('image', 5 ) , async function(req, res, next) {                          //category add
 console.log(req.params.id);
     const user = await user_db.findByIdAndUpdate( req.params.id, {
                $inc: {postCount: '1'} 
     } );
-    console.log(user);
-
+    
+    let images = [];
+    for(var i=0; i< req.files.length;i++){
+      images[i] = req.files[i].filename;
+    }
+    console.log(images);
     const data = await vehicle_db.create({
       
         subcategory: 'Cars',
@@ -85,11 +89,11 @@ console.log(req.params.id);
         user_image: user.image,
         user_mobile: user.mobile,
         since: user.added_on,
-        image: req.file.filename,
         title:req.body.title,
         created_on: moment(Date.now()).format("YYYY-MM-DD"),
         km:req.body.km,
         year:req.body.year,
+        image: images,
         fuel:req.body.fuel,
         owner: req.body.owner,
         brand: req.body.brand,
@@ -98,7 +102,7 @@ console.log(req.params.id);
         transmission: req.body.transmission
   
     });
-   
+  
     res.render('web_page/price',{id: data._id});
   });
   
