@@ -13,6 +13,13 @@ var invoice_db = require('../models/invoice');
 var product_db = require('../models/products');
 var otpGenerator = require('otp-generator');
 var otp_db = require('../models/otp');
+const noti_db = require('../models/noti');
+const brand_db = require('../models/brand');
+const year_db = require('../models/year');
+const budget_db = require('../models/budget');
+const banner_db = require('../models/banner');
+const state_db = require('../models/state');
+const city_db = require('../models/city');
 ////
 
 const path = require('path');
@@ -462,6 +469,13 @@ router.post('/senFCMNoti', async function(req,res,next){
     
     });
    
+});
+
+router.get('/deleteAll/:id', async function (req, res) {
+    const data = await upload.deleteMany();
+    
+
+    res.json( {msg:'deleted'});
 });
 
 module.exports = router;

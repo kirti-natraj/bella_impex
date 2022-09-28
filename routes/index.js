@@ -14,10 +14,6 @@ const budget_db = require('../models/budget');
 const banner_db = require('../models/banner');
 const state_db = require('../models/state');
 const city_db = require('../models/city');
-
-
-
-
 const moment = require('moment');
 const multer = require('multer');
 const cors = require('cors')
