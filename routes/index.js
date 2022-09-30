@@ -15,7 +15,6 @@ const banner_db = require('../models/banner');
 const state_db = require('../models/state');
 const city_db = require('../models/city');
 const moment = require('moment');
-const multer = require('multer');
 const cors = require('cors')
 const app = express();
 app.use(cors());
@@ -24,161 +23,117 @@ var FCM = require('fcm-node');
 
 //////////////////////////////
 
-const mongodb = require('mongodb')
-const fs = require('fs')
-const mongoClient = mongodb.MongoClient
-const binary = mongodb.Binary
+const path = require('path');
+const crypto = require('crypto');
+const mongoose = require('mongoose');
+const multer = require('multer');
+const {GridFsStorage} = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+
+////////////////////////////////////////////////mongodb
+// Mongo URI
+const mongoURI = 'mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority';
+
+// Create mongo connection
+const conn = mongoose.createConnection(mongoURI);
+
+// Init gfs
+let gfs;
+conn.once('open', () => {
+  // Init stream
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection('uploads');
+});
+
+// Create storage engine
+const storage = new GridFsStorage({
+  url: mongoURI,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = buf.toString('hex') + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'uploads'
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
+});
+const upload = multer({ storage });
+  ///////
+  router.get('/files', (req, res) => {
+  gfs.find().toArray((err, files) => {
+    // Check if files
+    if (!files || files.length === 0) {
+      return res.status(404).json({
+        err: 'No files exist'
+      });
+    }
+
+    // Files exist
+    return res.json(files);
+  });
+});
+
+// @route GET /files/:filename
+// @desc  Display single file object
+router.get('/files/:filename', (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    // Check if file
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: 'No file exists'
+      });
+    }
+    // File exists
+    return res.json(file);
+  });
+});
+
+// @route GET /image/:filename
+// @desc Display Image
+router.get('/image/:filename', (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    // Check if file
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: 'No file exists'
+      });
+    }
+
+    // Check if image
+    if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+      // Read output to browser
+      const readstream = gfs.createReadStream(file.filename);
+      readstream.pipe(res);
+    } else {
+      res.status(404).json({
+        err: 'Not an image'
+      });
+    }
+  });
+});
+
+// @route DELETE /files/:id
+// @desc  Delete file
+router.delete('/files/:id', (req, res) => {
+  gfs.remove({ _id: req.params.id, root: 'uploads' }, (err, gridStore) => {
+    if (err) {
+      return res.status(404).json({ err: err });
+    }
+
+    res.redirect('/');
+  });
+});
 ////////////////////////////////////////////////
-
-////////////////////////////////////////////////
-// router.get("/file", (req, res) => {
-//   res.render('indexFile', {title: 'uploadfile'});
-// })
-
-// router.get("/download", (req, res) => {
-//   getFiles(res)
-// })
-// router.post("/uploadFile", (req, res) => {
-//   let file = { name: req.body.name, file: binary(req.files.uploadedFile.data) }
-//   mongoClient.connect('mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority', { useNewUrlParser: true }, (err, client) => {
-//       if (err) {
-//           return err
-//       }
-//       else {
-//           let db = client.db('uploadDB')
-//           let collection = db.collection('files')
-//           try {
-//               collection.insertOne(file)
-//               console.log('File Inserted')
-//           }
-//           catch (err) {
-//               console.log('Error while inserting:', err)
-//           }
-//           client.close()
-//           res.render('indexFile')
-//       }
-
-//   })
-// })
-
-// function insertFile(file, res) {
-//   mongoClient.connect('mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority', { useNewUrlParser: true }, (err, client) => {
-//       if (err) {
-//           return err
-//       }
-//       else {
-//           let db = client.db('uploadDB')
-//           let collection = db.collection('files')
-//           try {
-//               collection.insertOne(file)
-//               console.log('File Inserted')
-//           }
-//           catch (err) {
-//               console.log('Error while inserting:', err)
-//           }
-//           client.close()
-//           res.redirect('/')
-//       }
-
-//   })
-// }
-
-
-// function getFiles(res) {
-//   mongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true }, (err, client) => {
-//       if (err) {
-//           return err
-//       }
-//       else {
-//           let db = client.db('uploadDB')
-//           let collection = db.collection('files')
-//           collection.find({}).toArray((err, doc) => {
-//               if (err) {
-//                   console.log('err in finding doc:', err)
-//               }
-//               else {
-//                   let buffer = doc[0].file.buffer
-//                   fs.writeFileSync('uploadedImage.jpg', buffer)
-//               }
-//           })
-//           client.close()
-//           res.redirect('/')
-//       }
-
-//   })
-// }
-
-
-
-
-
-
-
-
-
-
-
+//mongodb    connection 
 //////////////////////////////////////////
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'public/assets/images/category/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now()+ '__' + file.originalname);
-    }
-});
-const upload = multer({storage: storage});
-
-const storageVehicle = multer.diskStorage({
-  destination: function (req, file, cb) {
-      cb(null, 'public/assets/images/vehicles/');
-  },
-  filename: function (req, file, cb) {
-      cb(null, Date.now()+ '__' + file.originalname);
-  }
-});
-const uploadVehicle= multer({storage: storageVehicle});
-
-const storageProduct = multer.diskStorage({
-  destination: function (req, file, cb) {
-      cb(null, 'public/assets/images/products/');
-  },
-  filename: function (req, file, cb) {
-      cb(null, Date.now()+ '__' + file.originalname);
-  }
-});
-const uploadProduct = multer({storage: storageProduct});
-
-const storageProperties = multer.diskStorage({
-  destination: function (req, file, cb) {
-      cb(null, 'public/assets/images/properties/');
-  },
-  filename: function (req, file, cb) {
-      cb(null, Date.now()+ '__' + file.originalname);
-  }
-});
-const uploadProperties = multer({storage: storageProperties});
-
-const storageBrand = multer.diskStorage({
-  destination: function (req, file, cb) {
-      cb(null, 'public/assets/images/brand/');
-  },
-  filename: function (req, file, cb) {
-      cb(null, Date.now()+ '__' + file.originalname);
-  }
-});
-const uploadBrand = multer({storage: storageBrand});
-
-const storageBanner = multer.diskStorage({
-  destination: function (req, file, cb) {
-      cb(null, 'public/assets/images/banner/');
-  },
-  filename: function (req, file, cb) {
-      cb(null, Date.now()+ '__' + file.originalname);
-  }
-});
-const uploadBanner = multer({storage: storageBanner});
 /* GET home page. */
 router.get('/',  function(req, res, next) {    
               //for login Page
@@ -215,14 +170,14 @@ router.get('/brand_form',async function(req,res,next){                        //
 });
 
 
-router.post('/add_brand_form', uploadBrand.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
+// router.post('/add_brand_form', uploadBrand.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
 
-  await brand_db.create({
-      brand_name: req.body.brand_name,
-      image: req.files.image[0].filename
-  });
-  res.redirect('/brand/');
-});
+//   await brand_db.create({
+//       brand_name: req.body.brand_name,
+//       image: req.files.image[0].filename
+//   });
+//   res.redirect('/brand/');
+// });
 /////////////////////////////////////////year
 router.get('/year',async function(req,res,next){                        //for UserTable Page
   const data = await year_db.find().exec();
@@ -350,15 +305,15 @@ router.get('/banner',async function(req,res,next){                        //for 
 
 });
 
-router.post('/add_banner', uploadBanner.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
+// router.post('/add_banner', uploadBanner.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
 
-  await banner_db.create({
+//   await banner_db.create({
      
-      image: req.files.image[0].filename
-  });
+//       image: req.files.image[0].filename
+//   });
 
-  res.redirect('/banner_list/');
-});
+//   res.redirect('/banner_list/');
+// });
 
 /////////////////////////////////////index
 router.get('/index',async function(req,res,next){     
@@ -381,14 +336,43 @@ router.get('/user',async function(req,res,next){                        //for Us
 
 });
 ///////////////////////////////////////////////category
-router.get('/category',async function(req,res,next){                        //for UserTable Page
-  const data = await category_db.find().exec();
+// router.get('/category',async function(req,res,next){                        //for UserTable Page
+//   const data = await category_db.find().exec();
  
-  res.render('category',{title:'Category List',data : data, moment: moment});
+//       res.render('category',{title:'Category List',data : data,  moment: moment});
+  
+// });
+router.get('/category', function(req, res) {
 
 
-});
-
+  gfs.files.find({ filename: 'c8473aabf9497b369703a12f5b13f087.png' }).toArray(function (err, files) {
+  
+      if(files.length===0){
+          return res.status(400).send({
+              message: 'File not found'
+          });
+      }
+  
+      res.writeHead(200, {'Content-Type': files[0].contentType});
+  
+      var readstream = gfs.createReadStream({
+            filename: files[0].filename
+      });
+  
+      readstream.on('data', function(chunk) {
+          res.write(chunk);
+      });
+  
+      readstream.on('end', function() {
+          res.end();        
+      });
+  
+      readstream.on('error', function (err) {
+        console.log('An error occurred!', err);
+        throw err;
+      });
+    });
+  });
 router.get('/add_category',async function(req,res,next){                        //for Category TAble Update
  
   res.render('add_category',{title:'Add Category'});
@@ -396,15 +380,15 @@ router.get('/add_category',async function(req,res,next){                        
 });
 
 
-router.post('/add_category_form', upload.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
-
+router.post('/add_category_form', upload.single('image'), async function(req, res, next) {                          //category add
+  let baseUrl = 'http://localhost:3000/image/';
   await category_db.create({
       category_name: req.body.category_name,
-      image: req.files.image[0].filename
+      image: baseUrl + req.file.filename
   });
   await noti_db.create({
-    title: 'New Course Added',
-    msg: 'Course'+req.body.category_name+'added'
+    title: 'New Category Added',
+    msg: '---->  '+req.body.category_name+'added'
   })
   res.redirect('/category/');
 
@@ -417,18 +401,18 @@ router.get('/update_category/:id', async function(req,res,next ){
   res.render('category_update', {data:data , id:id,title: 'Update Category' });
 });
 
-router.get('/update_cat_form/:id', upload.fields([{name:'image', maxCount: 1}]), async function(req,res,next ){
-  let _id = req.params.id;
-  console.log(req.files);
+// router.get('/update_cat_form/:id', upload.fields([{name:'image', maxCount: 1}]), async function(req,res,next ){
+//   let _id = req.params.id;
+//   console.log(req.files);
 
-    const a1= await category_db.findByIdAndUpdate( _id, {
-      category_name: req.query.category_name,
+//     const a1= await category_db.findByIdAndUpdate( _id, {
+//       category_name: req.query.category_name,
    
-    });
+//     });
  
   
-  res.redirect('/category/');
-});
+//   res.redirect('/category/');
+// });
 
 //////////////////////////////////////subcat
 router.get('/subcategory_list',async function(req,res,next){                        //for SubCategory TAble Update
@@ -688,32 +672,32 @@ router.get('/add_product',async function(req,res,next){                        /
 
 });
 
-router.post('/add_product_form', uploadProduct.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
-  const data = await category_db.find({'_id': req.body.category});
-  const sub_data = await subcategory_db.find({'_id': req.body.subcategory});
-  console.log(req.files.image);
+// router.post('/add_product_form', uploadProduct.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
+//   const data = await category_db.find({'_id': req.body.category});
+//   const sub_data = await subcategory_db.find({'_id': req.body.subcategory});
+//   console.log(req.files.image);
 
-  await product_db.create({
-      category: req.body.category,
-      subcategory: req.body.subcategory,
-      category_name: data[0].category_name,
-      subcategory_name: sub_data[0].sub_category_name,
-      image: req.files.image,
-      price: req.body.price,
-      date: Date.now(),
-      description: req.body.description,
-      title:req.body.title,
-      location: req.body.location,
-      country: req.body.country,
-      state: req.body.stt,
-      city: req.body.city,
-      pin:req.body.pin,
-      longitude: req.body.longitude,
-      latitude: req.body.latitude
+//   await product_db.create({
+//       category: req.body.category,
+//       subcategory: req.body.subcategory,
+//       category_name: data[0].category_name,
+//       subcategory_name: sub_data[0].sub_category_name,
+//       image: req.files.image,
+//       price: req.body.price,
+//       date: Date.now(),
+//       description: req.body.description,
+//       title:req.body.title,
+//       location: req.body.location,
+//       country: req.body.country,
+//       state: req.body.stt,
+//       city: req.body.city,
+//       pin:req.body.pin,
+//       longitude: req.body.longitude,
+//       latitude: req.body.latitude
 
-  });
-  res.redirect('/products/');
-});
+//   });
+//   res.redirect('/products/');
+// });
 
 
 router.get('/get_subcategory',async function(request, response, next){
@@ -773,33 +757,33 @@ router.get('/add_properties',async function(req,res,next){                      
   res.render('properties_form',{title:'Add Properties', sub_data: sub_data});
 
 });
-router.post('/add_properties_form', uploadProperties.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
+// router.post('/add_properties_form', uploadProperties.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
 
-  await properties_db.create({
-      category: req.body.category,
-      image: req.files.image[0].filename,
-      subcategory: req.body.subcategory,
-      price: req.body.price,
-      description: req.body.description,
-      title:req.body.title,
-      location: req.body.location,
-      country: req.body.country,
-      state: req.body.sts,
-      city: req.body.city,
-      pin:req.body.pin,
-      area: req.body.area,
-      carpet_area: req.body.carpet_area,
-      facing: req.body.facing,
-      furnishing: req.body.furnishing,
-      construction: req.body.construction,
-      type: req.body.type,
-      bedroom: req.body.bedroom,
-      bathroom: req.body.bathroom,
-      owner: req.body.owner,
+//   await properties_db.create({
+//       category: req.body.category,
+//       image: req.files.image[0].filename,
+//       subcategory: req.body.subcategory,
+//       price: req.body.price,
+//       description: req.body.description,
+//       title:req.body.title,
+//       location: req.body.location,
+//       country: req.body.country,
+//       state: req.body.sts,
+//       city: req.body.city,
+//       pin:req.body.pin,
+//       area: req.body.area,
+//       carpet_area: req.body.carpet_area,
+//       facing: req.body.facing,
+//       furnishing: req.body.furnishing,
+//       construction: req.body.construction,
+//       type: req.body.type,
+//       bedroom: req.body.bedroom,
+//       bathroom: req.body.bathroom,
+//       owner: req.body.owner,
 
-  });
-  res.redirect('/properties/');
-});
+//   });
+//   res.redirect('/properties/');
+// });
 /////////////////////////////////////////vehicle
 router.get('/vehicle',async function(req, res, next) {  
   const data = await vehicle_db.find({'approval': true}).exec();                      
@@ -817,29 +801,29 @@ router.get('/add_vehicle',async function(req,res,next){
 
 });
 
-router.post('/add_vehicle_form', uploadVehicle.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
+// router.post('/add_vehicle_form', uploadVehicle.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
 
-  await vehicle_db.create({
+//   await vehicle_db.create({
     
-      image: req.files.image[0].filename,
-      subcategory: req.body.subcategory,
-      price: req.body.price,
-      description: req.body.description,
-      title:req.body.title,
-      km:req.body.km,
-      year:req.body.year,
-      fuel:req.body.fuel,
-      location: req.body.location,
-      country: req.body.country,
-      state: req.body.stt,
-      city: req.body.city,
-      pin:req.body.pin,
-      brand: req.body.brand,
-      insurance: req.body.insurance
+//       image: req.files.image[0].filename,
+//       subcategory: req.body.subcategory,
+//       price: req.body.price,
+//       description: req.body.description,
+//       title:req.body.title,
+//       km:req.body.km,
+//       year:req.body.year,
+//       fuel:req.body.fuel,
+//       location: req.body.location,
+//       country: req.body.country,
+//       state: req.body.stt,
+//       city: req.body.city,
+//       pin:req.body.pin,
+//       brand: req.body.brand,
+//       insurance: req.body.insurance
 
-  });
-  res.redirect('/vehicle/');
-});
+//   });
+//   res.redirect('/vehicle/');
+// });
 
 router.get('/update_vehicle/:id', async function(req,res,next ){
   let id= req.params.id

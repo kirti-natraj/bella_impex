@@ -74,10 +74,10 @@ console.log(req.params.id);
     const user = await user_db.findByIdAndUpdate( req.params.id, {
                $inc: {postCount: '1'} 
     } );
-    
+    let baseUrl = 'https://belle-impex-360513.el.r.appspot.com/image/'
     let images = [];
     for(var i=0; i< req.files.length;i++){
-      images[i] = req.files[i].filename;
+      images[i] = baseUrl + req.files[i].filename;
     }
     console.log(images);
     const data = await vehicle_db.create({

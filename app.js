@@ -6,23 +6,17 @@ var ejs = require('ejs');
 const cors = require("cors");
 var logger = require('morgan');
 var session = require('express-session');
-var mongoose = require('mongoose');  
+var mongoose = require('mongoose'); 
+var MongoClient = require('mongodb').MongoClient; 
 const Grid = require('gridfs-stream');
 const {GridFsStorage} = require('multer-gridfs-storage');
 var bodyParser = require('body-parser');    
 const methodOverride = require('method-override');
 const multer = require('multer');              //for mongodb
 
-var mongoURI = 'mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority';
-
-
-
-mongoose.connect(mongoURI, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority', {useNewUrlParser: true});
 var conn = mongoose.connection;
-let gfs;
 conn.on('connected', function() {
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads');
     console.log('database is connected successfully');
 });
 conn.on('disconnected',function(){
@@ -33,26 +27,7 @@ module.exports = conn;
 
 
 // Create storage engine
-const storage = new GridFsStorage({
-  url: mongoURI,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.randomBytes(16, (err, buf) => {
-        if (err) {
-          return reject(err);
-        }
-        const filename = buf.toString('hex') + path.extname(file.originalname);
-        const fileInfo = {
-          filename: filename,
-          bucketName: 'uploads'
-        };
-        resolve(fileInfo);
-      });
-    });
-  }
-});
-const upload = multer({ storage });
-module.exports = upload;
+
 
 const indexRouter = require('./routes/index');
 const user_apiRouter = require('./apis/user');
@@ -145,4 +120,4 @@ app.use(function(err, req, res, next) {
  // res.render('error');
 });
 
-module.exports = app, gfs;
+module.exports = app;

@@ -20,6 +20,7 @@ const budget_db = require('../models/budget');
 const banner_db = require('../models/banner');
 const state_db = require('../models/state');
 const city_db = require('../models/city');
+const feed_db = require('../models/feed');
 ////
 
 const path = require('path');
@@ -471,11 +472,32 @@ router.post('/senFCMNoti', async function(req,res,next){
    
 });
 
-router.get('/deleteAll/:id', async function (req, res) {
-    const data = await upload.deleteMany();
-    
 
-    res.json( {msg:'deleted'});
+/////////////////add feed post
+
+router.post('/addPostFeed',async function (req, res, next) {
+    const user_data = await feed_db.create({
+        user_id: req.body.user_id,
+        type: req.body.type,
+        url: req.body.url  ,
+        location: req.body.location,
+        feeling: req.body.feeling,
+        tagPeople: req.body.tagPeople,
+        about: req.body.about,
+        commentArray: { $push: {  
+                        "userName": req.body.userName,
+                        "userImage": req.body.userImage,
+                        "comment": req.body.comment
+         } }
+
+              });
+
+    res.json( {response: true, data: user_data});
 });
+
+
+////
+
+
 
 module.exports = router;
