@@ -44,22 +44,22 @@ router.post('/subcategory',async function (req, res, next) {
 });
  router.get('/getBanner', async function(req, res, next){
      const data = await banner_db.find().select('image');
-     const user = await user_db.findOne({payment: true});
-     var d = new Date(); // Today!
-//d.setDate(d.getDate() - 1); // Yesterday!
-console.log((d.getDate() - 1));
+//      const user = await user_db.findOne({payment: true});
+//      var d = new Date(); // Today!
+// //d.setDate(d.getDate() - 1); // Yesterday!
+// console.log((d.getDate() - 1));
      
-     if(user.yesterday == (d.getDate() - 1))
-     {
-        await user_db.findOneAndUpdate({payment: true},{
-            $inc:{
-                sub_left_day : -1,
+//      if(user.yesterday == (d.getDate() - 1))
+//      {
+//         await user_db.findOneAndUpdate({payment: true},{
+//             $inc:{
+//                 sub_left_day : -1,
               
-              }  ,
-              yesterday: moment(Date.now()).format("DD")
+//               }  ,
+//               yesterday: moment(Date.now()).format("DD")
                       
-         })
-     }
+//          })
+//      }
    
      const totalUserCount = await user_db.count(); 
      if(data == '') 

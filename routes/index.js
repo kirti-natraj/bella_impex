@@ -306,15 +306,16 @@ router.get('/banner',async function(req,res,next){                        //for 
 
 });
 
-// router.post('/add_banner', uploadBanner.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
-
-//   await banner_db.create({
+router.post('/add_banner', upload.single('image'), async function(req, res, next) {                          //category add
+  let baseUrl = 'https://belle-impex-360513.el.r.appspot.com/image/';
+  await banner_db.create({
      
-//       image: req.files.image[0].filename
-//   });
+      image: baseUrl + req.file.filename
+ 
+  });
 
-//   res.redirect('/banner_list/');
-// });
+  res.redirect('/banner_list/');
+});
 
 /////////////////////////////////////index
 router.get('/index',async function(req,res,next){     
@@ -337,22 +338,14 @@ router.get('/user',async function(req,res,next){                        //for Us
 
 });
 ///////////////////////////////////////////////category
-// router.get('/category',async function(req,res,next){                        //for UserTable Page
-//       const data = await category_db.find().exec();
- 
-//       res.render('category',{title:'Category List',data : data,  moment: moment});
-  
-// });
-
 router.get('/category',async function(req,res,next){                        //for UserTable Page
-  var gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads');
-  gfs.files.find().toArray((err,files)=>{
-      if (err) return res.status(400).json({err});
-      return res.render('category',{files:files});
-  }
-  )
+      const data = await category_db.find().exec();
+ 
+      res.render('category',{title:'Category List',data : data,  moment: moment});
+  
 });
+
+
 
 router.get('/add_category',async function(req,res,next){                        //for Category TAble Update
  
@@ -362,7 +355,7 @@ router.get('/add_category',async function(req,res,next){                        
 
 
 router.post('/add_category_form', upload.single('image'), async function(req, res, next) {                          //category add
-  let baseUrl = 'http://localhost:3000/image/';
+  let baseUrl = 'https://belle-impex-360513.el.r.appspot.com/image/';
   await category_db.create({
       category_name: req.body.category_name,
       image: baseUrl + req.file.filename
