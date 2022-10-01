@@ -464,7 +464,7 @@ router.post('/addActivity', async function(req,res){
   
     return res.json({response: true, msg:"Data found", data: data})
 })
-router.post('/getActivity', async function(req,res){
+router.post('/getFeelingActivity', async function(req,res){
     const data = await activity_db.find({type: req.body.type});
     return res.json({response: true, msg:"Data found", data: data})
 })
