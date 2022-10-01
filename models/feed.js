@@ -30,6 +30,11 @@ const feedSchema = new mongoose.Schema({
         required: false,
         default: ''
     },
+    activity:{
+        type: String,
+        required: false,
+        default: ''
+    },
     tagPeople:{
         type: String,
         required: false,
@@ -45,11 +50,11 @@ const feedSchema = new mongoose.Schema({
         required: false,
         default: '0'
     },
-    commentArray:[{
-           userName: String,
-           userImage: String,
-           comment: String
-        }],
+    commentArray:[{  
+        userName:String,
+        userImage: String,
+        comment: String
+    }],
     ago:{
         type: String,
         required: false,

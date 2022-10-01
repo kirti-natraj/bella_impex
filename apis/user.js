@@ -21,6 +21,7 @@ const banner_db = require('../models/banner');
 const state_db = require('../models/state');
 const city_db = require('../models/city');
 const feed_db = require('../models/feed');
+const activity_db = require('../models/activity');
 ////
 
 const path = require('path');
@@ -323,27 +324,6 @@ router.post('/likeIncr', async function (req, res, next){
         
 });
 
-// router.post('/likeDecr', async function (req, res, next){
-//     await user_db.findByIdAndUpdate(req.body.user_id, {
-       
-//     $pull:{
-//       liked_post_id: req.body.post_id
-//     }
-
-//     });
-
-//     await vehicle_db.findByIdAndUpdate(req.body.post_id,{
-       
-//      $inc:{
-//        like_count: -1
-//      } 
-
-//     });
-//     const data = await vehicle_db.findById(req.body.post_id);
-//         return res.json({response: true, msg:"Unliked by user", data: data});
-       
-   
-// });
 ////notification
 router.post('/getNotification',async function (req, res, next) {
 
@@ -475,21 +455,33 @@ router.post('/senFCMNoti', async function(req,res,next){
 
 /////////////////add feed post
 
+router.post('/addActivity', async function(req,res){
+    const data = await activity_db.create({
+        name: req.body.name,
+        image: 'http://localhost:3000/assets/images/emoji/'+req.body.image,
+        type: req.body.type
+    });
+  
+    return res.json({response: true, msg:"Data found", data: data})
+})
+router.post('/getActivity', async function(req,res){
+    const data = await activity_db.find({type: req.body.type});
+    return res.json({response: true, msg:"Data found", data: data})
+})
+
 router.post('/addPostFeed',async function (req, res, next) {
+    var commentVar = { userName: req.body.userName,
+        userImage: req.body.userImage,
+        comment: req.body.comment};
     const user_data = await feed_db.create({
         user_id: req.body.user_id,
         type: req.body.type,
-        url: req.body.url  ,
+        url: req.body.url,
         location: req.body.location,
-        feeling: req.body.feeling,
+        activity: req.body.activityId,
         tagPeople: req.body.tagPeople,
         about: req.body.about,
-        commentArray: { $push: {  
-                        "userName": req.body.userName,
-                        "userImage": req.body.userImage,
-                        "comment": req.body.comment
-         } }
-
+        commentArray:{$push: commentVar }
               });
 
     res.json( {response: true, data: user_data});
