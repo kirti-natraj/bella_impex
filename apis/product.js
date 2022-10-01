@@ -313,7 +313,7 @@ router.post('/getInvoice',async function (req, res, next) {
           
           // Downlaod the PDF
             const pdf = await page.pdf({
-              path: 'public/assets/pdf/result_'+user+ '.pdf',
+              path: upload,
               margin: { top: '100px', right: '50px', bottom: '100px', left: '50px' },
               printBackground: true,
               format: 'A4',
