@@ -171,14 +171,14 @@ router.get('/brand_form',async function(req,res,next){                        //
 });
 
 
-// router.post('/add_brand_form', uploadBrand.fields([{name:'image', maxCount: 1}]), async function(req, res, next) {                          //category add
-
-//   await brand_db.create({
-//       brand_name: req.body.brand_name,
-//       image: req.files.image[0].filename
-//   });
-//   res.redirect('/brand/');
-// });
+router.post('/add_brand_form', upload.single('image'), async function(req, res, next) {                          //category add
+  let baseUrl = 'https://belle-impex-360513.el.r.appspot.com/image/';
+  await brand_db.create({
+      brand_name: req.body.brand_name,
+      image: baseUrl+req.file.filename
+  });
+  res.redirect('/brand/');
+});
 /////////////////////////////////////////year
 router.get('/year',async function(req,res,next){                        //for UserTable Page
   const data = await year_db.find().exec();
@@ -471,12 +471,7 @@ router.get('/update_subcat_form/:id', async function(req,res,next ){
 //   const data = await category_db.find().exec();
 //   const sub_data = await subcategory_db.find().exec();
 //   res.render('View_forms',{title:'View Forms', data: data, sub_data: sub_data, moment: moment});
-
 // });
-
-
-
-
 
 // router.get('/view_form/:id',async function(req,res,next){  
 //   const brand = await brand_db.find().exec();
@@ -486,7 +481,6 @@ router.get('/update_subcat_form/:id', async function(req,res,next ){
 //   const cat = await category_db.find({'_id': data[0].category_id}).exec();
 //   console.log(data);
 //   res.render('view_form',{title:'Created Form', data: data,  brand: brand, years: year,cat:cat, budget: budget});
-
 // });
 
 router.get('/question/:id', async function(req,res, next){

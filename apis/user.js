@@ -22,7 +22,7 @@ const state_db = require('../models/state');
 const city_db = require('../models/city');
 const feed_db = require('../models/feed');
 const activity_db = require('../models/activity');
-////
+///// mongodb
 
 const path = require('path');
 const crypto = require('crypto');
@@ -30,8 +30,109 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const {GridFsStorage} = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
-const methodOverride = require('method-override');
+
+////////////////////////////////////////////////mongodb
+// Mongo URI
+const mongoURI = 'mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority';
+
+// Create mongo connection
+const conn = mongoose.createConnection(mongoURI);
+
+// Init gfs
+let gfs, gridfsBucket;
+conn.once('open', () => {
+ gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
+ bucketName: 'uploads'
+});
+
+ gfs = Grid(conn.db, mongoose.mongo);
+ gfs.collection('uploads');
+})
+
+// Create storage engine
+const storage = new GridFsStorage({
+  url: mongoURI,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = buf.toString('hex') + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'uploads'
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
+});
+const upload = multer({ storage });
+  ///////
+  router.get('/files', (req, res) => {
+  gfs.find().toArray((err, files) => {
+    // Check if files
+    if (!files || files.length === 0) {
+      return res.status(404).json({
+        err: 'No files exist'
+      });
+    }
+
+    // Files exist
+    return res.json(files);
+  });
+});
+
+// @route GET /files/:filename
+// @desc  Display single file object
+router.get('/files/:filename', (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    // Check if file
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: 'No file exists'
+      });
+    }
+    // File exists
+    return res.json(file);
+  });
+});
+
+// @route GET /image/:filename
+// @desc Display Image
+router.get('/image/:filename', (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    // Check if file
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: 'No file exists'
+      });
+    }
 ///
+
+    // Check if image
+    if(file.contentType === 'image/jpeg' || file.contentType 
+    ==='image/png') 
+    {
+       const readStream = gridfsBucket.openDownloadStream(file._id);
+       readStream.pipe(res);
+    }
+  });
+});
+
+// @route DELETE /files/:id
+// @desc  Delete file
+router.delete('/files/:id', (req, res) => {
+  gfs.remove({ _id: req.params.id, root: 'uploads' }, (err, gridStore) => {
+    if (err) {
+      return res.status(404).json({ err: err });
+    }
+
+    res.redirect('/');
+  });
+});
+///////////
 const moment = require('moment');
 const { ResultStorage } = require('firebase-functions/v1/testLab');
 
@@ -40,38 +141,6 @@ function AddMinutesToDate(date, minutes) {
     return new Date(date.getTime() + minutes*60000);
 }
 
-/////////////////////////mongogrid
-const mongoURI = 'mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority';
-
-// Create mongo connection
-const conn = mongoose.createConnection(mongoURI);
-
-// Init gfs
-let gfs;
-conn.once('open', () => {
-  // Init stream
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads');
-});
-const storage = new GridFsStorage({
-    url: mongoURI,
-    file: (req, file) => {
-      return new Promise((resolve, reject) => {
-        crypto.randomBytes(16, (err, buf) => {
-          if (err) {
-            return reject(err);
-          }
-          const filename = buf.toString('hex') + path.extname(file.originalname);
-          const fileInfo = {
-            filename: filename,
-            bucketName: 'uploads'
-          };
-          resolve(fileInfo);
-        });
-      });
-    }
-  });
-  const upload = multer({ storage });
 
 // //////////////////////////////////
 
@@ -86,22 +155,22 @@ router.post('/upload', upload.single('image'), async(req, res) => {
     return res.json({response: true, data: user});
   });
 
-//     router.post('/updateProfileImage', uploadUser.fields([{name:'image', maxCount: 1}]), async function (req, res){
-//     console.log(req.files.image);
+    router.post('/updateProfileImage', upload.single('image'), async function (req, res){
     
-//         var user = await user_db.findByIdAndUpdate(req.body.userId, {
+    let baseUrl = 'https://belle-impex-360513.el.r.appspot.com/image/';
+        var user = await user_db.findByIdAndUpdate(req.body.userId, {
            
-//             image: req.files.image[0].filename,
+            image: baseUrl + req.file.filename,
            
-//         })
+        })
     
-//     if (!user) return res.json({response: false, postMessage: 'failed'});
-//     else {
-//         const data = await user_db.findOne({'_id':req.body.userId});
-//         return res.json({response: true, data: data});
-//     }
+    if (!user) return res.json({response: false, postMessage: 'failed'});
+    else {
+        const data = await user_db.findOne({'_id':req.body.userId});
+        return res.json({response: true, data: data});
+    }
 
-// })
+})
 
     router.post('/updateProfile',  async function (req, res){
     
