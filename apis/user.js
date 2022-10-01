@@ -458,7 +458,7 @@ router.post('/senFCMNoti', async function(req,res,next){
 router.post('/addActivity', async function(req,res){
     const data = await activity_db.create({
         name: req.body.name,
-        image: 'http://localhost:3000/assets/images/emoji/'+req.body.image,
+        image: 'https://belle-impex-360513.el.r.appspot.com/assets/images/emoji/'+req.body.image,
         type: req.body.type
     });
   

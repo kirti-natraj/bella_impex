@@ -25,11 +25,6 @@ const feedSchema = new mongoose.Schema({
         required: false,
         default: ''
     },
-    feeling:{
-        type: String,
-        required: false,
-        default: ''
-    },
     activity:{
         type: String,
         required: false,
