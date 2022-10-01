@@ -38,12 +38,15 @@ const mongoURI = 'mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net
 const conn = mongoose.createConnection(mongoURI);
 
 // Init gfs
-let gfs;
+let gfs, gridfsBucket;
 conn.once('open', () => {
-  // Init stream
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads');
+ gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
+ bucketName: 'uploads'
 });
+
+ gfs = Grid(conn.db, mongoose.mongo);
+ gfs.collection('uploads');
+})
 
 // Create storage engine
 const storage = new GridFsStorage({
@@ -105,16 +108,14 @@ router.get('/image/:filename', (req, res) => {
         err: 'No file exists'
       });
     }
+///
 
     // Check if image
-    if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
-      // Read output to browser
-      const readstream = gfs.createReadStream(file.filename);
-      readstream.pipe(res);
-    } else {
-      res.status(404).json({
-        err: 'Not an image'
-      });
+    if(file.contentType === 'image/jpeg' || file.contentType 
+    ==='image/png') 
+    {
+       const readStream = gridfsBucket.openDownloadStream(file._id);
+       readStream.pipe(res);
     }
   });
 });
@@ -337,42 +338,22 @@ router.get('/user',async function(req,res,next){                        //for Us
 });
 ///////////////////////////////////////////////category
 // router.get('/category',async function(req,res,next){                        //for UserTable Page
-//   const data = await category_db.find().exec();
+//       const data = await category_db.find().exec();
  
 //       res.render('category',{title:'Category List',data : data,  moment: moment});
   
 // });
-router.get('/category', function(req, res) {
 
+router.get('/category',async function(req,res,next){                        //for UserTable Page
+  var gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection('uploads');
+  gfs.files.find().toArray((err,files)=>{
+      if (err) return res.status(400).json({err});
+      return res.render('category',{files:files});
+  }
+  )
+});
 
-  gfs.files.find({ filename: 'c8473aabf9497b369703a12f5b13f087.png' }).toArray(function (err, files) {
-  
-      if(files.length===0){
-          return res.status(400).send({
-              message: 'File not found'
-          });
-      }
-  
-      res.writeHead(200, {'Content-Type': files[0].contentType});
-  
-      var readstream = gfs.createReadStream({
-            filename: files[0].filename
-      });
-  
-      readstream.on('data', function(chunk) {
-          res.write(chunk);
-      });
-  
-      readstream.on('end', function() {
-          res.end();        
-      });
-  
-      readstream.on('error', function (err) {
-        console.log('An error occurred!', err);
-        throw err;
-      });
-    });
-  });
 router.get('/add_category',async function(req,res,next){                        //for Category TAble Update
  
   res.render('add_category',{title:'Add Category'});

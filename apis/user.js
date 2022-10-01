@@ -487,6 +487,10 @@ router.post('/addPostFeed',async function (req, res, next) {
     res.json( {response: true, data: user_data});
 });
 
+router.post('/getPostFeed', async function (req, res, next){
+    const data = await feed_db.find().exec();
+    res.json( {response: true, data: data});
+})
 
 ////
 

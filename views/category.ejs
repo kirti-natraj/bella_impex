@@ -1,132 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <%- include('admin/includes/header') %>
-<body>
-  <div class="min-height-250 bg-primary position-absolute w-100"></div>
- <%- include('admin/includes/sidebar')%>
-  <main class="main-content position-relative border-radius-lg ">
-    <!-- Navbar -->
-   <%- include('admin/includes/navbar')%>
-    <!-- End Navbar -->
-    <div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-12">
-          <div class="card mb-4">
-            <div class="row">
-
-           <div  class="col-10">
-            <div class="card-header pb-0">
-                <h6>Category table 
-                  </h6>
-               
-              </div>
-            </div>
-            <div class="col-2">
-            <div class="card-header pb-0">
-            <h6>
-            <a href="/add_category" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Add Category</button>
-              </a>
-                <!-- <a href="/add_category" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none">
-                    <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Add Category</button>
-                </a> -->
-               </h6>
-            </div>
-            </div>
-        </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">S.no.</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Category Name</th>
-                      <th class="text-uppercase text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">Category Image</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Created On</th>
-                      <th class="text-secondary opacity-7"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  
-
-                    <% if(data.length){
-                        for(var i = 0; i< data.length; i++) {%>  
-                            <tr>
-                                <td>
-                                    <div class="d-flex px-2 py-1">
-                                        <div class="d-flex flex-column justify-content-center">
-                                        <h6 class="mb-0 text-sm">&nbsp;&nbsp;<%= i+1 %></h6>
-                                        </div>
-
-                                    </div>
-                                </td>
-                                <td>
-                                  <div class="d-flex px-2 py-1">
-                                  
-                                    <div class="d-flex flex-column justify-content-center">
-                                      <h6 class="mb-0 text-sm"><%= data[i].category_name %></h6>
-                                      
-                                    </div>
-                                  </div>
-                                </td>
-                                <td>
-                                 
-                                          <img src="#" alt="">
-                                         
-                                </td>
-                               
-                                <td class="align-middle text-center">
-                                  <span class="text-secondary text-xs font-weight-bold"><%= moment(data[i].created_on).format('MMMM Do YYYY') %></span>
-                                </td>
-                                <td class="align-middle">
-                                  <a href="/update_category/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs text-end" data-toggle="tooltip" data-original-title="Edit user">
-                                   Update &nbsp;&nbsp;
-                                      </a>
-                                  <a href="/delete_cat/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs text-info" data-toggle="tooltip" data-original-title="Edit user">
-                                    Delete &nbsp;&nbsp;
-                                      </a>
-                                  <a href="/add_subcategory/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs text-danger" data-toggle="tooltip" data-original-title="Edit user">
-                                ADD SUBCATEGORY
-                                  </a>
-                                </td>
-                              </tr>
-                            <% }
-                                
-                              }else{ %>
-                                  <tr>
-                                     <td colspan="3">No user</td>
-                                  </tr>
-                               <% } %> 
-
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-     
-      <%- include('admin/includes/footer')%>
-    </div>
-  </main>
- 
-
-
-    <!--   Core JS Files   -->
-  
-  <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+  <style>
+    img {
+      width: 100%;
     }
-  </script>
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
- 
+  </style>
+  <title>Mongo File Uploads</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 m-auto">
+        <h1 class="text-center display-4 my-4">Mongo File Uploads</h1>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+          <div class="custom-file mb-3">
+            <input type="file" name="file" id="file" class="custom-file-input">
+            <label for="file" class="custom-file-label">Choose File</label>
+          </div>
+          <input type="submit" value="Submit" class="btn btn-primary btn-block">
+        </form>
+        <hr>
+        <% if(files){ %>
+          <% files.forEach(function(file) { %>
+            <div class="card card-body mb-3">
+           
+                <img src="image/<%= file.filename %>" alt="">
+                   
+                      <form method="POST" action="/files/<%= file._id %>?_method=DELETE">
+                        <button class="btn btn-danger btn-block mt-4">Delete</button>
+                      </form>
+            </div>
+            <% }) %>
+              <% } else { %>
+                <p>No files to show</p>
+                <% } %>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>
