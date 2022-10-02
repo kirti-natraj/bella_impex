@@ -12,274 +12,136 @@
  
 </head>
 <style>
-    *,
-*:before,
-*:after{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-body{
-    height : 128vh;
+    body{
+    font-family: Poppins;
+    height : 160vh;
     background:linear-gradient(135deg,);
 }
-hr{
-    border: 2px solid;
-    border-color:#dedcdc;
+.trigger_popup{
+    cursor: pointer;
+    font-size: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+    padding: 20px;
 }
-.container{
-    width: 98%;
+#success_trigger{
+    background: #32ba7c;
+    position: fixed;
+    top:20%;
+    left:20%;
+}
+#error_trigger{
+    background: #ff3636;
+    position: fixed;
+    top:20%;
+    left:60%;
+}
+h1{
+    font-size: medium;
+}
+
+#success{
+    display:flex;
+    top:20%;
+    left:10%
+}
+#error{
+    display: none;
+    position: fixed;
+    top:20%;
+    left:55%;
+}
+
+.popup-content{
+   /* display: block; */
+   width: 98%;
     background-color: #ffffff;
     padding: 10px 13px;
     transform: translate(-50%,-50%);
     position: relative;
     left: 50%;
-    top: 50%;
+    top: 25%;
     border-radius: 5px;
     box-shadow: 20px 30px 25px rgba(0,0,0,0.15);
 }
-.title-con{
-    background-color: #edf1ee;
-    padding-top: 15px;
-}
-.title-con img{
-    text-align: right;
-    padding: 6px 4px;
-    display: flex;
-    width:35px;
-    cursor: pointer;
-}
-p{
-    text-align: right;
-    font-weight: 100;
-}
-h3{
-    font-size: 20px;
+.imgbox{
     text-align: center;
-    color: rgb(0, 0, 0);
 }
-form{
-    width: 100%;
-    position: relative;
-    margin: 10px auto 0 auto;
- }
- .row{
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
-    grid-gap: 10px 10px;
-    margin-bottom: 5px;
- }
- label{
-    color:black;
-    font-family: Arial;
-    font-size: 15px;
+.img{
+    display:flex;
+    width: 112px;
+    margin-top: 40px;
+}
+.title{
     font-weight: 500;
- }
- textarea,input,select{
-    width: 100%;
-    font-size: 13px;
-    font-weight: 400;
-    padding: 8px 10px;
-    border-radius: 5px;
-    border: 1px solid #c4cae0;
-    margin-top: 5px;
+    font-size: 24px;
+   letter-spacing: 0.05em;
+   text-align: center;
+   margin: auto;
 }
-textarea{ 
-    resize: none;
+#success .title{
+   color: black;
 }
-textarea:focus,
-input:focus,
-select:focus{
-    outline: none;
-    border-color: black;
+#error .title{
+    color: #ff3636;
 }
-.btn-shadow{
-    border-radius: 5px;
-    border: 2px solid rgb(215, 215, 215);  
-}
-button{
-    font-size: 17px;
-    font-weight: 1000;
-    width: 100%;
-    border: 2px solid white;
-    padding: 10px 20px;
-    background: linear-gradient(135deg, #ff4d00, #e48c5c);
-    border-radius: 5px;
-    color: #ffff;
-    position: sticky;
-    cursor: pointer;
-}
+.para{
+    font-weight: 500;
+    width: 80%;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0.05em;
+    text-align: center;
+    margin: auto;
 
-input[type="radio"]{
-    display: none;
-}
-.radiobtn{
-    padding: 2px;
-    display: flex;
-    overflow-x: scroll;
-}
-.radiobtn label{
-    position: relative;
-    color: rgb(155, 154, 154);
-    background: #f0f0f0;
-    font-size: 12px;
-    border: 2px solid #9ea19f;
-    border-radius: 5px;
-    padding: 2px  20px;
-    margin: 5px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.13);
-    cursor: pointer;
-}
-.radiobtn label:before{
-    position: relative;
-    content: "";
-}
-.radiobtn [type="radio"]:checked + label{
-    background-color: #ffff;
-    color: black;
-    border-color: black;
-}
-.owner-con{
-    padding: 2px;
-    display: flex;
-    overflow-x: scroll;
-}
-.owner-con label{
-    position: relative;
-    color: rgb(155, 154, 154);
-    background: #f0f0f0;
-    font-size: 12px;
-    border: 2px solid #9ea19f;
-    border-radius: 5px;
-    padding: 2px  20px;
-    margin: 5px;
-    cursor: pointer;
-}
-.owner-con label:before{
-    position: relative;
-    content: "";
-}
-.owner-con [type="radio"]:checked + label{
-    background-color: #ffff;
-    color: black;
-    border-color: black;
-     box-shadow: 0 3px 6px rgba(0,0,0,0.13);
-}
-.insurance-con{
-    padding: 2px;
-    display: flex;
-    overflow-x: scroll;
-}
-.insurance-con label{
-    display: flex;
-    position: relative;
-    color: rgb(155, 154, 154);
-    background: #f0f0f0;
-    font-size: 12px;
-    border: 2px solid #9ea19f;
-    border-radius: 5px;
-    padding: 2px  20px;
-    margin: 5px;
-    cursor: pointer;
-   
-}
-.insurance-con label:before{
-    position: relative;
-    content: "";
-}
-.insurance-con [type="radio"]:checked + label{
-    background-color: #ffff;
-    color: black;
-    border-color: black;
-}
-.trans-container{
-    padding: 2px;
-}
-.trans-container label{
-    position: relative;
-    color: rgb(155, 154, 154);
-    background: #f0f0f0;
-    font-size: 12px;
-    border: 2px solid #9ea19f;
-    border-radius: 5px;
-    padding: 2px  20px;
-    cursor: pointer;
-}
-.trans-container label:before{
-    position: relative;
-    content: "";
-}
-.trans-container [type="radio"]:checked + label{
-    background-color: #ffff;
-    color: black;
-    border-color: black;
-}
 
-</style>
+}
+.button{
+    width: 50%;
+    display: block;
+    margin: 20px auto;
+    border-radius: 25px;
+    padding: 10px;
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    letter-spacing: 0.05em;
+}
+#s_button{
+    background: #32ba7c;
+}
+#e_button{
+    background: #ff3636;
+}
+  </style> 
 <body>
-    <div class="container">
-        <div class="title-con">
-            <h3>Fill Some Details</h3>
-            <img src="./img/backicon.png" >
-            <hr>
-        </div>
-        
-        <form action="/webviewIndex/add_vehicle"  method="post" >
-            <div class="row">
-                <div class="col">
-                 
-                    <input type="radio" id="html" name="fav_language" value="HTML">
-                    <label for="html">HTML</label><br>
-                    <input type="radio" id="css" name="fav_language" value="CSS">
-                    <label for="css">CSS</label><br>
-                    <input type="radio" id="javascript" name="fav_language" value="JavaScript">
-                    <label for="javascript">JavaScript</label>
-                </div>
-              
-            </div>
-           
-            <div class="btn-shadow">
-                <button type="submit" required value="submit">
-                  Next</button>
-            </div>
+    <div class="popup-content">
+        <div class="title">
+            <h1>Congratulations!</h1>
+            <h5> Your ad will be live shorty..</h5>
+          </div>
+          <table border = "1" width = "100%">
+            <tr>
+              <td>Category :  <%= data.category %></td>
+           </tr>
+           <tr>
+            <td>Brand : <%= data.brand %></td>
+         </tr>
+         <tr>
+          <td>Year : <%= data.year %></td>
+       </tr>
+       <tr>
+        <td>Fuel : <%= data.fuel %> </td>
+     </tr>
+          </table><br>
+        <h1>Do you want urgent sell ?</h1>
+     
+        <h4>Urgent sell reach more buyers & sell fastest</h4>
+        <form action="">
+          <a href="#" class="button" id="s_button">Sell Urgent Now</a>
         </form>
     </div>
-    <script>
-        var myText = document.getElementById("my-text");
-var result = document.getElementById("result");
-var limit = 60;
-result.textContent = 0 + "/" + limit;
-
-myText.addEventListener("input", function(){
-    var textlength = myText.value.length;
-    result.textContent = textlength + "/" + limit;
-
-    if (textlength > limit) {
-        myText.style.borderColor = "#ff2851";
-        result.style.color = "#ff2851";
-    }
-});
-var myText2 = document.getElementById("my-text2");
-var result2 = document.getElementById("result2");
-var limit2 = 100;
-result2.textContent = 0 + "/" + limit2;
-
-myText.addEventListener("input", function(){
-    var textlength2 = myText2.value.length;
-    result2.textContent = textlength2 + "/" + limit2;
-
-    if (textlength > limit) {
-        myText2.style.borderColor = "#ff2851";
-        result2.style.color = "#ff2851";
-    }
-});
-
-getElementById("imageOne").onclick = ()=>{
-  getElementById("inputeOne").click(); //if user click on the button then the input also clicked
-}
-
-    </script>
+  
 </body>
 </html>

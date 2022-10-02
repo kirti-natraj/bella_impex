@@ -118,13 +118,14 @@ console.log(req.params.id);
  
   router.post('/add_location/:id',async function(req, res, next) {                          //category add
 
-    const data = await vehicle_db.findByIdAndUpdate(req.params.id, {
+     await vehicle_db.findByIdAndUpdate(req.params.id, {
       state: req.body.stt,
       city: req.body.city
     
     });
-   
-    res.json('Successfully Product Addded'); //,{title:"popup", data : data} );
+    const data = await vehicle_db.findOne({_id:req.params.id});
+    res.render('web_page/form_field',{ data: data});
+   // res.json('Successfully Product Addded'); //,{title:"popup", data : data} );
   });
   
 

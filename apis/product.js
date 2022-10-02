@@ -135,7 +135,7 @@ router.post('/getCity',async function (req, res, next) {
 
   router.get('/getWebviewData',async function (req, res, next) {
      
-        const data = "https://bellaimpex.herokuapp.com/webviewIndex";
+        const data = "https://belle-impex-360513.el.r.appspot.com/webviewIndex";
         return res.json({response: true, msg:"Page found", data: data })
        
 });
@@ -143,7 +143,7 @@ router.post('/getCity',async function (req, res, next) {
 
 router.post('/getPDF',async function (req, res, next) {
      
-    const data = "https://bellaimpex.herokuapp.com/assets/images/result.pdf";
+    const data = "https://belle-impex-360513.el.r.appspot.com/assets/images/result.pdf";
     return res.json({response: true, msg:"PDF found", data: data, user_id: req.body.user_id, invoiceNo: '218y63981ksdjbfskj',price:'20,000/-', date: '22/09/22' })
    
 });
@@ -295,7 +295,7 @@ router.post('/getInvoice',async function (req, res, next) {
             const page = await browser.newPage();
           
             // Website URL to export as pdf
-            const website_url = 'http://localhost:8080/userWebview/'+user; 
+            const website_url = 'https://belle-impex-360513.el.r.appspot.com/userWebview/'+user; 
           
             // Open URL in current page
             await page.goto(website_url, { waitUntil: 'networkidle0' }); 
@@ -305,7 +305,7 @@ router.post('/getInvoice',async function (req, res, next) {
           
           // Downlaod the PDF
             const pdf = await page.pdf({
-              path: 'http://localhost:8080/image/',
+              path: 'https://belle-impex-360513.el.r.appspot.com/image/',
               margin: { top: '100px', right: '50px', bottom: '100px', left: '50px' },
               printBackground: true,
               format: 'A4',
@@ -313,7 +313,7 @@ router.post('/getInvoice',async function (req, res, next) {
           
             // Close the browser instance
             await browser.close();
-            res.json({ response: true , msg: "Data Found", pdf: 'http://localhost:8080/'});
+            res.json({ response: true , msg: "Data Found", pdf: 'https://belle-impex-360513.el.r.appspot.com/'});
         })();
 
         }
@@ -327,7 +327,7 @@ router.post('/invoice',async function (req, res, next) {
     .then(result => {
         if (!result) return res.json({response: false, msg: "User not found"});
         else {
-            return res.json({response: true, msg:"User found", data: 'http://localhost:8080/userWebview/'+user});
+            return res.json({response: true, msg:"User found", data: 'https://belle-impex-360513.el.r.appspot.com/userWebview/'+user});
         }
     })
 });
@@ -338,7 +338,7 @@ router.post('/getForm',async function (req, res, next) {
     .then(result => {
         if (!result) return res.json({response: false, msg: "Subcategory not found"});
         else {
-            return res.json({response: true, msg:"User found", data: 'http://localhost:8080/view_question/'+subcategory+'/'+req.body.userId});
+            return res.json({response: true, msg:"User found", data: 'https://belle-impex-360513.el.r.appspot.com/view_question/'+subcategory+'/'+req.body.userId});
         }
     })
 });
