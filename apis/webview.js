@@ -69,7 +69,7 @@ router.get('/location', function (req, res) {
 
 });
 
-router.post('/add_vehicle/:id',upload.array('image', 5 ) , async function(req, res, next) {                          //category add
+router.post('/add_vehicle/:id', upload.array('image', 5 ) , async function(req, res, next) {                          //category add
 console.log(req.params.id);
     const user = await user_db.findByIdAndUpdate( req.params.id, {
                $inc: {postCount: '1'} 

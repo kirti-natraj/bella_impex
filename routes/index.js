@@ -488,48 +488,62 @@ router.get('/question/:id', async function(req,res, next){
   console.log(data.form_created);
   res.render('question',{title:"Create Form", data: data});
 })
+router.get('/view_question/:subcat/:user', async function(req,res, next){                   ////////////////view Question
+  const data = await subcategory_db.findOne({'_id': req.params.subcat});
+  console.log(data.question);
+  res.render('dynamic_form',{title:"View Form", id: data._id, data: data.question, type: data.dataType, category: data, user: req.params.user});
+})
 
 router.get('/view_question/:id', async function(req,res, next){                   ////////////////view Question
  
   const data = await subcategory_db.findOne({'_id': req.params.id});
   console.log(data.question);
-  res.render('View_question',{title:"View Form", id: data._id, data: data.question});
+  res.render('dynamic_form_view',{title:"View Form", id: data._id, data: data.question, type: data.dataType, category: data});
 })
 router.post('/submit_form/:id', async function(req, res, next){
   console.log(req.body.indicator);
   if(req.body.indicator == 'yes'){
     await subcategory_db.findByIdAndUpdate(req.params.id,{
-      $push:{ question: req.body.first},
+      $push:{ 
+        question: req.body.first,
+      dataType: req.body.firstType},
       form_created: true
     })
      await subcategory_db.findByIdAndUpdate(req.params.id,{
-      $push:{ question: req.body.second},
+      $push:{ 
+      question: req.body.second,
+       dataType: req.body.secondType},
       
     })
     const data = await subcategory_db.findByIdAndUpdate(req.params.id,{
-      $push:{ question: req.body.third},
+      $push:{
+         question: req.body.third,
+         dataType: req.body.thirdType},
      
     })
-    res.redirect('/subcategory_list/');
+    res.render('dynamic_form_view',{title:"View Form", id: data._id, data: data.question, type: data.dataType, category: data});
   }else{
     await subcategory_db.findByIdAndUpdate(req.params.id,{
-      $push:{ question: req.body.first},
+      $push:{ 
+        question: req.body.first,
+        dataType: req.body.firstType},
       form_created: true
     })
      await subcategory_db.findByIdAndUpdate(req.params.id,{
-      $push:{ question: req.body.second},
+      $push:{ 
+        question: req.body.second,
+        dataType: req.body.secondType},
       
     })
     await subcategory_db.findByIdAndUpdate(req.params.id,{
-      $push:{ question: req.body.third},
+      $push:{ 
+        question: req.body.third,
+        dataType: req.body.thirdType},
      
     })
     const data = await subcategory_db.findById(req.params.id);
     res.render('add_more',{title:'Add More', data: data});
   }
-  
- 
- 
 })
 
 router.get('/add_more/:id', async function(req, res, next){
@@ -538,7 +552,7 @@ router.get('/add_more/:id', async function(req, res, next){
 })
 router.get('/add_more_one/:id', async function(req, res, next){
    await subcategory_db.findByIdAndUpdate(req.params.id,{
-    $push:{ question: req.body.extra},
+    $push:{ question: req.body.extra, dataType: req.body.dataType},
   });
   const data = await subcategory_db.findById(req.params.id);
   res.render('add_more',{title:'Add More', data: data});
@@ -546,12 +560,51 @@ router.get('/add_more_one/:id', async function(req, res, next){
 router.post('/add_more_submit/:id', async function(req, res, next){
 
   await subcategory_db.findByIdAndUpdate(req.params.id,{
-    $push:{ question: req.body.extra},
+    $push:{ question: req.body.extra, dataType: req.body.dataType},
   });
   const data = await subcategory_db.findById(req.params.id);
-  res.render('View_question',{title:"View Form", id: data._id, data: data.question});
+  res.render('dynamic_form_view',{title:"View Form", id: data._id, data: data.question,category: data.sub_category_name, type: data.dataType});
   
-})
+});
+
+
+router.post('/submit_dynamic_form/:id/:userId', upload.array('image', 5 ) , async function(req, res, next) {                          //category add
+  console.log(req.params.id);
+      const subcat_data = await subcategory_db.findById(req.params.id);
+      const user = await user_db.findByIdAndUpdate( req.params.userId, {
+                 $inc: {postCount: '1'} 
+      } );
+      let baseUrl = 'https://belle-impex-360513.el.r.appspot.com/image/'
+      let images = [];
+      for(var i=0; i< req.files.length;i++){
+        images[i] = baseUrl + req.files[i].filename;
+      }
+      console.log(images);
+      const question = subcat_data.question;
+      const extra_data = {};
+      for(var i = 0; i < question.length;i++){
+        const name = question[i];
+        Object.entries({[`${question[i]}`]: req.body[name]}).forEach(([key,value]) => { extra_data[key] = value })
+      };
+      console.log(extra_data);
+      const data = await product_db.create({
+          category: subcat_data.category_id,
+          subcategory: subcat_data.sub_category_name,
+          description: req.body.description,
+          user_id: user._id,
+          user_name: user.name,
+          user_image: user.image,
+          user_mobile: user.mobile,
+          since: user.added_on,
+          title:req.body.title,
+          image: images,
+          extra_data: extra_data,
+          created_on: moment(Date.now()).format("YYYY-MM-DD"),
+         
+      });
+    
+      res.render('web_page/price',{id: data._id});
+    });
 //////////////////////////////////////////////////Pending
 
 router.get('/pending',async function(req, res, next) {  

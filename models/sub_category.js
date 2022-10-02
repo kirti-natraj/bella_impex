@@ -40,6 +40,10 @@ const subcategorySchema = new mongoose.Schema({
     question:{
         type: Array,
         required:false,
+    },
+    dataType:{
+        type: Array,
+        required: false
     }
   
 })

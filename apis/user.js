@@ -144,16 +144,7 @@ function AddMinutesToDate(date, minutes) {
 
 // //////////////////////////////////
 
-router.post('/upload', upload.single('image'), async(req, res) => {
-    // res.json({ file: req.file });
-    console.log(req.file.filename);
-    var user = await user_db.findByIdAndUpdate(req.body.userId, {
-           
-               image: req.file.filename
-                   
-              })
-    return res.json({response: true, data: user});
-  });
+
 
     router.post('/updateProfileImage', upload.single('image'), async function (req, res){
     

@@ -30,16 +30,42 @@
                       <div class="card-body">
                         <p class="text-uppercase text-sm">Enter Form Field Name for Subcategory <%= data.sub_category_name %></p>
                         <div class="row">
-                            <div class="col-md-5">
+                           
                                 <div class="form-group">
-                                <input type="text" name="first" id="flagone" placeholder="Enter Here" required/>
-                                <input type="text" name="second" id="flagtwo" placeholder="Enter Here" required/>
-                                <input type="text" name="third" id="flagthree" placeholder="Enter Here" required/>
+                                  <div class="col-md-5">
+                                    <label class="label">Enter First Field</label>
+                                    <input type="text" class="form-control" name="first" id="flagone" placeholder="Enter Here" required/>
+                                   
+                                    <select class="form-control" name="firstType" >
+                                      <option selected disabled>Enter Input Type</option>
+                                      <option value="number">Number</option>
+                                      <option value="text">Letter</option>
+                                      <option value="date">Date</option>
+                                    </select>
+                                 
+                                <br>
+                                <label class="label">Enter Second Field</label>
+                                <input type="text" name="second" id="flagtwo" class="form-control" placeholder="Enter Here" required/>
+                                <select class="form-control" class="form-control" name="secondType">
+                                  <option selected disabled>Enter Input Type</option>
+                                  <option value="number">Number</option>
+                                  <option value="text">Letter</option>
+                                  <option value="date">Date</option>
+                                </select>
+                                <br>
+                                <label class="label">Enter Third Field</label>
+                                <input type="text" name="third" id="flagthree" class="form-control" placeholder="Enter Here" required/>
+                                <select class="form-control" class="form-control" name="thirdType">
+                                  <option selected disabled>Enter Input Type</option>
+                                  <option value="number">Number</option>
+                                  <option value="text">Letter</option>
+                                  <option value="date">Date</option>
+                                </select>
                                 <input type="text" name="indicator" id="indicat" value="yes" hidden/>
                                 </div>
                             </div>
-                          
-                        </div>
+                          </div>
+                       
                         <hr>
     
                        <div class="row">

@@ -7,33 +7,44 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    user_name:{
+        type: String,
+        required: false,
+        default:''
+    },
+    user_image:{
+        type: String,
+        required: false,
+        default:''
+    },
+    user_mobile:{
+        type: String,
+        required: false,
+        default:''
+    },
+    since:{
+        type: String,
+        required: false,
+        default:''
+    },
     category: {
         type: String,
-        required: false
+        required: false,
+        default: ''
     },
     subcategory: {
         type: String,
         required: false
     },
-    category_name: {
-        type: String,
+    image: {
+        type: Array,
         required: false
     },
-    subcategory_name: {
-        type: String,
-        required: false
-    },
-    image: [
-        Object
-    ],
+
     description: {
         type: String,
         required: false
         
-    },
-    brand:{
-        type: String,
-        required: false
     },
     price: {
         type: String,
@@ -44,24 +55,15 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    date: {
-        type: Date,
-        required: false,
-        default: Date.now()
+    created_on: {
+        type: String,
+        required: false
     },
+    
     status: {
         type: Boolean,
         required: false,
         default: false
-    },
-        
-    location: {
-        type: String,
-        required: false
-    },
-    country: {
-        type: String,
-        required: false
     },
     state: {
         type: String,
@@ -71,16 +73,36 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    pin: {
-        type: String,
-        required: false
+    extra_data:{
+        type:Array
     },
-    longitude: {
-        type: String,
-        required: false
+    approval:{
+        type: Boolean,
+        required: false,
+        default: false
     },
-    latitude: {
+    reject:{
+        type: Boolean,
+        required: false,
+        default: false
+    },
+    like_count:{
+        type: Number,
+        required: false,
+        default: 0
+    },
+    approved_on:{
         type: String,
+        required: false,
+        default:""
+    },
+    view_count:{
+        type: Number,
+        required: false,
+        default: 0
+    },
+    viewer_id:{
+        type: Array,
         required: false
     },
     likeFlag:{
@@ -88,6 +110,7 @@ const productSchema = new mongoose.Schema({
         required: false,
         default: false
     }
+    
 
 })
 

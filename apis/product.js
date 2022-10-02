@@ -69,23 +69,15 @@ router.post('/addProduct', uploadProduct.fields([{name:'image', maxCount: 5}]), 
  /////////// getProduct
  router.post('/getProduct',async function (req, res, next) {
 
-    const sub_id =  req.body.subcategory_id;
+    const sub_id =  req.body.subcategory;
   
     console.log(sub_id)
     const data = await product_db.find({subcategory: sub_id});
-    if(data == '') 
-    {
+  
        
-        return res.json({response: false, msg:"Data not found", data: data })
-    }    
-    else
-    {
-        console.log(data);
-       
-        const data = await vehicle_db.findById(req.body.post_id).exec();
-        res.json({ response: true , msg: "Data Found", data: data });
-    } 
-   
+        return res.json({response: false, msg:"Data found", data: data })
+    
+ 
 
 }); 
 //////////////////////////////////////getVehicle
@@ -313,7 +305,7 @@ router.post('/getInvoice',async function (req, res, next) {
           
           // Downlaod the PDF
             const pdf = await page.pdf({
-              path: upload,
+              path: 'http://localhost:8080/image/',
               margin: { top: '100px', right: '50px', bottom: '100px', left: '50px' },
               printBackground: true,
               format: 'A4',
@@ -321,7 +313,7 @@ router.post('/getInvoice',async function (req, res, next) {
           
             // Close the browser instance
             await browser.close();
-            res.json({ response: true , msg: "Data Found", pdf: 'http://localhost:8080/assets/pdf/result_'+user+'.pdf'});
+            res.json({ response: true , msg: "Data Found", pdf: 'http://localhost:8080/'});
         })();
 
         }
@@ -335,11 +327,21 @@ router.post('/invoice',async function (req, res, next) {
     .then(result => {
         if (!result) return res.json({response: false, msg: "User not found"});
         else {
-           
-
             return res.json({response: true, msg:"User found", data: 'http://localhost:8080/userWebview/'+user});
         }
     })
 });
+
+router.post('/getForm',async function (req, res, next) {
+    const subcategory = req.body.subcategoryId;
+    subcategory_db.findById(subcategory)
+    .then(result => {
+        if (!result) return res.json({response: false, msg: "Subcategory not found"});
+        else {
+            return res.json({response: true, msg:"User found", data: 'http://localhost:8080/view_question/'+subcategory+'/'+req.body.userId});
+        }
+    })
+});
+
 
 module.exports = router;
