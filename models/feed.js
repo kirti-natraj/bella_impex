@@ -26,14 +26,10 @@ const feedSchema = new mongoose.Schema({
         default: ''
     },
     activity:{
-        type: String,
-        required: false,
-        default: ''
+        type: Array
     },
-    tagPeople:{
-        type: String,
-        required: false,
-        default: ''
+    tag_people:{
+       type: Array
     },
     about:{
         type: String,
@@ -45,11 +41,6 @@ const feedSchema = new mongoose.Schema({
         required: false,
         default: '0'
     },
-    commentArray:[{  
-        userName:String,
-        userImage: String,
-        comment: String
-    }],
     ago:{
         type: String,
         required: false,

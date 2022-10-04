@@ -21,6 +21,9 @@ const banner_db = require('../models/banner');
 const state_db = require('../models/state');
 const city_db = require('../models/city');
 const feed_db = require('../models/feed');
+const follow_db = require('../models/follow');
+const likePost_db = require('../models/likePost');
+const commentPost_db = require('../models/comment');
 const activity_db = require('../models/activity');
 ///// mongodb
 
@@ -529,19 +532,26 @@ router.post('/getFeelingActivity', async function(req,res){
     return res.json({response: true, msg:"Data found", data: data})
 })
 
-router.post('/addPostFeed',async function (req, res, next) {
-    var commentVar = { userName: req.body.userName,
+router.post('/addPostFeed',upload.single('url'), async function (req, res, next) {
+    var commentVar = { 
+        userName: req.body.userName,
         userImage: req.body.userImage,
         comment: req.body.comment};
+        var activityVar = { 
+            icon: req.body.icon,
+            name: req.body.activityName,
+            };
+           
+           
+     let baseUrl = 'https://belle-impex-360513.el.r.appspot.com/image/';
     const user_data = await feed_db.create({
         user_id: req.body.user_id,
         type: req.body.type,
-        url: req.body.url,
+        url: baseUrl + req.file.filename,
         location: req.body.location,
-        activity: req.body.activityId,
-        tagPeople: req.body.tagPeople,
+        activity: activityVar,
+        tag_people: commentVar,
         about: req.body.about,
-        commentArray:{$push: commentVar }
               });
 
     res.json( {response: true, data: user_data});
@@ -552,7 +562,47 @@ router.post('/getPostFeed', async function (req, res, next){
     res.json( {response: true, data: data});
 })
 
-////
+/////////follow
+
+router.post('/followUser', async function (req, res, next){
+
+    const data = await follow_db.create({
+        myUserId: req.body.myUserId,
+        otherUserId: req.body.otherUserId
+    });
+    res.json( {response: true, msg: "Follow Success"});
+});
+////like post
+
+
+router.post('/likePost', async function (req, res, next){
+
+    const data = await likePost_db.create({
+        userId: req.body.userId,
+        postId: req.body.postId,
+        $inc:{
+            like_count: 1
+          } 
+    });
+    const count = await likePost_db.find({postId: req.body.postId });
+    res.json( {response: true, msg: "Success", likeCount: count.length});
+});
+/////////////comment on post
+
+router.post('/commentPost', async function (req, res, next){
+    await commentPost_db.create({
+        userId: req.body.userId,
+        postId: req.body.postId,
+        comment: req.body.comment
+    });
+    const count = await commentPost_db.find({postId: req.body.postId });
+    var comment = [];
+    for(var i = 0;i<count.length; i++){
+          comment[i] = count[i].comment
+    }
+    res.json( {response: true, msg: "Success", comment: comment});
+});
+
 
 
 
