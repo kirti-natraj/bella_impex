@@ -559,31 +559,78 @@ router.post('/addPostFeed',upload.single('url'), async function (req, res, next)
 
 router.post('/getPostFeed', async function (req, res, next){
     const data = await feed_db.find().exec();
-    res.json( {response: true, data: data});
+    for(var i = 0; i < data.length; i++){
+         const follow = await follow_db.find({ myUserId: req.body.userId,
+            otherUserId: data[i].user_id}) ;
+            const like = await likePost_db.find({ userId: req.body.userId,
+                postId: data[i]._id}) ;
+            if(follow == ''){
+               await feed_db.findByIdAndUpdate(data[i]._id,{
+                    follow: false
+                });
+            }else{
+             await feed_db.findByIdAndUpdate(data[i]._id,{
+                    follow: true
+                });
+            }
+           
+                if(like == ''){
+                    await feed_db.findByIdAndUpdate(data[i]._id,{
+                        like: false
+                    });
+                }else{
+                    await feed_db.findByIdAndUpdate(data[i]._id,{
+                        like: true
+                    });
+                }
+    };
+    const final = await feed_db.find().exec();
+    res.json( {response: true, data: final});
 })
 
 /////////follow
 
 router.post('/followUser', async function (req, res, next){
 
-    const data = await follow_db.create({
-        myUserId: req.body.myUserId,
-        otherUserId: req.body.otherUserId
-    });
-    res.json( {response: true, msg: "Follow Success"});
+    const data =  await follow_db.find({   myUserId: req.body.myUserId,
+        otherUserId: req.body.otherUserId });
+        if(data == ''){
+            await follow_db.create({
+                myUserId: req.body.myUserId,
+                otherUserId: req.body.otherUserId
+            });
+            res.json( {response: true, msg: "Follow Success"});
+        }else{
+            await follow_db.findOneAndDelete({  myUserId: req.body.myUserId,
+                otherUserId: req.body.otherUserId
+                });
+                res.json( {response: false, msg: "Unfollow Success"});
+        }
+    
+
+
+   
+   
 });
 ////like post
 
 
 router.post('/likePost', async function (req, res, next){
 
-    const data = await likePost_db.create({
-        userId: req.body.userId,
-        postId: req.body.postId,
-        $inc:{
-            like_count: 1
-          } 
-    });
+    const data =  await likePost_db.find({ userId: req.body.userId,
+    postId: req.body.postId});
+    if(data == ''){
+        await likePost_db.create({
+            userId: req.body.userId,
+            postId: req.body.postId
+        });
+    }else{
+        await likePost_db.findOneAndDelete({ userId: req.body.userId,
+            postId: req.body.postId
+            });
+    }
+
+   
     const count = await likePost_db.find({postId: req.body.postId });
     res.json( {response: true, msg: "Success", likeCount: count.length});
 });
@@ -596,11 +643,7 @@ router.post('/commentPost', async function (req, res, next){
         comment: req.body.comment
     });
     const count = await commentPost_db.find({postId: req.body.postId });
-    var comment = [];
-    for(var i = 0;i<count.length; i++){
-          comment[i] = count[i].comment
-    }
-    res.json( {response: true, msg: "Success", comment: comment});
+    res.json( {response: true, msg: "Success"});
 });
 
 

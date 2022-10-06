@@ -46,7 +46,17 @@ const feedSchema = new mongoose.Schema({
         required: false,
         default: '1 hr'
     },
-        
+       
+    like:{
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    follow:{
+        type: Boolean,
+        required: false,
+        default: false
+      },
     
 })
 
