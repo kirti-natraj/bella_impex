@@ -146,13 +146,13 @@ router.get('/setState',async function (req, res, next) {
      
 
   
-  const city =  await city_db.create(
+  const state =  await city_db.create(
     {
-      state_id: "631f0f7a3df6bbab862ad51b",
-      city_name: "Bhopal"
+      state_id: "633ed767e7a4a0e9a48ce760",
+      city_name: "Ujjain"
     }
   );
-  return res.json({response: true, msg:"Page found",  city: city })
+  return res.json({response: true, msg:"Page found" })
  
 });
 

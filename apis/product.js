@@ -264,7 +264,9 @@ router.post('/getAllProduct',async function (req, res, next) {
     const user = req.body.user_id;
     const user_data = await user_db.findById(user);
     console.log(user_data);
-    for(var j=0; j < data.length; j++)
+    if(user_data == null) res.json({ response: true , msg: "Data not Found" });
+    else{
+        for(var j=0; j < data.length; j++)
     {
        for(var i=0;i < user_data.liked_post_id.length ;i++){
            console.log(data[j]);
@@ -273,7 +275,9 @@ router.post('/getAllProduct',async function (req, res, next) {
            }
        }
     }
-    res.json({ response: true , msg: "Data Found", data: data });
+    res.json({ response: true , msg: "Data Found", data: data }); 
+    }
+   
 });
 
 ////////////////////////////////////////// Invoice
