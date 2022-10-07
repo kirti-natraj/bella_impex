@@ -50,8 +50,9 @@ const storage = new GridFsStorage({
 router.get('/:id', async function (req, res) {
     console.log(req.params.id);
     const brand = await brand_db.find().exec();
+    const year =  await year_db.find().exec();
     const user = await user_db.findOne({ '_id': req.params.id });
-    res.render('web_page/index',{brand:brand, user: user});
+    res.render('web_page/index',{brand:brand, user: user, year:year});
 });
 
 router.get('/price', function (req, res) {

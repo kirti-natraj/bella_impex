@@ -143,9 +143,7 @@ router.get('/',  function(req, res, next) {
 //////////////////////////////////////////////state nd city
 
 router.get('/setState',async function (req, res, next) {
-     
-
-  
+      
   const state =  await city_db.create(
     {
       state_id: "633ed767e7a4a0e9a48ce760",

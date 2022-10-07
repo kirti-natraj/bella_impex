@@ -6,9 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap" rel="stylesheet">
+ 
  
 </head>
 <style>
@@ -217,7 +215,49 @@ input[type="radio"]{
     color: black;
     border-color: black;
 }
-
+        .dropbtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+  
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+  
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 
+                0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+  
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+  
+        .dropdown-content a:hover {
+            background-color: #f1f1f1
+        }
+  
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+  
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+ 
 </style>
 <body>
     <div class="container">
@@ -231,11 +271,27 @@ input[type="radio"]{
                 <div class="col">
                     <label for="brand-details">Brand*</label>
                     <div class="brand-container">
+                        <!-- <div class="dropdown">
+                            <button class="dropbtn">
+                                Country Flags
+                            </button>
+                              
+                            <div class="dropdown-content">
+                                <% if(brand.length){
+                                    for(var i = 0; i< brand.length; i++) {%> 
+                                <a href="#">
+                                    <img src=
+                "<%= brand[i].image %>"
+                                    width="20" height="15"><%= brand[i].brand_name %></a>
+                                    <% } %> 
+                                    <% } %> 
+                            </div>
+                        </div> -->
                         <select name="brand" id="dropdown-brand">
                            
                             <% if(brand.length){
                                 for(var i = 0; i< brand.length; i++) {%> 
-                              <option value="<%= brand[i].brand_name %>"><%= brand[i].brand_name %></option>
+                              <option value="<%= brand[i]._id %>"><%= brand[i].brand_name %></option>
                               <% } %> 
                               <% } %> 
                         </select>
@@ -244,6 +300,7 @@ input[type="radio"]{
                 <div class="col">
                     <label for="year">Year*</label>
                     <input type="number" required name="year" placeholder="Year">
+                    
                 </div>
             </div>
             <div class="row">

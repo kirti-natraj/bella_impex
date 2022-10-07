@@ -4,25 +4,16 @@ const commentSchema = new mongoose.Schema({
     comment_id:{
         type:mongoose.ObjectId,
     },
+   
     userId:{
         type: String,
         required: false,
 
     },
-    postId:{
+    commentId:{
         type: String,
         required: false,
 
-    },
-    comment:{
-        type: String,
-        required: false,
-
-    },
-    commentArray:{
-        type: Array,
-        required: false,
-        default:[]
     },
     created_on:{
         type: Date,
@@ -30,7 +21,6 @@ const commentSchema = new mongoose.Schema({
        default: Date.now()
 
     },
-  
 })
 
-module.exports = mongoose.model('commentPost',commentSchema,'comentPost');
+module.exports = mongoose.model('likeComment',commentSchema,'likeComment');

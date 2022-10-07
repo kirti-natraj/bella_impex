@@ -23,6 +23,8 @@ const city_db = require('../models/city');
 const feed_db = require('../models/feed');
 const follow_db = require('../models/follow');
 const likePost_db = require('../models/likePost');
+
+const likePostComment_db = require('../models/likeComment');
 const commentPost_db = require('../models/comment');
 const activity_db = require('../models/activity');
 ///// mongodb
@@ -624,15 +626,17 @@ router.post('/likePost', async function (req, res, next){
             userId: req.body.userId,
             postId: req.body.postId
         });
+        const count = await likePost_db.find({postId: req.body.postId });
+        res.json( {response: true, msg: "Liked", likeCount: count.length});
     }else{
         await likePost_db.findOneAndDelete({ userId: req.body.userId,
             postId: req.body.postId
             });
+            const count = await likePost_db.find({postId: req.body.postId });
+            res.json( {response: false, msg: "Disliked", likeCount: count.length});
     }
 
    
-    const count = await likePost_db.find({postId: req.body.postId });
-    res.json( {response: true, msg: "Success", likeCount: count.length});
 });
 /////////////comment on post
 
@@ -646,7 +650,61 @@ router.post('/commentPost', async function (req, res, next){
     res.json( {response: true, msg: "Success"});
 });
 
+router.post('/commentOnPostComment', async function (req, res, next){
+    // await commentPost_db.create({
+    //     userId: req.body.userId,
+    //     postId: req.body.commentId,             ////////////////////// inserting the CommentId in postId to loop into the other 
+    //     comment: req.body.comment
+    // });
+    // const count = await commentPost_db.find({postId: req.body.commentId });
+    // res.json( {response: true, msg: "Success", commentCount: count.length});
 
+    const data = {
+        userId: req.body.userId,
+        commentId: req.body.commentId,             ////////////////////// inserting the CommentId in postId to loop into the other 
+        comment: req.body.comment
+    };
+     await commentPost_db.findByIdAndUpdate(req.body.commentId,{
+        $push:{
+            commentArray: data
+        }
+    });
+    const result = await commentPost_db.findById(req.body.commentId);
+    res.json( {response: true, msg: "Success",data: result});
+});
+
+router.post('/getCommentPost', async function (req, res, next){
+   const result = await commentPost_db.find({postId: req.body.postId })
+   
+            return res.json({response: true, msg:"User found", data: result});
+ 
+});
+
+router.post('/likePostComment', async function (req, res, next){
+    const data =  await likePostComment_db.find({ userId: req.body.userId,
+        commentId: req.body.commentId});
+        if(data == ''){
+            await likePostComment_db.create({
+                userId: req.body.userId,
+                commentId: req.body.commentId
+            });
+            const count = await likePostComment_db.find({postId: req.body.commentId });
+            res.json( {response: true, msg: "Liked", likeCount: count.length});
+        }else{
+            await likePost_db.findOneAndDelete({ userId: req.body.userId,
+                commentId: req.body.commentId
+                });
+                const count = await likePostComment_db.find({commentId: req.body.commentId });
+                res.json( {response: false, msg: "Disliked", likeCount: count.length});
+        }
+});
+
+
+
+router.post('/deletePostComment', async function (req, res, next){
+    await commentPost_db.findByIdAndDelete(req.body.commentId);
+    res.json( {response: true, msg: "Deleted Successfully"});
+});
 
 
 module.exports = router;

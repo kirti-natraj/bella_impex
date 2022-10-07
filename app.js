@@ -29,13 +29,13 @@ module.exports = conn;
 // Create storage engine
 
 
-const indexRouter = require('./routes/index');
-const user_apiRouter = require('./apis/user');
-const category_apiRouter = require('./apis/category');
-const userRouter = require('./routes/user');
-const webview_apiRouter= require('./apis/webview');
-const webview_user_router = require('./apis/user');
-const productRouter = require('./apis/product');
+const indexapp = require('./routes/index');
+const user_apiapp = require('./apis/user');
+const category_apiapp = require('./apis/category');
+const userapp = require('./routes/user');
+const webview_apiapp= require('./apis/webview');
+const webview_user_app = require('./apis/user');
+const productapp = require('./apis/product');
 
 global.imageBaseDir = '/public/images';
 
@@ -44,27 +44,46 @@ global.imageBaseDir = '/public/images';
 var app = express();
 
 ////////////////////////////////////////fb
+const mongoURI = 'mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority';
+
+// Create mongo connection
 
 
+// Init gfs
+let gfs, gridfsBucket;
+conn.once('open', () => {
+ gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
+ bucketName: 'uploads'
+});
+
+ gfs = Grid(conn.db, mongoose.mongo);
+ gfs.collection('uploads');
+})
+
+  ///////
+ 
 
 
-// const fbAuth = require('./config/fbconfig')
-// const {
-//    login,
-//    userBasedFunc
-// } = require('./config/user')
-// app.post('/login', login);
-//app.get('/userBasedFunc', fbAuth, userBasedFunc);
+// @route GET /image/:filename
+// @desc Display Image
+app.get('/image/:filename', (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    // Check if file
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: 'No file exists'
+      });
+    }
+    // Check if image
+    if(file.contentType === 'image/jpeg' || file.contentType 
+    ==='image/png') 
+    {
+       const readStream = gridfsBucket.openDownloadStream(file._id);
+       readStream.pipe(res);
+    }
+  });
+});
 
-
-
-
-
-
-
-
-
-/////////////
 app.use(cors());
 
 app.use(methodOverride('_method'));
@@ -90,17 +109,17 @@ app.use(session({
    key: 'sid'
 }))
 
-app.use('/', indexRouter);
-app.use('/login', indexRouter);
-app.use('/api/user',user_apiRouter);
-app.use('/api/category',category_apiRouter);
-app.use('/api/product',productRouter);
-app.use('/webviewIndex',webview_apiRouter);
-app.use('/userWebview', webview_user_router);
-app.use('/user', userRouter);
-app.use('/brand', indexRouter);
-app.use('/year', indexRouter);
-app.use('/budget', indexRouter);
+app.use('/', indexapp);
+app.use('/login', indexapp);
+app.use('/api/user',user_apiapp);
+app.use('/api/category',category_apiapp);
+app.use('/api/product',productapp);
+app.use('/webviewIndex',webview_apiapp);
+app.use('/userWebview', webview_user_app);
+app.use('/user', userapp);
+app.use('/brand', indexapp);
+app.use('/year', indexapp);
+app.use('/budget', indexapp);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

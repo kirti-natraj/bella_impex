@@ -11,6 +11,9 @@ const state_db = require('../models/state');
 const city_db = require('../models/city');
 const moment = require('moment');
 const multer = require('multer');
+const brand_db = require('../models/brand');
+const year_db = require('../models/year');
+const budget_db = require('../models/budget');
 const puppeteer = require('puppeteer');
 var user_bill_db = require('../models/user_billing');
 
@@ -140,6 +143,14 @@ router.post('/getCity',async function (req, res, next) {
        
 });
 
+router.get('/getFilterData',async function(req, res, next) {                          //category add
+
+    const brand =  await brand_db.find().exec();
+     const year = await year_db.find().exec();
+     const budget = await budget_db.find().exec();
+     return res.json({respone: true, msg:'Data Found', brand: brand, year: year, budget:budget});
+    // res.json('Successfully Product Addded'); //,{title:"popup", data : data} );
+   });
 
 router.post('/getPDF',async function (req, res, next) {
      
