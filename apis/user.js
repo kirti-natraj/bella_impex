@@ -641,8 +641,12 @@ router.post('/likePost', async function (req, res, next){
 /////////////comment on post
 
 router.post('/commentPost', async function (req, res, next){
+    const user = await user_db.findOne({'_id': req.body.userId});
+    console.log(user)
     await commentPost_db.create({
         userId: req.body.userId,
+        userName: user.name,
+        userImage: user.image,
         postId: req.body.postId,
         comment: req.body.comment
     });
@@ -651,16 +655,13 @@ router.post('/commentPost', async function (req, res, next){
 });
 
 router.post('/commentOnPostComment', async function (req, res, next){
-    // await commentPost_db.create({
-    //     userId: req.body.userId,
-    //     postId: req.body.commentId,             ////////////////////// inserting the CommentId in postId to loop into the other 
-    //     comment: req.body.comment
-    // });
-    // const count = await commentPost_db.find({postId: req.body.commentId });
-    // res.json( {response: true, msg: "Success", commentCount: count.length});
-
+   
+    const user = await user_db.findOne({'_id': req.body.userId});
+    console.log(user)
     const data = {
         userId: req.body.userId,
+        userName: user.name,
+        userImage: user.image,
         commentId: req.body.commentId,             ////////////////////// inserting the CommentId in postId to loop into the other 
         comment: req.body.comment
     };
@@ -670,7 +671,7 @@ router.post('/commentOnPostComment', async function (req, res, next){
         }
     });
     const result = await commentPost_db.findById(req.body.commentId);
-    res.json( {response: true, msg: "Success",data: result});
+    res.json( {response: true, msg: "Success"});
 });
 
 router.post('/getCommentPost', async function (req, res, next){

@@ -9,6 +9,16 @@ const commentSchema = new mongoose.Schema({
         required: false,
 
     },
+    userName:{
+        type: String,
+        required: false,
+
+    },
+    userImage:{
+        type: String,
+        required: false,
+
+    },
     postId:{
         type: String,
         required: false,
