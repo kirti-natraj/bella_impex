@@ -235,15 +235,22 @@ input[type="radio"]{
                 <div class="col">
                     <label for="brand-details">Select State*</label>
                     <div class="brand-container">
-                        
-                        <input class="form-control" name ="stt"/>
+                        <label for="state">State*</label>
+                        <select name="stt"  id="dropdown-year" required >
+                        <% if(state.length){
+                            for(var i = 0; i< state.length; i++) {%> 
+                          <option value="<%= state[i]._id %>"><%= state[i].state_name %></option>
+                          <% } %> 
+                          <% } %>
                     </div>
                     <div class="col">
-                        <label for="brand-details">Select City*</label>
-                        <div class="brand-container">
-                           
-                            <input name="city" class="form-control"  />
-                        </div>
+                        <label for="city">City*</label>
+                        <select name="city"  id="dropdown-year" required >
+                        <% if(city.length){
+                            for(var i = 0; i< city.length; i++) {%> 
+                          <option value="<%= city[i]._id %>"><%= city[i].city_name %></option>
+                          <% } %> 
+                          <% } %>
                     </div>
                 </div>
             </div>

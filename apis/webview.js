@@ -69,8 +69,10 @@ router.get('/drop', function (req, res) {
 
 });
 
-router.get('/location', function (req, res) {
-    res.render('web_page/location');
+router.get('/location',async function (req, res) {
+    const state = await state_db.find().exec();
+    const city = await city_db.find().exec();
+        res.render('web_page/location', {state: state, city: city});
 
 });
 
@@ -112,12 +114,13 @@ console.log(req.params.id);
   });
   
   router.post('/add_price/:id',async function(req, res, next) {                          //category add
-
+    const state = await state_db.find().exec();
+    const city = await city_db.find().exec();
     await vehicle_db.findByIdAndUpdate(req.params.id, {
       price: req.body.price
   
     });
-    res.render('web_page/location',{id: req.params.id});
+    res.render('web_page/location',{id: req.params.id, state: state, city: city});
   });
 
  

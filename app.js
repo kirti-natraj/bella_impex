@@ -109,7 +109,6 @@ app.use(session({
    key: 'sid'
 }))
 
-app.use('/', indexapp);
 app.use('/login', indexapp);
 app.use('/api/user',user_apiapp);
 app.use('/api/category',category_apiapp);
@@ -117,14 +116,10 @@ app.use('/api/product',productapp);
 app.use('/webviewIndex',webview_apiapp);
 app.use('/userWebview', webview_user_app);
 app.use('/user', userapp);
-app.use('/brand', indexapp);
-app.use('/year', indexapp);
-app.use('/budget', indexapp);
+app.use('/', indexapp);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+
 // foor json
 app.use(bodyParser.urlencoded({extended: false}));                       //added for image view
 app.use(bodyParser.json());
@@ -138,5 +133,15 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
  // res.render('error');
 });
+app.use(function(req, res, next) {
+  return res.json({response: false, msg:"Page Not found"})
+  //next(createError(404));
+});
 
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (err, promise) => {
+  console.log(err);
+  // Close server & exit process
+  // server.close(() => process.exit(1));
+});
 module.exports = app;
