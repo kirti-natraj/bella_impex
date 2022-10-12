@@ -1,57 +1,48 @@
 const mongoose = require('mongoose');
 
-const commentSchema = new mongoose.Schema({
-    comment_id:{
+const feedStorySchema = new mongoose.Schema({
+    feed_id:{
         type:mongoose.ObjectId,
     },
     userId:{
         type: String,
         required: false,
-
+        default: ''
     },
     userName:{
         type: String,
         required: false,
-
+        default: ''
     },
     userImage:{
         type: String,
         required: false,
-
+        default: ''
     },
-    postId:{
+    url:{
         type: String,
         required: false,
+        default: ''
 
     },
-    comment:{
+    about:{
         type: String,
         required: false,
-
+        default: ''
     },
-    commentArray:{
+   
+    viewUser:{
         type: Array,
         required: false,
-        default:[]
-    },
-    likeCount:{
-        type: Number,
-        required: false,
-        default: 0
-
-    },
-    created_on:{
-        type: Date,
-        required: false,
-       default: Date.now()
-
+      
     },
     ago:{
         type: String,
         required: false,
         default: '1 hr'
     },
-  
+   
+    
 })
 
-module.exports = mongoose.model('commentPost',commentSchema,'comentPost');
+module.exports = mongoose.model('feedStory',feedStorySchema,'feedStory');

@@ -298,9 +298,14 @@ input[type="radio"]{
                     </div>
                 </div>
                 <div class="col">
-                    <label for="year">Year*</label>
-                    <input type="number" required name="year" placeholder="Year">
-                    
+                    <label for="year">Purchase Year*</label>
+                    <select name="year"  id="dropdown-year" required >
+                        <% if(yearObj.length){
+                            for(var i = 0; i< yearObj.length; i++) {%> 
+                          <option value="<%= yearObj[i] %>"><%= yearObj[i] %></option>
+                          <% } %> 
+                          <% } %> 
+                    </select>
                 </div>
             </div>
             <div class="row">

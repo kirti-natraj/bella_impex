@@ -85,10 +85,7 @@ router.post('/addProduct', uploadProduct.fields([{name:'image', maxCount: 5}]), 
 }); 
 //////////////////////////////////////getVehicle
 router.post('/getVehicle',async function (req, res, next) {
-
-    const cat =  req.body.category;
-   
-    const data = await vehicle_db.find({category: cat, approval: true});
+    const data = await vehicle_db.find({category: 'Vehicles', approval: true});
     if(data == '') 
     {
        
@@ -96,22 +93,63 @@ router.post('/getVehicle',async function (req, res, next) {
     }    
     else
     {
-        console.log(data)
-        
-     const user = req.body.user_id;
-     const user_data = await user_db.findById(user);
-     console.log(user_data);
-     for(var j=0; j < data.length; j++)
-     {
-        for(var i=0;i < user_data.liked_post_id.length ;i++){
-            console.log(data[j]);
-            if(user_data.liked_post_id[i] == data[j]._id){
-                data[j].likeFlag = true
+       
+        if(req.body.brand == '' && req.body.year == '' && req.body.budget == '')  {
+            const user = req.body.user_id;
+            const user_data = await user_db.findById(user);
+            console.log(user_data);
+            for(var j=0; j < data.length; j++)
+            {
+               for(var i=0;i < user_data.liked_post_id.length ;i++){
+                   console.log(data[j]);
+                   if(user_data.liked_post_id[i] == data[j]._id){
+                       data[j].likeFlag = true
+                   }
+               }
             }
-        }
-     }
+           
+               res.json({ response: true , msg: "Data Found", data: data });
+        }else if(req.body.brand != '' )
+        {
+
+              const data = await vehicle_db.find({category: 'Vehicles',brand: req.body.brand, approval: true});
+              if(data == ''){
+                res.json({ response: true , msg: "Data Not Found", data: data });
+              }else{
+                res.json({ response: true , msg: "Data Found", data: data });
+              }
+             
+
+        } else if (req.body.year != '')
+        {
+            const year = new Date().getFullYear();
+            
+            const yearForm = await year_db.findById(req.body.year); 
+            const yearObj = [];
+            for(var i = 0; i < yearForm.yearCount; i++){
+                yearObj[i] = year - i; 
+            }
+            console.log(yearObj);
+            const vehicle = await vehicle_db.find({category: 'Vehicles',year:{$in: yearObj}, approval: true});
+            if(vehicle == ''){
+                res.json({ response: false , msg: "Data Not Found" , data: vehicle });
+              }else{
+                res.json({ response: true , msg: "Data Found", data: vehicle });
+              }
+           
+        } else if(req.body.budget != '') 
+        {
+            const budgetData = await budget_db.findById(req.body.budget);   
+            console.log(budgetData);
+            const vehicle = await vehicle_db.find({category: 'Vehicles',price:{$gte: budgetData.from ,$lt: budgetData.to}, approval: true});
+            if(vehicle == ''){
+                res.json({ response: false, msg: "Data Not Found", data: vehicle });
+              }else{
+                res.json({ response: true , msg: "Data Found", data: vehicle });
+              }
+            
+        } 
     
-        res.json({ response: true , msg: "Data Found", data: data });
     } 
    
 

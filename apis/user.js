@@ -24,9 +24,11 @@ const feed_db = require('../models/feed');
 const follow_db = require('../models/follow');
 const likePost_db = require('../models/likePost');
 
+const feedStory_db = require('../models/feedStory');
 const likePostComment_db = require('../models/likeComment');
 const commentPost_db = require('../models/comment');
 const activity_db = require('../models/activity');
+const savePost_db = require('../models/savePost');
 ///// mongodb
 
 const path = require('path');
@@ -140,6 +142,7 @@ router.delete('/files/:id', (req, res) => {
 ///////////
 const moment = require('moment');
 const { ResultStorage } = require('firebase-functions/v1/testLab');
+const feedStory = require('../models/feedStory');
 
 
 function AddMinutesToDate(date, minutes) {
@@ -544,10 +547,12 @@ router.post('/addPostFeed',upload.single('url'), async function (req, res, next)
             name: req.body.activityName,
             };
            
-           
+            const user = await user_db.findOne({'_id': req.body.user_id});
      let baseUrl = 'https://belle-impex-360513.el.r.appspot.com/image/';
     const user_data = await feed_db.create({
         user_id: req.body.user_id,
+        userName: user.name,
+        userImage: user.image,
         type: req.body.type,
         url: baseUrl + req.file.filename,
         location: req.body.location,
@@ -655,29 +660,30 @@ router.post('/commentPost', async function (req, res, next){
 });
 
 router.post('/commentOnPostComment', async function (req, res, next){
-   
     const user = await user_db.findOne({'_id': req.body.userId});
-    console.log(user)
-    const data = {
+    console.log(user);
+    const comment = await commentPost_db.create({
         userId: req.body.userId,
         userName: user.name,
         userImage: user.image,
-        commentId: req.body.commentId,             ////////////////////// inserting the CommentId in postId to loop into the other 
+        postId: req.body.commentId,
         comment: req.body.comment
-    };
-     await commentPost_db.findByIdAndUpdate(req.body.commentId,{
-        $push:{
-            commentArray: data
-        }
     });
+    
     const result = await commentPost_db.findById(req.body.commentId);
     res.json( {response: true, msg: "Success"});
 });
 
 router.post('/getCommentPost', async function (req, res, next){
-   const result = await commentPost_db.find({postId: req.body.postId })
-   
-            return res.json({response: true, msg:"User found", data: result});
+   const result = await commentPost_db.find({postId: req.body.postId });
+   for(var i = 0;i< result.length;i++){
+    const data = await commentPost_db.find({postId: result[i]._id});
+    await commentPost_db.findByIdAndUpdate(result[i]._id,{
+            commentArray: data
+    });
+   }
+   const final = await commentPost_db.find({postId: req.body.postId });
+            return res.json({response: true, msg:"User found", data: final});
  
 });
 
@@ -690,12 +696,18 @@ router.post('/likePostComment', async function (req, res, next){
                 commentId: req.body.commentId
             });
             const count = await likePostComment_db.find({postId: req.body.commentId });
+            await commentPost_db.findByIdAndUpdate(req.body.commentId,{
+                likeCount: count.length
+            });
             res.json( {response: true, msg: "Liked", likeCount: count.length});
         }else{
             await likePost_db.findOneAndDelete({ userId: req.body.userId,
                 commentId: req.body.commentId
                 });
                 const count = await likePostComment_db.find({commentId: req.body.commentId });
+                await commentPost_db.findByIdAndUpdate(req.body.commentId,{
+                    likeCount: count.length
+                });
                 res.json( {response: false, msg: "Disliked", likeCount: count.length});
         }
 });
@@ -707,5 +719,78 @@ router.post('/deletePostComment', async function (req, res, next){
     res.json( {response: true, msg: "Deleted Successfully"});
 });
 
+router.post('/savePost', async function (req, res, next){
+    const data =  await savePost_db.find({ userId: req.body.userId,
+        postId: req.body.postId});
+        if(data == ''){
+            await savePost_db.create({
+                postId: req.body.postId,
+                 userId: req.body.userId
+              });
+              res.json( {response: true, msg: "Post Saved Successfully"});
+        }else{
+            await savePost_db.findOneAndDelete({ userId: req.body.userId,
+                postId: req.body.postId
+                });
+                res.json( {response: false, msg: "Post Unsaved Successfully"});
+        }
+      
+
+   
+});
+
+router.post('/getSavedPost', async function(req, res, next){
+           const data = await savePost_db.find({userId: req.body.userId});
+           let saved = [];
+           for(var i=0; i< data.length;i++){
+            saved[i] = data[i].postId;
+           }
+           console.log(saved);
+           const post = await feed_db.find({'_id':{$in:saved}});
+           res.json( {response: true, msg: "Success", data: post});
+});
+
+
+/////////////////////////////////////feed Story///////////////////////
+
+router.post('/addFeedStory',upload.single('url'), async function (req, res, next) {
+            const user = await user_db.findOne({'_id': req.body.userId});
+     let baseUrl = 'https://belle-impex-360513.el.r.appspot.com/image/';
+    const user_data = await feedStory_db.create({
+        userId: req.body.userId,
+        userName: user.name,
+        userImage: user.image,
+        url: baseUrl + req.file.filename,
+        about: req.body.about
+              });
+
+    res.json( {response: true, msg:'Story Added',data: user_data});
+});
+
+router.post('/viewFeedStory', async function (req, res, next) {
+    const user = await user_db.findOne({'_id': req.body.userId});
+    const viewer = {
+             userId: user._id,
+             userImage: user.name,
+             userName: user.image
+    };
+    console.log(viewer);
+await feedStory_db.findByIdAndUpdate(req.body.storyId,{
+viewUser: viewer
+      });
+      const user_data = await feedStory_db.findById(req.body.storyId);
+res.json( {response: true, msg: 'viewer added'});
+});
+
+
+router.post('/getFeedStory',upload.single('url'), async function (req, res, next) {
+    const story = await feedStory_db.findOne({userId: req.body.userId});
+    res.json( {response: true, data: story});
+});
+
+router.post('/deleteFeedStory',upload.single('url'), async function (req, res, next) {
+    const story = await feedStory_db.deleteOne({'_id': req.body.storyId});
+    res.json( {response: true, msg: 'Data deleted Successfully'});
+});
 
 module.exports = router;

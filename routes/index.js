@@ -648,7 +648,7 @@ router.get('/activate/:id', async function(req,res,next ){
       
       };
       
-      fcm.send(message, function(err, response) {
+      FCM.send(message, function(err, response) {
           if (err) {
               console.log("Something has gone wrong!"+err);
               console.log("Respponse:! "+response);
@@ -958,4 +958,5 @@ router.get('/delete_question/:id', async function(req,res,next ){
   res.redirect('/subcategory_list/');
 
 });
+
 module.exports = router;

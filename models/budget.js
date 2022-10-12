@@ -10,6 +10,16 @@ const budgetSchema = new mongoose.Schema({
         required: false,
 
     },
+    from:{
+        type: Number,
+        required: false,
+        default: 0
+    },
+    to:{
+        type: Number,
+        required: false,
+        default: 0
+    },
     created_on:{
         type: Date,
         required: false,

@@ -9,6 +9,16 @@ const feedSchema = new mongoose.Schema({
         required: false,
         default: ''
     },
+    userName:{
+        type: String,
+        required: false,
+        default: ''
+    },
+    userImage:{
+        type: String,
+        required: false,
+        default: ''
+    },
     type:{
         type: String,
         required: false,
@@ -46,7 +56,16 @@ const feedSchema = new mongoose.Schema({
         required: false,
         default: '1 hr'
     },
-       
+    commentCount:{
+        type: Number,
+        required: false,
+        default: 10
+    },  
+    ShareCount:{
+        type: Number,
+        required: false,
+        default: 10
+    },
     like:{
       type: Boolean,
       required: false,

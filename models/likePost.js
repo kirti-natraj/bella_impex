@@ -24,7 +24,7 @@ const likeSchema = new mongoose.Schema({
         required: false,
        default: Date.now()
 
-    },
+    }
 })
 
 module.exports = mongoose.model('likePost',likeSchema,'likePost');
