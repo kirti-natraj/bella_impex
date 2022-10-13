@@ -225,44 +225,41 @@ input[type="radio"]{
 <body>
     <div class="container">
         <div class="title-con">
-            <h3>set Location</h3>
-
+            <h3>set price</h3>
+           
             <hr>
         </div>
         
         <form action="/webviewIndex/add_location/<%= id %>" method="post">
             <div class="row">
                 <div class="col">
-                    <label for="brand-details">Select State*</label>
-                    <div class="brand-container">
-                        <label for="state">State*</label>
+                    <label for="year">Select State*</label>
                         <select name="stt"  id="dropdown-year" required >
-                        <% if(state.length){
-                            for(var i = 0; i< state.length; i++) {%> 
-                          <option value="<%= state[i]._id %>"><%= state[i].state_name %></option>
-                          <% } %> 
-                          <% } %>
-                    </div>
-                    <div class="col">
-                        <label for="city">City*</label>
+                            <% if(state.length){for(var i = 0; i< state.length; i++) {%> 
+                              <option value="<%= state[i]._id %>"><%= state[i].state_name %></option>
+                              <% } %> 
+                              <% } %>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="year">Select City*</label>
                         <select name="city"  id="dropdown-year" required >
-                        <% if(city.length){
-                            for(var i = 0; i< city.length; i++) {%> 
-                          <option value="<%= city[i]._id %>"><%= city[i].city_name %></option>
-                          <% } %> 
-                          <% } %>
-                    </div>
+                            <% if(city.length){for(var i = 0; i< city.length; i++) {%> 
+                              <option value="<%= city[i]._id %>"><%= city[i].city_name %></option>
+                              <% } %> 
+                              <% } %>
+                    </select>
                 </div>
             </div>
             <div class="btn-shadow">
                 <br>
-                <br>
-                <button type="submit" required >
-                    Next</button>
+                <button type="submit" required  >
+                Next</button>
             </div>
         </form>
     </div>
-  
-
 </body>
+
 </html>

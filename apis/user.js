@@ -538,10 +538,9 @@ router.post('/getFeelingActivity', async function(req,res){
 })
 
 router.post('/addPostFeed',upload.single('url'), async function (req, res, next) {
-    var commentVar = { 
-        userName: req.body.userName,
-        userImage: req.body.userImage,
-        comment: req.body.comment};
+       if(req.body.user_id == ''){             /// hanged on requirement by 
+        res.json( {response: false, msg: 'Error'});
+       }else{
         var activityVar = { 
             icon: req.body.icon,
             name: req.body.activityName,
@@ -557,11 +556,12 @@ router.post('/addPostFeed',upload.single('url'), async function (req, res, next)
         url: baseUrl + req.file.filename,
         location: req.body.location,
         activity: activityVar,
-        tag_people: commentVar,
         about: req.body.about,
               });
 
     res.json( {response: true, data: user_data});
+       }
+       
 });
 
 router.post('/getPostFeed', async function (req, res, next){
@@ -784,7 +784,7 @@ res.json( {response: true, msg: 'viewer added'});
 
 
 router.post('/getFeedStory',upload.single('url'), async function (req, res, next) {
-    const story = await feedStory_db.findOne({userId: req.body.userId});
+    const story = await feedStory_db.find({userId: req.body.userId});
     res.json( {response: true, data: story});
 });
 

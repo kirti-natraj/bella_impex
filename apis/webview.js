@@ -5,6 +5,8 @@ const user_db = require('../models/user');
 const brand_db = require('../models/brand');
 const year_db = require('../models/year');
 const budget_db = require('../models/budget');
+const state_db = require('../models/state');
+const city_db = require('../models/city');
 const moment = require('moment');
 const path = require('path');
 const crypto = require('crypto');
@@ -124,16 +126,18 @@ console.log(req.params.id);
   });
 
  
-  router.post('/add_location/:id',async function(req, res, next) {                          //category add
+  router.post('/add_location/:id', async function(req, res, next) {                          //category add
 
      await vehicle_db.findByIdAndUpdate(req.params.id, {
       state: req.body.stt,
       city: req.body.city
     
     });
-    const data = await vehicle_db.findOne({_id:req.params.id});
-    res.render('web_page/form_field',{ data: data});
-   // res.json('Successfully Product Addded'); //,{title:"popup", data : data} );
+    const data = await vehicle_db.findOne({_id: req.params.id});
+    const brand = await brand_db.findById( data.brand);
+    console.log(brand.brand_name);
+    res.render('web_page/form_field',{ data: data, brand: brand});
+  
   });
   
 
