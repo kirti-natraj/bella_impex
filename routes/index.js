@@ -8,6 +8,7 @@ var properties_db= require('../models/properties');
 var vehicle_db= require('../models/vehicle');
 var product_db = require('../models/products');
 const noti_db = require('../models/noti');
+const subscription_db = require('../models/subscription');
 const brand_db = require('../models/brand');
 const year_db = require('../models/year');
 const budget_db = require('../models/budget');
@@ -335,6 +336,32 @@ router.get('/user',async function(req,res,next){                        //for Us
 
 
 });
+///////////////////////////////////////////susbscription
+router.get('/subscription',async function(req,res,next){                        //for UserTable Page
+  const data = await subscription_db.find().exec();
+  res.render('subscription',{title:'Category List',data : data,  moment: moment});
+
+});
+
+router.get('/add_subscription',async function(req,res,next){                        //for Category TAble Update
+ 
+  res.render('add_subscription',{title:'Add Subscription'});
+
+});
+
+router.post('/add_subscription_form',  async function(req, res, next) {                          //category add
+  
+  await subscription_db.create({
+      subscription_name: req.body.subscription_name,
+      description: req.body.description
+  });
+  await noti_db.create({
+    title: 'New Subscription Plan Added',
+    msg: '---->  '+req.body.subscription_name+'  added  '
+  })
+  res.redirect('/subscription/');
+
+});
 ///////////////////////////////////////////////category
 router.get('/category',async function(req,res,next){                        //for UserTable Page
       const data = await category_db.find().exec();
@@ -360,7 +387,7 @@ router.post('/add_category_form', upload.single('image'), async function(req, re
   });
   await noti_db.create({
     title: 'New Category Added',
-    msg: '---->  '+req.body.category_name+'added'
+    msg: '---->  '+req.body.category_name+' added'
   })
   res.redirect('/category/');
 
@@ -634,35 +661,6 @@ router.get('/activate/:id', async function(req,res,next ){
 
   });
 
-    var message = {
-      to: "ci9arx8Mizk:APA91bFiMGRQIs-glSL6hZfRXCumXBDuGL1LXRoYj-7jY6kPesrAxXy7KaOlbvYTWJllj1tqKSl7XuxbHBErOU-s_z45abHma6Zttm8HjXX_f1tNFNNuP0U9y-RWWieFZkiLt5kJGFDU",
-          notification: {
-              title: 'NotifcatioTestAPP',
-              body: '{"Message from node js app"}',
-          },
-      
-          data: { //you can send only notification or only data(or include both)
-              title: 'ok cdfsdsdfsd',
-              body: '{"name" : "okg ooggle ogrlrl","product_id" : "123","final_price" : "0.00035"}'
-          }
-      
-      };
-      
-      FCM.send(message, function(err, response) {
-          if (err) {
-              console.log("Something has gone wrong!"+err);
-              console.log("Respponse:! "+response);
-          } else {
-              // showToast("Successfully sent with response");
-              console.log("Successfully sent with response: ", response);
-          }
-      
-     
-
-
-
-
-    })
   res.redirect('/vehicle/');
 });
 
@@ -921,9 +919,26 @@ router.get('/delete_cat/:id', async function(req,res,next ){
   res.redirect('/category/');
 
 });
+
+router.get('/delete_ban/:id', async function(req,res,next ){
+  let id= req.params.id;
+  await banner_db.deleteOne({ _id:id});
+
+  res.redirect('/banner_list/');
+
+});
+
 router.get('/delete_brand/:id', async function(req,res,next ){
   let id= req.params.id;
   await brand_db.deleteOne({ _id:id});
+
+  res.redirect('/brand/');
+
+});
+///////////////////////////////testing router
+router.get('/delete_vehicle', async function(req,res,next ){
+  
+  await vehicle_db.deleteMany({ approval: false});
 
   res.redirect('/brand/');
 

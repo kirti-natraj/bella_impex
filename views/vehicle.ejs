@@ -63,16 +63,14 @@
                         </td>
                         <td>
                           <div>
-                             <% if(data[i].image.length){
-                            for(var j = 0; j< data[i].image.length; j++) {%>  
-                          <img src="../assets/images/vehicles/<%= data[i].image[j].filename %>" class=" avatar-lg me-3" >
-                          <% } %> 
-                          <% } %> 
+                            <% if(data[i].image.length){
+                              for(var j = 0; j< data[i].image.length; j++) {%>  
+                            <img src="<%= data[i].image[j] %>" class="avatar-sm" />
+                            <% } %> 
+                            <% } %> 
                             </div>
                         </td> 
-                      <td>
-                       
-                          
+                        <td>e
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm"><%= data[i].title %></h6>
                           </div>

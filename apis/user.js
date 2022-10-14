@@ -2,24 +2,13 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');
 var FCM = require('fcm-node');
-var admin_db = require('../models/adminlogin');
 var user_db = require('../models/user');
-var category_db = require('../models/category');
-var subcategory_db = require('../models/sub_category');
-var properties_db= require('../models/properties');
 var vehicle_db= require('../models/vehicle');
 var user_bill_db = require('../models/user_billing');
 var invoice_db = require('../models/invoice');
 var product_db = require('../models/products');
 var otpGenerator = require('otp-generator');
 var otp_db = require('../models/otp');
-const noti_db = require('../models/noti');
-const brand_db = require('../models/brand');
-const year_db = require('../models/year');
-const budget_db = require('../models/budget');
-const banner_db = require('../models/banner');
-const state_db = require('../models/state');
-const city_db = require('../models/city');
 const feed_db = require('../models/feed');
 const follow_db = require('../models/follow');
 const likePost_db = require('../models/likePost');
@@ -37,6 +26,9 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const {GridFsStorage} = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
+const moment = require('moment');
+const { ResultStorage } = require('firebase-functions/v1/testLab');
+const feedStory = require('../models/feedStory');
 
 ////////////////////////////////////////////////mongodb
 // Mongo URI
@@ -76,83 +68,13 @@ const storage = new GridFsStorage({
   }
 });
 const upload = multer({ storage });
-  ///////
-  router.get('/files', (req, res) => {
-  gfs.find().toArray((err, files) => {
-    // Check if files
-    if (!files || files.length === 0) {
-      return res.status(404).json({
-        err: 'No files exist'
-      });
-    }
-
-    // Files exist
-    return res.json(files);
-  });
-});
-
-// @route GET /files/:filename
-// @desc  Display single file object
-router.get('/files/:filename', (req, res) => {
-  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-    // Check if file
-    if (!file || file.length === 0) {
-      return res.status(404).json({
-        err: 'No file exists'
-      });
-    }
-    // File exists
-    return res.json(file);
-  });
-});
-
-// @route GET /image/:filename
-// @desc Display Image
-router.get('/image/:filename', (req, res) => {
-  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-    // Check if file
-    if (!file || file.length === 0) {
-      return res.status(404).json({
-        err: 'No file exists'
-      });
-    }
-///
-
-    // Check if image
-    if(file.contentType === 'image/jpeg' || file.contentType 
-    ==='image/png') 
-    {
-       const readStream = gridfsBucket.openDownloadStream(file._id);
-       readStream.pipe(res);
-    }
-  });
-});
-
-// @route DELETE /files/:id
-// @desc  Delete file
-router.delete('/files/:id', (req, res) => {
-  gfs.remove({ _id: req.params.id, root: 'uploads' }, (err, gridStore) => {
-    if (err) {
-      return res.status(404).json({ err: err });
-    }
-
-    res.redirect('/');
-  });
-});
-///////////
-const moment = require('moment');
-const { ResultStorage } = require('firebase-functions/v1/testLab');
-const feedStory = require('../models/feedStory');
-
 
 function AddMinutesToDate(date, minutes) {
     return new Date(date.getTime() + minutes*60000);
 }
 
 
-// //////////////////////////////////
-
-
+////////////////////////////////////
 
     router.post('/updateProfileImage', upload.single('image'), async function (req, res){
     
