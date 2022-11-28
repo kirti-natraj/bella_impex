@@ -14,7 +14,7 @@ var bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const multer = require('multer');              //for mongodb
 
-mongoose.connect('mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority', {useNewUrlParser: true});
+mongoose.connect('mongodb+srv://belle-impex:belle123@serverlessinstance0.wn38x.mongodb.net/?retryWrites=true&w=majority', {useNewUrlParser: true});
 var conn = mongoose.connection;
 conn.on('connected', function() {
     console.log('database is connected successfully');
@@ -76,12 +76,25 @@ app.get('/image/:filename', (req, res) => {
     }
     // Check if image
     if(file.contentType === 'image/jpeg' || file.contentType 
-    ==='image/png') 
+    ==='image/png' || file.contentType === 'video/mp4' || file.contentType === 'text/csv') 
     {
        const readStream = gridfsBucket.openDownloadStream(file._id);
        readStream.pipe(res);
     }
   });
+});
+
+// @route DELETE /files/:id
+// @desc  Delete file
+app.delete('/files/:id', (req, res) => {
+  gfs.remove({ _id: req.params.id}, (err, result) => {
+    if (err) {
+      return res.status(404).json({ err: err });
+    }
+
+    res.redirect('/');
+  });
+  
 });
 
 app.use(cors());

@@ -3,12 +3,12 @@
 
   <%- include('admin/includes/header') %>
 <body>
-  <div class="min-height-250 bg-primary position-absolute w-100"></div>
+  <div class="min-height-400 bg-primary position-absolute w-100"></div>
  <%- include('admin/includes/sidebar')%>
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
    <%- include('admin/includes/navbar')%>
-    <!-- End Navbar -->
+    <!-- End Navbar --> 
     <div class="container-fluid py-4">
         <div class="card shadow-lg mx-4 card-profile">
             <div class="card-body p-3">
@@ -56,8 +56,24 @@
                           <input class="form-control" type="text" name="description">
                         </div>
                       </div>
-                      
-                      
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Amount (In ₹)</label>
+                          <input class="form-control" type="number" name="amount">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">Expiry Duration (In Days)</label>
+                          <input class="form-control" type="number" name="duration">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="example-text-input" class="form-control-label">GST Percentage(In %)</label>
+                          <input class="form-control" type="number" name="gst">
+                        </div>
+                      </div>
                     </div>
                     
                     <hr>

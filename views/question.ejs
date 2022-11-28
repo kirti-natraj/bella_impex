@@ -34,33 +34,16 @@
                                 <div class="form-group">
                                   <div class="col-md-5">
                                     <label class="label">Enter First Field</label>
-                                    <input type="text" class="form-control" name="first" id="flagone" placeholder="Enter Here" required/>
+                                    <input type="text" class="form-control" name="extra" id="flagone" placeholder="Enter Here" required/>
                                    
-                                    <select class="form-control" name="firstType" >
-                                      <option selected disabled>Enter Input Type</option>
+                                    <select class="form-control" name="dataType" required >
+                                      <option value="">None</option>
                                       <option value="number">Number</option>
                                       <option value="text">Letter</option>
                                       <option value="date">Date</option>
                                     </select>
-                                 
+
                                 <br>
-                                <label class="label">Enter Second Field</label>
-                                <input type="text" name="second" id="flagtwo" class="form-control" placeholder="Enter Here" required/>
-                                <select class="form-control" class="form-control" name="secondType">
-                                  <option selected disabled>Enter Input Type</option>
-                                  <option value="number">Number</option>
-                                  <option value="text">Letter</option>
-                                  <option value="date">Date</option>
-                                </select>
-                                <br>
-                                <label class="label">Enter Third Field</label>
-                                <input type="text" name="third" id="flagthree" class="form-control" placeholder="Enter Here" required/>
-                                <select class="form-control" class="form-control" name="thirdType">
-                                  <option selected disabled>Enter Input Type</option>
-                                  <option value="number">Number</option>
-                                  <option value="text">Letter</option>
-                                  <option value="date">Date</option>
-                                </select>
                                 <input type="text" name="indicator" id="indicat" value="yes" hidden/>
                                 </div>
                             </div>
@@ -72,7 +55,7 @@
                         <div class="d-flex justify-content-between">
                           <a href="/subcategory_list/" class="btn btn-sm bg-gradient-secondary mb-0 d-none d-lg-block">Cancel</a>
                          
-                          <a id="addMore" onclick="addMore()" class="btn btn-sm bg-gradient-secondary mb-0 d-none d-lg-block">Add More</a>
+                          <button type="submit" id="addMore" formaction="/submit_add_more_form/<%= data._id %>" class="btn btn-sm bg-gradient-secondary mb-0 d-none d-lg-block">Add More</a>
                           
                           
                           <button  type="submit" class="btn btn-sm btn-info float-right mb-0 d-none d-lg-block">Submit</button>
@@ -143,20 +126,7 @@
 
 
 function addMore(){
-  var myInputOne = document.getElementById("flagone");
-  var myInputTwo = document.getElementById("flagtwo");
-  var myInputThree = document.getElementById("flagthree");
-if((myInputOne && myInputOne.value)&&(myInputTwo && myInputTwo.value)&&(myInputThree && myInputThree.value)) {
   document.getElementById("indicat").value = "no";
-    document.getElementById("queForm").submit();
-  
-}else{
-  alert("Please Insert value");
-}
-
- 
-
-  
 }
 
     </script>

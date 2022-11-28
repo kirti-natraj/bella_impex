@@ -17,7 +17,7 @@ const Grid = require('gridfs-stream');
 const cors = require('cors')
 const app = express();
 app.use(cors());
-const mongoURI = 'mongodb+srv://belle_impex:Indore123@cluster0.tsyi5.mongodb.net/belle_impex?retryWrites=true&w=majority';
+const mongoURI = 'mongodb+srv://belle-impex:belle123@serverlessinstance0.wn38x.mongodb.net/?retryWrites=true&w=majority';
 
 // Create mongo connection
 const conn = mongoose.createConnection(mongoURI);
@@ -40,6 +40,7 @@ const storage = new GridFsStorage({
           const filename = buf.toString('hex') + path.extname(file.originalname);
           const fileInfo = {
             filename: filename,
+            contentType: 'image/jpeg',
             bucketName: 'uploads'
           };
           resolve(fileInfo);
@@ -60,6 +61,10 @@ router.get('/:id', async function (req, res) {
     const user = await user_db.findOne({ '_id': req.params.id });
     res.render('web_page/index',{brand:brand, user: user,  yearObj: yearObj});
 });
+
+////////////////////////////////////subscription plans
+
+
 
 router.get('/price', function (req, res) {
     res.render('web_page/price');
@@ -86,7 +91,8 @@ console.log(req.params.id);
     let baseUrl = 'https://belle-impex-360513.el.r.appspot.com/image/'
     let images = [];
     for(var i=0; i< req.files.length;i++){
-      images[i] = baseUrl + req.files[i].filename;
+      const url = baseUrl + req.files[i].filename;
+      images[i] = {url};
     }
     console.log(images);
     const data = await vehicle_db.create({
@@ -102,10 +108,11 @@ console.log(req.params.id);
         created_on: moment(Date.now()).format("YYYY-MM-DD"),
         km:req.body.km,
         year:req.body.year,
+        brand: req.body.brand,
         image: images,
         fuel:req.body.fuel,
         owner: req.body.owner,
-        brand: req.body.brand,
+       
         insurance_type: req.body.insurance_type,
         insurance_valid: req.body.insurance_valid,
         transmission: req.body.transmission

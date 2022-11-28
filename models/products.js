@@ -43,17 +43,33 @@ const productSchema = new mongoose.Schema({
 
     description: {
         type: String,
-        required: false
+        required: false,
+        default: ''
         
+    },
+    brand:{
+        type: String,
+        required: false,
+        default:'default'
+    },
+    year:{
+        type: String,
+        required: false
     },
     price: {
         type: String,
-        required: false
-       
+        required: false,
+        default: ''  
+    },
+    location:{
+        type: String,
+        required: false,
+        default: ''
     },
     title: {
         type: String,
-        required: false
+        required: false,
+        default: ''
     },
     created_on: {
         type: String,
@@ -65,15 +81,10 @@ const productSchema = new mongoose.Schema({
         required: false,
         default: false
     },
-    state: {
-        type: String,
-        required: false
+    dataKey:{
+        type:Array
     },
-    city: {
-        type: String,
-        required: false
-    },
-    extra_data:{
+    dataValue:{
         type:Array
     },
     approval:{

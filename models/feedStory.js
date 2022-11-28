@@ -39,8 +39,13 @@ const feedStorySchema = new mongoose.Schema({
     ago:{
         type: String,
         required: false,
-        default: '1 hr'
+        default: ''
     },
+    created_on:{
+        type: Number,
+        required: false,
+        default: 0
+      }
    
     
 })

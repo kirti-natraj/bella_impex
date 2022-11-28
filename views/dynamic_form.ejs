@@ -222,12 +222,40 @@ input[type="radio"]{
 <body>
     <div class="container">
         <div class="title-con">
-            <h3><%= category.sub_category_name %></h3>
+            <h3>Fill some details</h3>
             <hr>
         </div>
         
         <form action="/submit_dynamic_form/<%= category._id %>/<%= user %>"  method="post" enctype="multipart/form-data" >
             
+           
+           
+            <div class="row">
+                <div class="col">
+
+                    <label for="ad-title">Ad title*</label>
+                    <textarea id="my-text" required  name="title" placeholder="Heading of your Ad" id="" cols="68" rows="1"></textarea>
+                    <p id="result"></p>
+                    <label for="input">Select Image*</label>
+                  
+
+                    <input type="file" name="image" id="inputOne" placeholder="Heading of your Ad" cols="68" rows="1" multiple max="5" required>
+                    
+                    <p id="result"></p>
+                    <label for="ad-title">Location*</label>
+                    <textarea id="my-text" required  name="location" placeholder="Heading of your Ad" id="" cols="68" rows="1"></textarea>
+                    <p id="result"></p>
+                    <label for="ad-title">Price*</label>
+                    <input type="number" id="my-text" required  name="price" placeholder="Heading of your Ad" id="" cols="68" rows="1" ></textarea>
+                    <p id="result"></p>
+                </div>
+                
+                <div class="col">
+                    <label for="other-info">Other Information*</label>
+                    <textarea id="my-text2"  required name="description" placeholder="Any other information related to car" cols="1" rows="6" ></textarea>
+                <p id="result2"></p>
+                </div>
+            </div>
             <div class="row">
                 <div class="col">
 
@@ -239,26 +267,6 @@ input[type="radio"]{
                         <% } %> 
                 </div>
                 
-            </div>
-           
-            <div class="row">
-                <div class="col">
-                    <label for="ad-title">Ad title*</label>
-                    <textarea id="my-text" required  name="title" placeholder="Heading of your Ad" id="" cols="68" rows="1"></textarea>
-                    <p id="result"></p>
-                    <label for="input">Select Image*</label>
-                  
-
-                    <input type="file" name="image" id="inputOne" placeholder="Heading of your Ad" cols="68" rows="1" multiple max="5" required>
-                    
-                    <p id="result"></p>
-                </div>
-                
-                <div class="col">
-                    <label for="other-info">Other Information*</label>
-                    <textarea id="my-text2"  required name="description" placeholder="Any other information related to car" cols="1" rows="6"></textarea>
-                <p id="result2"></p>
-                </div>
             </div>
             <div class="btn-shadow">
                 <button type="submit" required value="submit">

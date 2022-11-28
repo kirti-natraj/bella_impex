@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    body {
+    margin: 0;
+    font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: .8125rem;
+    font-weight: 400;
+    line-height: 1.5385;
+    color: #333;
+    text-align: left;
+    background-color: #eee
+}
+
+.mt-50 {
+    margin-top: 50px
+}
+
+.mb-50 {
+    margin-bottom: 50px
+}
+
+.card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: .1875rem
+}
+
+.card-img-actions {
+    position: relative
+}
+
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+    text-align: center
+}
+
+.card-title {
+    margin-top: 10px;
+    font-size: 17px
+}
+
+.invoice-color {
+    color: red !important
+}
+
+.card-header {
+    padding: .9375rem 1.25rem;
+    margin-bottom: 0;
+    background-color: rgba(0, 0, 0, .02);
+    border-bottom: 1px solid rgba(0, 0, 0, .125)
+}
+
+a {
+    text-decoration: none !important
+}
+
+.btn-light {
+    color: #333;
+    background-color: #fafafa;
+    border-color: #ddd
+}
+
+.header-elements-inline {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap
+}
+
+@media (min-width: auto) {
+    .wmin-md-300 {
+        min-width: auto !important
+    }
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #2196f3
+}
+
+.btn-labeled>b {
+    position: absolute;
+    top: -1px;
+    background-color: blue;
+    display: block;
+    line-height: 1;
+    padding: .62503rem
+}
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" crossorigin="anonymous">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+
+</head>
+
+<body>
+    <div class="container d-flex justify-content-center mt-60 mb-60">
+        <div class="row">
+            <div class="col-md-12 text-right mb-3">
+                <button class="btn btn-primary" id="download"> download pdf</button>
+            </div>
+            <div class="col-md-12">
+                <div class="card" id="invoice">
+                    <div class="card-header bg-transparent header-elements-inline">
+                       
+                        <h4 class="invoice-color mb-2 mt-md-2">Invoice #</h4>
+                        <ul class="list list-unstyled mb-0">
+                            <li>Date: <span class="font-weight-semibold"><%= invoice.created_on %></span></li>
+                          
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                        
+                            <div class="col-sm-6">
+                                <div class="mb-4 ">
+                                    <div class="text-sm-right">
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-md-flex flex-md-wrap">
+                            <div class="mb-4 mb-md-2 text-left"> <span class="text-muted">Invoice To:</span>
+                                <h2 class="to"><%= data.name %></h2>
+                                <div class="email"><a href="mailto:john@example.com">john@example.com</a></div>
+                                <div class="address"><%= data.address %></div>
+                                <div class="address"><%= data.stateName %></div>
+                                <div class="address"><%= data.cityName %></div> 
+                            </div>
+                            <div class="mb-2 ml-auto"> 
+                                
+                            <img src=" data:image/jpeg;base64,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" style="width: 50px;height: 50px;" class="avatar-sm" >
+
+                          
+                                <h2 class="name">
+                                    
+                                    <a target="_blank" href="https://lobianijs.com">
+                                    Belle Impex Commercial
+                                    </a>
+                                </h2>
+                                <div>455 Foggy Heights, AZ 85004, US</div>
+                                <div>(123) 456-789</div>
+                                <div>company@example.com</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-lg">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Qty</th>
+                                    <th>Product Amount</th>
+                                    <th>GST Rate</th>
+                                    <th>GST Amount</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <h6 class="mb-0">Title</h6> <span class="text-muted">
+                                            Subscription Plan </span>
+                                    </td>
+                                    <td class="qty">1</td>
+                                    <td class="unit">$0.00</td>
+                                    <td class="gstr">18%</td>
+                                    <td class="gstam">$0.00</td>
+                                    <td><span class="font-weight-semibold">$300</span></td>
+                                </tr>
+                               
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-md-flex flex-md-wrap">
+                            <div class="pt-2 mb-3 wmin-md-400 ml-auto">
+                                <h6 class="mb-3 text-left">Total due</h6>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th class="text-left">Subtotal:</th>
+                                                <td class="text-right">$1,090</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-left">Tax: <span class="font-weight-normal">(25%)</span></th>
+                                                <td class="text-right">$27</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-left">Total:</th>
+                                                <td class="text-right text-primary">
+                                                    <h5 class="font-weight-semibold">$1,160</h5>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer"> <span class="text-muted"></span> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    window.onload = function () {
+    document.getElementById("download")
+        .addEventListener("click", () => {
+            const invoice = this.document.getElementById("invoice");
+            console.log(invoice);
+            console.log(window);
+            var opt = {
+                margin: 1,
+                filename: 'myfile.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().from(invoice).set(opt).save();
+        })
+}
+</script>
+</html>

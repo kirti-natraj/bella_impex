@@ -4,7 +4,11 @@ const budgetSchema = new mongoose.Schema({
     budget_id:{
         type:mongoose.ObjectId,
     },
-   
+    category_id:{
+        type: String,
+        required: false,
+
+    },
     budget:{
         type: String,
         required: false,

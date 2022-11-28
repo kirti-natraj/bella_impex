@@ -29,6 +29,7 @@
                   
                 <form action="/created_form/"  method="post" >
                   <div class="card-body">
+                    <% if(data.length){ %>
                     <div class="row">
                       <div class="col-md-2">
                         <a href="/delete_question/<%= id %>" class="btn btn-sm bg-gradient-secondary mb-0 d-none d-lg-block">Delete</a>
@@ -42,13 +43,15 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class="form-group">
-                              
-                            <% for(var i = 0; i< data.length; i++) {%>  
-                            <label for="example-text-input" class="form-control-label"><%= data[i] %></label> &nbsp;&nbsp;
-                          
-                            <input class="form-control" type="<%= type[i] %>" name="field" />
                            
-                            <% } %>    
+                                <% for(var i = 0; i< data.length; i++) {%>  
+                                  <label for="example-text-input" class="form-control-label"><%= data[i] %></label> &nbsp;&nbsp;
+                                
+                                  <input class="form-control" type="<%= type[i] %>" name="field" />
+                                 
+                                  <% } %>    
+                             
+                           
                       
                             </div>
                         </div>
@@ -63,7 +66,12 @@
                       <button  type="submit" class="btn btn-sm btn-info float-right mb-0 d-none d-lg-block">Submit</button>
                     </div>
                    </div>
-                    
+                   <% } else {%>
+                    <div> Form Not  Created</div>
+                    <a class="btn btn-dark btn-sm" href="/question/<%= id %>">
+                      Add Form
+                   </a>
+                                                 <% } %>
                    </div>
                 </form>
                 </div>

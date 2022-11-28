@@ -1,134 +1,98 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-</head>
-<style>
-    #invoice{
+<html><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script><style>#invoice{
     padding: 30px;
-}
-
-.invoice {
+    }
+    .invoice {
     position: relative;
     background-color: #FFF;
     min-height: 680px;
     padding: 15px
-}
-
-.invoice header {
+    }
+    .invoice header {
     padding: 10px 0;
     margin-bottom: 20px;
     border-bottom: 1px solid #3989c6
-}
-
-.invoice .company-details {
+    }
+    .invoice .company-details {
     text-align: right
-}
-
-.invoice .company-details .name {
+    }
+    .invoice .company-details .name {
     margin-top: 0;
     margin-bottom: 0
-}
-
-.invoice .contacts {
+    }
+    .invoice .contacts {
     margin-bottom: 20px
-}
-
-.invoice .invoice-to {
+    }
+    .invoice .invoice-to {
     text-align: left
-}
-
-.invoice .invoice-to .to {
+    }
+    .invoice .invoice-to .to {
     margin-top: 0;
     margin-bottom: 0
-}
-
-.invoice .invoice-details {
+    }
+    .invoice .invoice-details {
     text-align: right
-}
-
-.invoice .invoice-details .invoice-id {
+    }
+    .invoice .invoice-details .invoice-id {
     margin-top: 0;
     color: #3989c6
-}
-
-.invoice main {
+    }
+    .invoice main {
     padding-bottom: 50px
-}
-
-.invoice main .thanks {
+    }
+    .invoice main .thanks {
     margin-top: -100px;
     font-size: 2em;
     margin-bottom: 50px
-}
-
-.invoice main .notices {
+    }
+    .invoice main .notices {
     padding-left: 6px;
     border-left: 6px solid #3989c6
-}
-
-.invoice main .notices .notice {
+    }
+    .invoice main .notices .notice {
     font-size: 1.2em
-}
-
-.invoice table {
+    }
+    .invoice table {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
     margin-bottom: 20px
-}
-
-.invoice table td,.invoice table th {
+    }
+    .invoice table td,.invoice table th {
     padding: 15px;
     background: #eee;
     border-bottom: 1px solid #fff
-}
-
-.invoice table th {
+    }
+    .invoice table th {
     white-space: nowrap;
     font-weight: 400;
     font-size: 16px
-}
-
-.invoice table td h3 {
+    }
+    .invoice table td h3 {
     margin: 0;
     font-weight: 400;
     color: #3989c6;
     font-size: 1.2em
-}
-
-.invoice table .qty,.invoice table .total,.invoice table .unit,.invoice table .gstr,.invoice table .gstam {
+    }
+    .invoice table .qty,.invoice table .total,.invoice table .unit {
     text-align: right;
     font-size: 1.2em
-}
-
-.invoice table .no {
+    }
+    .invoice table .no {
     color: #fff;
     font-size: 1.6em;
     background: #3989c6
-}
-
-.invoice table .unit {
+    }
+    .invoice table .unit {
     background: #ddd
-}
-
-.invoice table .total {
+    }
+    .invoice table .total {
     background: #3989c6;
     color: #fff
-}
-
-.invoice table tbody tr:last-child td {
+    }
+    .invoice table tbody tr:last-child td {
     border: none
-}
-
-.invoice table tfoot td {
+    }
+    .invoice table tfoot td {
     background: 0 0;
     border-bottom: none;
     white-space: nowrap;
@@ -136,164 +100,145 @@
     padding: 10px 20px;
     font-size: 1.2em;
     border-top: 1px solid #aaa
-}
-
-.invoice table tfoot tr:first-child td {
+    }
+    .invoice table tfoot tr:first-child td {
     border-top: none
-}
-
-.invoice table tfoot tr:last-child td {
+    }
+    .invoice table tfoot tr:last-child td {
     color: #3989c6;
     font-size: 1.4em;
     border-top: 1px solid #3989c6
-}
-
-.invoice table tfoot tr td:first-child {
+    }
+    .invoice table tfoot tr td:first-child {
     border: none
-}
-
-.invoice footer {
+    }
+    .invoice footer {
     width: 100%;
     text-align: center;
     color: #777;
     border-top: 1px solid #aaa;
     padding: 8px 0
-}
-
-@media print {
+    }
+    @media print {
     .invoice {
-        font-size: 11px!important;
-        overflow: hidden!important
+    font-size: 11px!important;
+    overflow: hidden!important
     }
-
     .invoice footer {
-        position: absolute;
-        bottom: 10px;
-        page-break-after: always
+    position: absolute;
+    bottom: 10px;
+    page-break-after: always
     }
-
     .invoice>div:last-child {
-        page-break-before: always
+    page-break-before: always
     }
-}
-</style>
-<!------ Include the above in your HEAD tag ---------->
-
-<!--Author      : @arboshiki-->
-<body>
-<div id="invoice">
-    <div class="invoice overflow-auto">
-        <div style="min-width: 600px">
-            <header>
-                <div class="row">
-                    <div class="col">
-                       
-                            <img src=" data:image/jpeg;base64,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" style="width: 50px;height: 50px;" class="avatar-sm" >
-
-                          
-                    </div>
-                    
-                </div>
-            </header>
-            <main>
-                <div class="row contacts">
-                    <div class="col invoice-to">
-                        <div class="text-gray-light">INVOICE TO:</div>
-                        <h2 class="to"><%= data[0].name %></h2>
-                        <div class="email"><a href="mailto:john@example.com">john@example.com</a></div>
-                        <div class="address"><%= data[0].address %></div>
-                        <div class="address"><%= data[0].stateName %></div>
-                        <div class="address"><%= data[0].cityName %></div>
-                    </div>
-                    <div class="col invoice-details">
-                        <h3 class="invoice-id">INVOICE NO: <%= invoice.number %></h3>
-                        <div class="date">Date of Invoice: <%= invoice.created_on %></div>
-                        <div class="col company-details">
-                            <h2 class="name">
-                                <a target="_blank" href="https://lobianijs.com">
-                                Belle Impex Commercial
-                                </a>
-                            </h2>
-                            <div>455 Foggy Heights, AZ 85004, US</div>
-                            <div>(123) 456-789</div>
-                            <div>company@example.com</div>
-                        </div>
-                    </div>
-                </div>
-                <table border="0" cellspacing="0" cellpadding="0">
-                    <thead>
-                        <tr>
-                          
-                            <th class="text-left">DESCRIPTION</th>
-                            <th class="text-right">QTY</th>
-                            <th class="text-right">PRODUCT<br>AMOUNT</th>
-                            <th class="text-right">GST<br>Rate</th>
-                            <th class="text-right">GST<br>AMOUNT</th>
-                            <th class="text-right">TOTAL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                           
-                            <td class="text-left"><h3>
-                               Subscription Plan 
-                            </td>
-                            <td class="qty">1</td>
-                            <td class="unit">$0.00</td>
-                            <td class="gstr">18%</td>
-                            <td class="gstam">$0.00</td>
-                            <td class="total">$0.00</td>
-                        </tr>
-                       
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="2"></td>
-                            <td colspan="2">Total Taxable Value</td>
-                            <td>$400.00</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"></td>
-                            <td colspan="2">SGST Amount</td>
-                            <td>$13.00</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"></td>
-                            <td colspan="2">CGST Amount</td>
-                            <td>$13.00</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"></td>
-                            <td colspan="2">GST Amount</td>
-                            <td>$13.00</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"></td>
-                            <td colspan="2">TOTAL Amount</td>
-                            <td>$500.00</td>
-                        </tr>
-                    </tfoot>
-                </table>
-              
-                <div class="notices">
-                    <div>NOTICE:</div>
-                    <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
-                </div>
-            </main>
-        </div>
-        <!--DO NOT DELETE THIS div. IT is responsible for showing footer always at the bottom-->
-        <div></div>
+    }</style><link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <!--Author : @arboshiki-->
+    </head><body><div id="invoice">
+    <div class="toolbar hidden-print">
+    <div class="text-right">
+    
     </div>
-</div>
-</body>
-<script>
-     $('#printInvoice').click(function(){
-            Popup($('.invoice')[0].outerHTML);
-            function Popup(data) 
-            {
-                window.print();
-                return true;
-            }
-        });
-</script>
-</html>
+    <hr>
+    </div>
+    <div class="invoice overflow-auto">
+    <div style="min-width: 600px">
+    <header>
+        <div class="row">
+            <div class="col">
+            <img src="<%= company[0].image %>" style="width: 50px;height: 50px;" class="avatar-sm" >
+            </div>
+            <div class="col company-details">
+            <h2 class="name">
+            <a target="_blank" href="#">
+                <%= company[0].company_name %>
+            </a>
+            </h2>
+            <div><%= company[0].location %></div>
+            <div><a href="<%= company[0].email %>"><%= company[0].email %></a></div>
+            <div>  <%= company[0].mobile %></div>
+            </div>
+            </div>
+    </header>
+    <main>
+        <div class="row contacts">
+            <div class="col invoice-to">
+                <div class="text-gray-light">INVOICE TO:</div>
+                <h2 class="to"><%= data.name %></h2>
+                <div class="email"><a href="<%= user.user_name %>"><%= user.user_name %></a></div>
+                <div class="address"><%= data.address %></div>
+                <div class="address"><%= data.stateName %></div>
+                <div class="address"><%= data.cityName %></div>
+            </div>
+            <div class="col invoice-details">
+                <h3 class="invoice-id">INVOICE NO: <%= invoice.number %></h3>
+                <div class="date">Date of Invoice: <%= invoice.created_on %></div>
+            </div>
+        </div>
+        <table border="0"  cellspacing="0" cellpadding="0">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th class="text-left">DESCRIPTION</th>
+                    <th class="text-right">QTY</th>
+                    <th class="text-right">PRODUCT<br>AMOUNT</th>
+                    <th class="text-right">GST<br>Rate</th>
+                    <th class="text-right">GST<br>AMOUNT</th>
+                    <th class="text-right">TOTAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                   <td class="no">01</td>
+                    <td class="text-left"><h3>
+                       <%= package.subscription_name %></h3>
+                       <h5><%= package.description %></h5>
+                    </td>
+                    <td class="qty">1</td>
+                    <td class="unit">₹<%= package.amount %></td>
+                    <td class="gstr">18%</td>
+                    <td class="gstam">₹<%= package.amount*18/100 %></td>
+                    <td class="total">₹<%= package.amount+(package.amount*18/100) %></td>
+                </tr>
+               
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">Total Taxable Value</td>
+                    <td>₹<%= package.amount %></td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">GST Amount</td>
+                    <td>₹<%= package.amount*18/100 %></td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">TOTAL Amount</td>
+                    <td>₹<%= package.amount+(package.amount*18/100) %></td>
+                </tr>
+            </tfoot>
+        </table>
+    <div class="thanks">Thank you!</div>
+    <div class="notices">
+    <div>NOTICE:</div>
+    <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
+    </div>
+    </main>
+    
+    </div>
+    <!--DO NOT DELETE THIS div. IT is responsible for showing footer always at the bottom-->
+    <div></div>
+    </div>
+    </div> <script type="text/javascript"> $('#printInvoice').click(function(){
+    Popup($('.invoice')[0].outerHTML);
+    function Popup(data)
+    {
+    window.print();
+    return true;
+    }
+    });</script></body></html>

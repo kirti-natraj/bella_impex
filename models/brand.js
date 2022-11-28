@@ -15,6 +15,11 @@ const brandSchema = new mongoose.Schema({
         required: false,
 
     },
+    categoryId:{
+        type: String,
+        required: false,
+
+    },
     created_on:{
         type: Date,
         required: false,

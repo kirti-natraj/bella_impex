@@ -1,163 +1,170 @@
-<!-- <div class="min-height-200 bg-primary position-absolute w-100"></div>
-<aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
+<aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 data-toggle" id="sidenav-main">
+ 
+  
   <div class="sidenav-header">
-    <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-    <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
-          <img src=" data:image/jpeg;base64,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" class="navbar-brand-img h-100" alt="main_logo">
-          <span class="ms-1 font-weight-bold">Belle Impex</span>
-       
-      </div>
-    </a>
-  </div> -->
-  <div class="min-height-300 bg-primary position-absolute w-100"></div>
-  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
-    <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
-     <img class="navbar-brand-img h-100" src=" data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBw8NEA0NDQ4PDQ0NEA0NDQ0NDg8QDg4PFREWFhURFRUZHSohGBolGxMVIzIhMSsrLi4wFyszODMsNygtLisBCgoKDg0OGhAPFysfHR8rNy0rMC41LSs3LS0tLSstLS8tLS0uLS0tLS0tKy0tLS0tLS0rKystLS0tLS03Ny03Lf/AABEIAOEA4QMBIgACEQEDEQH/xAAbAAEBAAIDAQAAAAAAAAAAAAAAAQIGBAUHA//EAD4QAAICAQICBQoEBAQHAAAAAAABAgMRBBIFIQYTMXFzBxQiMzRBUWGBsjKRsbMjUsPhFZPR0hZCU2N0gqL/xAAZAQEBAQEBAQAAAAAAAAAAAAAAAQIDBAX/xAAiEQEBAAICAwABBQAAAAAAAAAAAQIRAzEEEiFBExQyM0L/2gAMAwEAAhEDEQA/APNkhgAza+jIYGACbXRgADZowMADZowMADZowMADZowMADZowMADZoGABs0YGABs0YGABs0YGABs0YGABs0YLghRs0wIAac9M0AgZrpAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKQoHzABvTmzQKiGa6QABAAKBAAAAAAAoEAAAAAAUAQAAAAAAAAAACkKBgQA05s0AgSukAAQAAAAAAAAACgQAAAAAAAAAAAAAAAAAACkKBgQA25s0AgZrpAAEAABQABAAAAAAAAAAAAAAAAAAAAAAAAApCgfMAG2GaBUQzW4HK0V1EM9fTK6PL8FzrlFe/HovJxiS95LNwen09B9BOMZrr8TUZLNvuayvcaxCPButlTZDWU7ZyrdsrISrypNZeOaXL4HpPDPU6fwqfsR4vxF/xtR4t33s8PBcs7lLb8G7cS8n8HBz0d83LG6MLtkoTWM4UopYz9TRoxVc8Wwb2ScbK9zhLK5NZ93M9i6OVSho9HCxNTjRTGUX2r0Fy+iwjy7pZdCzW6udTTg7EsrsclFKTX/sma8flyytxv3Q2Tox0f0HEKXd1V9UoTdc4dfuWcJ5T29mGfHpDwnhnD5Vwsq1djtjKadd0MJJ455Oz8mPs1/j/wBOJ1nlQ9dpPCs+9GZllea4b+DiaBcEtkoTWr0+cJStsj1efnKOcd7ON004PTobqq6N22dSse+W57t8lyfckdbrdB1VGjtaanqVqJvPZsjNRg0vnzf1MuK8R85jpE92/T0Kiblj0ts5OLXP+Vx/I9GON9ty/B2nRXRaLW2rTW0Wwnsc1ZDUZjJxxnMdvL8zv+N9FeH6Oi3UShfNVpYgrsbpOSilnHLmzoPJ97fX4d32m6dPPYNR30/uRPPy5ZTlmMvyjyzVWVyadVTqjjnF2OzL+OWkfEFPcOVobtPD2mmdsc5cq7urlGPvwtrTZ6Ougeg/73+b/Y8rt/DLuf6HvVfZHuX6Hj8rK461TTxni0tNGdtWnosjsnKEbbL97ajLDe3bjnj4nWn31vrbvEt+9nxPVj1Bnp5RjJOcHZHnmCm4Z5fzYeDeujnRvQa+hXqu+t7pVzh1+5KSx2PbzWGjQj03ybexz8ez7YHDyrccNyjo+kHDOF6CyFVlOrsc4KxOu6GEtzWOfcfHhlXBb5quS1VEpNRi7rI7G37t0c4+pn5TPaqf/Hj+5M6DiOgVNWim8qWppndLL5betkoYXzik/qOOe2Etyu6Ob0w4XVotSqad2zqoT9OW57m5J8/odEzsOL8R86dE3u316eqiblj0pQcvSX0aOAdsJZjN9iFIU2MACG3NmgEDNdIEfv8AqUP3kV7jw31NHhU/YjQNNxjhdOonKegmrI2zzc7HclJTeZqEnhc+fJZN/wCGep0/hU/YjxfiPrr/ABrvvZ87xsJnllKn4eqcb0V2upUtHrXVXbFSSjFbbYtcszXpLOf7Hlev0VmmsnRdHZZB4a92Pc0/en8T1DoEpeYafdntt2Z/k6yWDV/KbKPnNCWN6p9P44c3tz/9GvHyuOdw/CO48mXs1/j/ANOJemlmgjfpvP675+hLa6pJQUd3PcsqT+hj5MfZr/H/AKcTrPKh67S+FZ96JMfbyLCsPKNKuX+Hunb1Lpsdez8OzMMY+WDTjmavXdZTpaXnOm6+OX2OM5qSS7uZ9lw7bo56uxNdZfVp9N2rOIzlZL5r0UvzPXhPTGSq7Lye+3V+Hd9punTz2DUd9P7kTS/J77dX4d32m6dPPYNR30/uRPLzf34q8mQB3HRPhvnerphKOaq2rrs9nVxecPveF9T3ZX1m6jpbfwy7n+h71X2R7l+h4RqpKXWSSSUnOSSWEk88kj3evsj3R/Q8Xmf5Hh2t9bd4tv3s+B99b627xbfvZ8YRcmoxTlJtKMV2tvsSPZj0IeneTb2Ofj2fbA0vpRoY6WyjTpRU69NT10openbJylJv49qXckbp5NvY5+PZ9sDzeTlvi2Ph0tt4fHV0ef1XTfVRacH/AAlHfL8UV6T9/wBDqPKRKLt0jrw4PT5g442uG57cY92ME8pntVPgR/cma7rdd11ekred2mrnU28YadkpRx3JpfQvDx/MctkcIHZz4ds0cdVNNSvvVdHb6uMJOcse/LwvodYemWXoCkKUYEKDenNkgAZrpA5Ojqok35xbZVHl6qlWOS9/NyWH+ZxgZs2r02np1oYRjGMdRiCjGP8ACh2JYX/N8jWbbeDTtndJ61xnKVjp21qGW8tZznHP4msA4zx8cerUb7q+n9cIKvR6Zx2pRg7dsYQSWFiEW892UaZdqJai126iyW6x5st272u6OV8ljJxgb4+LHHobx0a6R6Dh9LpUtTZKU3ZOfUQis4Swlv7MIw6Q8a4XxB1yseshKpSUZV1V808cmnL5GlYBn9vj7e33Y2TSf4LCSlPz67HPbOFcYvv2yTZ9emHSDT6yrTUaWE4QplKTjKEYRilHbFRSb+MjVgX9KbmWxsnRbX6PQ2+cW232WbHFQhp4xjFyxnm58+z5GwcU6XcO1VNmntWp2WJJuNcFJNNNNel8UedgmXBjll7Ud8q+Ef8AV1/d1VH+p3vD+knDNHTZVpa9QpTjL051xcpz2tR3S3dmX9DQwXLhmXdo5Wgp08vabbIRyk41UqcpR9+Jblj8mejf8faH+XUf5Uf9x5gBycOOf8hsWrfCLZzsU9fDfKU3GNdTSbeXjLz7zncG4hwfRzVsY6u22P4J3V1vZ84pSST+Zp4F4pZrdHcdINfVrdZZdunXTPZGMnXumlGCX4d3xT95snR3pPoNDQqE9TY90pym6YRzJ47Fv5LkjQwMuHHLH1vQ3PpBxfhfEJQssesrnCOzNddfOOc4ab+Lf5nB0UuC1yUp+e345qNkK1D6qMlk1omROGSaluhs/TPj9GtWmhpozjXT1m6M4KCTaioqKTfLCZrABvDGYzUUKQppHzwADbmzRcEQyZrpAAEAABQAAMgAIAAAAAAAAuQQAUZIABSAAAAAAAFIUDAgBpzZoBAldIAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSFAwBAbc2YCBmukAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoHzBSG9ubNAIGa6QABAKiACkAAAAAUgAAAAAAKQAAAAAAApAAAAAoIUDAEBdOemaAQFdIAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSFAwIUhphmgUhK1AAEUAKBAAAAAAAoEAAAAAAAAAAAAAAUgAAACkKBgQuAa+uW1QABOgABQMAIIABRgAAAAAAAAACojAAhSAFUAAEGAEEAAAACsQAacX//2Q==" class="navbar-brand-img h-100" alt="main_logo">
-           <span class="ms-1 font-weight-bold">Belle Business</span>
+      <a class="navbar-brand m-0" target="_blank">
+        <img src="../assets/img/belle_logo.jpg" class="navbar-brand-img h-100" alt="main_logo">
+        <span class="ms-1 font-weight-bold">Belle Impex</span>
       </a>
+
+      
     </div>
     <hr class="horizontal dark mt-0">
-  <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link active" href="/index/">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
-          </div>
-          <span class="nav-link-text ms-1">Dashboard</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="/user/">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-          </div>
-          <span class="nav-link-text ms-1">Users List</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="/category/">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
-          </div>
-          <span class="nav-link-text ms-1">Explore Categories</span>
-          
-        </a>
-       
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="/subcategory_list/">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="ni ni-app text-info text-sm opacity-10"></i>
-          </div>
-          <span class="nav-link-text ms-1">List of Subcategory</span>
-        </a>
-      </li>
-      <!-- <li class="nav-item">
-        <a class="nav-link " href="/Forms/">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="ni ni-app text-info text-sm opacity-10"></i>
-          </div>
-          <span class="btn-dropdown">Forms</span>
-        </a>
-      </li> -->
-      <li class="nav-item">
-        <a class="nav-link " href="/pending/">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="ni ni-world-2 text-danger text-sm opacity-10"></i>
-          </div>
-          <span class="nav-link-text ms-1">Pending Post </span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="/products/">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="ni ni-world-2 text-danger text-sm opacity-10"></i>
-          </div>
-          <span class="nav-link-text ms-1">Products</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link dropdown-toggle" href="/vehicle/">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="ni ni-app text-info text-sm opacity-10"></i>
-          </div>
-          <span class="nav-link-text ms-1">Vehicles</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/brand/">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+    <div class="collapse navbar-collapse" style="height: max-content;">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link hover-shadow " href="/index/">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link hover-shadow " href="/user/">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Users List</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link hover-shadow " href="/category/">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Explore Categories</span>
+            
+          </a>
          
-          </div>
-          <span class="nav-link-text ms-1">Brand</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/year/">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-           
-          </div>
-          <span class="nav-link-text ms-1">Year</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/budget/">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-       
-          </div>
-          <span class="nav-link-text ms-1">Budget</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="/properties/">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="ni ni-app text-info text-sm opacity-10"></i>
-          </div>
-          <span class="btn-dropdown">Properties</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="/notification/">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
-          </div>
-          <span class="nav-link-text ms-1">Notification</span>
-          
-        </a>
-       
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="/banner_list/">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
-          </div>
-          <span class="nav-link-text ms-1">Add Banner</span>
-          
-        </a>
-       
-      </li>
-      <li class="nav-item">
-        <a class="nav-link " href="/subscription/">
-          <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="ni ni-app text-info text-sm opacity-10"></i>
-          </div>
-          <span class="btn-dropdown">Add Suscription</span>
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div class="sidenav-footer mx-3 ">
-    <div class="card card-plain shadow-none" id="sidenavCard">
-      <div class="card-body text-center p-3 w-100 pt-0">
-        
-      </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link hover-shadow " href="/subcategory_list/">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-app text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">List of Subcategory</span>
+          </a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link hover-shadow " href="/Forms/">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-app text-info text-sm opacity-10"></i>
+            </div>
+            <span class="btn-dropdown">Forms</span>
+          </a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link hover-shadow " href="/pending/">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-world-2 text-danger text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Pending Post </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link hover-shadow " href="/products/">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-world-2 text-danger text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Products</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link hover-shadow " href="/vehicle/">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-app text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Vehicles</span>
+          </a>
+        </li>
+        <li class="nav-item" id="brand" >
+          <a class="nav-link hover-shadow" href="/brand/">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+  
+            </div>
+            <span class="nav-link-text ms-1">Brand</span>
+          </a>
+        </li>
+        <li class="nav-item" id="year" >
+          <a class="nav-link hover-shadow" href="/year/">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+             
+            </div>
+            <span class="nav-link-text ms-1">Year</span>
+          </a>
+        </li>
+        <li class="nav-item" id="budget" >
+          <a class="nav-link hover-shadow" href="/budget/">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+         
+            </div>
+            <span class="nav-link-text ms-1">Budget</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link hover-shadow " href="/properties/">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-app text-info text-sm opacity-10"></i>
+            </div>
+            <span class="btn-dropdown">Properties</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link hover-shadow " href="/notification/">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Notification</span>
+            
+          </a>
+         
+        </li>
+        <li class="nav-item">
+          <a class="nav-link hover-shadow " href="/banner_list/">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Add Banner</span>
+            
+          </a>
+         
+        </li>
+        <li class="nav-item">
+          <a class="nav-link hover-shadow " href="/subscription/">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-app text-info text-sm opacity-10"></i>
+            </div>
+            <span class="btn-dropdown">Add Suscription</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link hover-shadow " href="/viewState/">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Add State/City</span>
+            
+          </a>
+         
+        </li>
+        <li class="nav-item">
+          <a class="nav-link hover-shadow " href="/invoice/">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Update Invoice</span>
+            
+          </a>
+         
+        </li>
+      </ul>
+     
+
+      <div class="sidenav-footer mt-3">
+      <a class="btn btn-rounded btn-dark btn-sm md-0 w-100" href="https://belle-impex-360513.el.r.appspot.com/" type="button">Log Out</a>
+     </div>
     </div>
-    <a class="btn btn-primary btn-sm mb-0 w-100" href="https://belle-impex-360513.el.r.appspot.com/" type="button">Log Out</a>
-    <br>
-    <br>
-    <img class="w-70 mx-auto align-middle text-center align-items-center justify-content-center" src="https://img.lovepik.com/free-png/20210928/lovepik-data-analysis-data-management-icon-free-vector-png-image_401354990_wh1200.png" alt="sidebar_illustration">
-    </div>
-</aside>
+    
+  </aside>

@@ -38,6 +38,11 @@ const userBillSchema = new mongoose.Schema({
         type: String,
         required: false,
         default:''
+    },
+    invoice:{
+        type: String,
+        required: false,
+        default:''
     }
     
 })

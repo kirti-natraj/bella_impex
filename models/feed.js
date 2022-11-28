@@ -9,6 +9,11 @@ const feedSchema = new mongoose.Schema({
         required: false,
         default: ''
     },
+    added_by:{
+        type: String,
+        required: false,
+        default: '' 
+    },
     userName:{
         type: String,
         required: false,
@@ -20,6 +25,11 @@ const feedSchema = new mongoose.Schema({
         default: ''
     },
     type:{
+        type: String,
+        required: false,
+        default: ''
+    },
+    from:{
         type: String,
         required: false,
         default: ''
@@ -47,9 +57,9 @@ const feedSchema = new mongoose.Schema({
         default: ''
     },
     likeCount:{
-        type: String,
+        type: Number,
         required: false,
-        default: '0'
+        default: 0
     },
     ago:{
         type: String,
@@ -59,12 +69,12 @@ const feedSchema = new mongoose.Schema({
     commentCount:{
         type: Number,
         required: false,
-        default: 10
+        default: 0
     },  
     ShareCount:{
         type: Number,
         required: false,
-        default: 10
+        default: 0
     },
     like:{
       type: Boolean,
@@ -76,6 +86,16 @@ const feedSchema = new mongoose.Schema({
         required: false,
         default: false
       },
+      created_on:{
+        type: Number,
+        required: false,
+        default: 0
+      },
+      added_on:{
+        type: String,
+        required: false,
+        default: '21St Oct 2022'
+      }
     
 })
 

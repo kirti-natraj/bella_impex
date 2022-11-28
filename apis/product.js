@@ -5,87 +5,142 @@ var user_db = require('../models/user');
 var category_db = require('../models/category');
 var subcategory_db = require('../models/sub_category');
 var properties_db= require('../models/properties');
+var subscription_db = require('../models/subscription');
 var vehicle_db= require('../models/vehicle');
 var product_db = require('../models/products');
 const state_db = require('../models/state');
 const city_db = require('../models/city');
+var user_bill_db = require('../models/user_billing');
+var invoice_db = require('../models/invoice');
+const package_db = require('../models/subscription');
 const moment = require('moment');
 const multer = require('multer');
+var otpGenerator = require('otp-generator');
+var html_to_pdf = require('html-pdf-node');
+const puppeteer = require('puppeteer');
 const brand_db = require('../models/brand');
 const year_db = require('../models/year');
 const budget_db = require('../models/budget');
-const puppeteer = require('puppeteer');
+const invoiceGet_db = require('../models/getInvoice');
 var user_bill_db = require('../models/user_billing');
+const path = require('path');
+const crypto = require('crypto');
+const mongoose = require('mongoose');
+const {GridFsStorage} = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
 
+////////////////////////////////////////////////mongodb
+// Mongo URI
+const mongoURI = 'mongodb+srv://belle-impex:belle123@serverlessinstance0.wn38x.mongodb.net/?retryWrites=true&w=majority';
 
+// Create mongo connection
+const conn = mongoose.createConnection(mongoURI);
 
+// Init gfs
+let gfs, gridfsBucket;
+conn.once('open', () => {
+ gridfsBucket = new mongoose.mongo.GridFSBucket(conn.db, {
+ bucketName: 'uploads'
+});
 
-const storageProduct = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'public/assets/images/products/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now()+ '__' + file.originalname);
+ gfs = Grid(conn.db, mongoose.mongo);
+ gfs.collection('uploads');
+})
+const storage = new GridFsStorage({
+    url: mongoURI,
+    file: (req, file) => {
+      return new Promise((resolve, reject) => {
+        crypto.randomBytes(16, (err, buf) => {
+          if (err) {
+            return reject(err);
+          }
+          const filename = buf.toString('hex') + path.extname(file.originalname);
+          const fileInfo = {
+            filename: filename,
+            contentType: 'application/pdf',
+            bucketName: 'uploads'
+          };
+          resolve(fileInfo);
+        });
+      });
     }
   });
-  const uploadProduct = multer({storage: storageProduct});
+  const upload = multer({ storage });
 
 
-router.post('/addProduct', uploadProduct.fields([{name:'image', maxCount: 5}]), async function(req, res, next) {                          //category add
-   
-    const value = Date.Now();
-    const data = await category_db.find({'_id': req.body.category});
-    const sub_data = await subcategory_db.find({'_id': req.body.subcategory});
-    const user =  await product_db.create({
-        category: req.body.category,
-        subcategory: req.body.subcategory,
-        category_name: data[0].category_name,
-        subcategory_name: sub_data[0].sub_category_name,
-        image: req.files.image,
-        price: req.body.price,
-        date: value.format('yyyy-mm-dd'),
-        description: req.body.description,
-        title:req.body.title,
-        location: req.body.location,
-        country: req.body.country,
-        state: req.body.stt,
-        city: req.body.city,
-        pin:req.body.pin,
-        longitude: req.body.longitude,
-        latitude: req.body.latitude
-  
-    });
-    user.save()
-    .then(result => {
-        res.status(200).json({
-            response: true,
-            msg: "Product Added Successfully",
-            data: result
-        })
-    })
-    .catch(err => {
-        res.status(500).json({
-            error: err
-        })
-    })
-  });
- /////////// getProduct
  router.post('/getProduct',async function (req, res, next) {
 
-    const sub_id =  req.body.subcategory;
-  
-    console.log(sub_id)
-    const data = await product_db.find({subcategory: sub_id});
-  
-       
-        return res.json({response: false, msg:"Data found", data: data })
-    
- 
-
+    const category = await subcategory_db.findById(req.body.categoryId);
+    const data = await product_db.find({category:req.body.subcategory ,$or:[{brand: {$in:req.body.brandId}},{price:{$gte: 0,$lt: req.body.price}}]});
+    if(data == ''){
+        return res.json({response: false, msg:"No Product Found", data: [] })
+    }else{ 
+        return res.json({response: true, msg:"Product Found", data: data })
+    }
 }); 
+
+router.post('/getProductById',async function (req, res, next) {
+
+    const id =  req.body.productId;
+    console.log(id)
+    const data = await product_db.find({'_id': id, approval: true});       
+    return res.json({response: true, msg:"Data found", data: data })
+
+
+});
+
+router.post('/editPrice',async function (req, res, next) {
+    const data = await product_db.findById(req.body.productId);
+    if(data == ''){
+        return res.json({response: false, msg:"No Product Found", data: [] })
+    }else{
+        await product_db.findByIdAndUpdate(req.body.productId,{
+            price: req.body.price
+        });   
+        const product_data = await product_db.findById(req.body.productId);  
+        return res.json({response: true, msg:"Price Updated", data: product_data })
+    }
+}); 
+////////// Brand Filter
+
+router.post('/getCatBrand',async function (req, res, next) {
+    const data = await brand_db.find({categoryId: req.body.subcategoryId});
+    const budget = await budget_db.find({category: req.body.categoryId});
+    if(data == ''){
+        return res.json({response: false, msg:"No Brand Budget Found", brand: [] , budget:[]})
+    }else{ 
+        return res.json({response: true, msg:"Brand and Budget Found", brand: data,budget: budget })
+    }
+}); 
+
+router.post('/getCatFilterProduct',async function (req, res, next) {
+    const category = await category_db.findById(req.body.categoryId)
+    const data = await product_db.find({category: category.category_name,$or:[{brand: req.body.brandId},{price:{$gte: req.body.min,$lt: req.body.max}}]});
+    if(data == ''){
+        return res.json({response: false, msg:"No Brand Found", data: [] })
+    }else{ 
+        return res.json({response: true, msg:"Brand Found", data: data })
+    }
+}); 
+
+///////////////Price Filter
+
+router.post('/getCatPriceProduct',async function (req, res, next) {
+    const category = await category_db.findById(req.body.subcategoryId);
+    const data = await product_db.find({category: category.category_name,price: {$gte:req.body.min,$lt:req.body.max}});
+    if(data == ''){
+        return res.json({response: false, msg:"No Product Found", data: [] })
+    }else{ 
+        return res.json({response: true, msg:"Product Found", data: data })
+    }
+}); 
+
 //////////////////////////////////////getVehicle
+
 router.post('/getVehicle',async function (req, res, next) {
-    const data = await vehicle_db.find({category: 'Vehicles', approval: true});
+    const vehicleId = await category_db.find({category_name:'Vehicles'});
+    console.log(vehicleId[0]._id)
+    const data = await product_db.find({category: vehicleId[0]._id, approval: true});
     if(data == '') 
     {
        
@@ -112,7 +167,7 @@ router.post('/getVehicle',async function (req, res, next) {
         }else if(req.body.brand != '' )
         {
 
-              const data = await vehicle_db.find({category: 'Vehicles',brand: req.body.brand, approval: true});
+              const data = await product_db.find({category: vehicleId[0]._id,brand: req.body.brand, approval: true});
               if(data == ''){
                 res.json({ response: true , msg: "Data Not Found", data: data });
               }else{
@@ -130,7 +185,7 @@ router.post('/getVehicle',async function (req, res, next) {
                 yearObj[i] = year - i; 
             }
             console.log(yearObj);
-            const vehicle = await vehicle_db.find({category: 'Vehicles',year:{$in: yearObj}, approval: true});
+            const vehicle = await product_db.find({category: vehicleId[0]._id, year:{$in: yearObj}, approval: true});
             if(vehicle == ''){
                 res.json({ response: false , msg: "Data Not Found" , data: vehicle });
               }else{
@@ -141,7 +196,7 @@ router.post('/getVehicle',async function (req, res, next) {
         {
             const budgetData = await budget_db.findById(req.body.budget);   
             console.log(budgetData);
-            const vehicle = await vehicle_db.find({category: 'Vehicles',price:{$gte: budgetData.from ,$lt: budgetData.to}, approval: true});
+            const vehicle = await product_db.find({category: vehicleId[0]._id,price:{$gte: budgetData.from ,$lt: budgetData.to}, approval: true});
             if(vehicle == ''){
                 res.json({ response: false, msg: "Data Not Found", data: vehicle });
               }else{
@@ -191,69 +246,108 @@ router.get('/getFilterData',async function(req, res, next) {                    
    });
 
 router.post('/getPDF',async function (req, res, next) {
-     
-    const data = "https://belle-impex-360513.el.r.appspot.com/assets/images/result.pdf";
-    return res.json({response: true, msg:"PDF found", data: data, user_id: req.body.user_id, invoiceNo: '218y63981ksdjbfskj',price:'20,000/-', date: '22/09/22' })
+    const bill_data = await user_bill_db.findOne({user_id:req.body.userId});
+    console.log(bill_data);
+    const user = await user_db.findById(req.body.userId);
+    const data = 'https://belle-impex-360513.el.r.appspot.com/userWebview/'+req.body.userId;
+    const arrayData =[];
+    for(var i = 0; i< user.packageIds.length;i++){
+        const package = await package_db.findById(user.packageIds[i]);
+        const invoice_data = await invoice_db.findOne({number:user.invoice[i]});
+        arrayData[i] = {url:data+'/'+user.packageIds[i]+'/'+user.invoice[i], user_id: req.body.user_id, invoiceNo: invoice_data.number, price:'₹'+package.amount, date: invoice_data.created_on }
+    
+    }
+    if(bill_data == null){
+        return res.json({response: false, msg:"PDF not found", data: [] })
+    }else{
+        return res.json({response: true, msg:"PDF found", data: arrayData })
+    }
+    
    
 });
-router.post('/checkSubscription',async function (req, res, next) {
-          
 
-    
-    user_db.findById(req.body.userId)
-    .then(result => {
-        if(result.postCount >= 1) 
-    {
-         if(result.payment == true) 
+
+////////////////////////////////// Get Subscription Plan
+
+router.post('/checkSubscription',async function (req, res, next) {
+    const user = await user_db.find({'_id':req.body.userId});
+        const packageId = user[0].packageId;
+        var data ={};
+        console.log(packageId);
+        if(packageId == ''){
+            data= {};
+        }else{
+            const plan = await subscription_db.find({'_id': packageId});
+            if(plan == ''){
+                         data = { Subscription: "plan does not exist"};
+            }else{
+                data = {
+                    product_id: plan[0]._id,
+                        subscription_name: plan[0].subscription_name,
+                        description: plan[0].description,
+                        start_date: user[0].packageDate,
+                        amount: plan[0].amount,
+                        end_date: user[0].packageEnd
+                }
+            }
+          
+        }
+       
+        
+         if(user[0].payment == true) 
          {
-            
-         res.json({response: true, msg:"Subcription Taken", remainingDays: '15'  })
+           return res.json({response: true, msg:"Subcription Taken", data: data  })
          }
          else
-         {
-            
-         res.json({response: false, msg:"Subscription not taken" })
+         {  
+           res.json({response: false, msg:"Subscription not taken" , data: data})
          }
        
-    }    
-    else
-    { 
-        return res.json({response: true, msg:"Subscription Taken" })
-    } 
-    })      
+  
+
+    }) ;     
    
-});
+
 
 router.post('/subscriptionPlan',async function (req, res, next) {
-     
-    var user = await user_db.findByIdAndUpdate(req.body.userId, {
+    var userData = await user_db.findById(req.body.userId);
+    var endDate = userData.packageEnd;
+    const number = otpGenerator.generate(6, { digits:true, upperCaseAlphabets:false, specialChars: false, lowerCaseAlphabets:false});
+    const plan = await subscription_db.find({'_id': req.body.packageId});
+    const a = moment(endDate, "DD-MM-YYYY");
+    const b = moment(moment(Date.now()).format("DD-MM-YYYY"), "DD-MM-YYYY");
+    var i = 0;
+     i = a.diff(b, 'days');
+    
+    console.log(i);
+    await user_db.findByIdAndUpdate(req.body.userId, {
         payment: true,
         receiptId: req.body.receiptId,
+        $push: {packageIds: req.body.packageId, invoice: number},
+        packageDate: moment(Date.now()).format("DD-MM-YYYY"),
+        packageEnd: moment(Date.now()).add(plan[0].duration + i,"days").format("DD-MM-YYYY"),
         yesterday:moment(Date.now()).format("DD")
     })
-
-  
+    const invoice = await invoice_db.create({
+        user_id: req.body.userId,
+        number: number,
+        created_on: moment(Date.now()).format("YYYY-MM-DD"),
+        });
+    var user = await user_db.findById(req.body.userId);
+    
    res.json({response:true, msg:"Subcription Plan Successfully applied, payment submitted", data:user});
    
 });
 
 router.post('/getAddedPost',async function (req, res, next) {
-
     const user_id =  req.body.user_id;
-    
-    const data = await vehicle_db.find({user_id: user_id, approval: true});
-    if(data == '') 
-    {
-       
-        return res.json({response: false, msg:"Data not found", data: data })
-    }    
-    else
-    {
-        console.log(data)
+    const data = await product_db.find({user_id: user_id});
+    if(data == ''){
+        return res.json({response: false, msg:"Data Not found", data: [] })
+    }else{
+        console.log(data);
         res.json({ response: true , msg: "Data Found", data: data });
     } 
-   
-
 }); 
 ////////////////////////////get product by id
 router.post('/getVehicleById', async function(req, res, next){
@@ -287,7 +381,7 @@ router.post('/getProductDetails',async function (req, res, next) {
              const user = req.body.user_id;
   
             const user_data = await user_db.findById(user);
-   const data = await vehicle_db.findById( req.body.product_id);
+   const data = await product_db.findById( req.body.product_id);
    
         if(data == null) return res.json({response: false, msg: "Data not found"});
         else {
@@ -300,6 +394,7 @@ router.post('/getProductDetails',async function (req, res, next) {
                        data.likeFlag = true
                    }
                 }
+
             
 
             data.fcmToken = req.body.fcmToken;
@@ -309,7 +404,7 @@ router.post('/getProductDetails',async function (req, res, next) {
    
 });
 router.post('/getAllProduct',async function (req, res, next) {
-    const data = await vehicle_db.find().exec();
+    const data = await product_db.find({approval:true}).exec();
     const user = req.body.user_id;
     const user_data = await user_db.findById(user);
     console.log(user_data);
@@ -333,46 +428,21 @@ router.post('/getAllProduct',async function (req, res, next) {
 
 router.post('/getInvoice',async function (req, res, next) {
 
-    user_bill_db.findOne({user_id:req.body.user_id})
-    .then(result => {
-        if (!result) return res.json({response: false, msg: "Billing Info not"});
-        else {
-            (async () => {
-
-            const user = req.body.user_id;
-
-            // Create a browser instance
-            const browser = await puppeteer.launch();
-          
-            // Create a new page
-            const page = await browser.newPage();
-          
-            // Website URL to export as pdf
-            const website_url = 'https://belle-impex-360513.el.r.appspot.com/userWebview/'+user; 
-          
-            // Open URL in current page
-            await page.goto(website_url, { waitUntil: 'networkidle0' }); 
-          
-            //To reflect CSS used for screens instead of print
-            await page.emulateMediaType('screen');
-          
-          // Downlaod the PDF
-            const pdf = await page.pdf({
-              path: 'https://belle-impex-360513.el.r.appspot.com/image/',
-              margin: { top: '100px', right: '50px', bottom: '100px', left: '50px' },
-              printBackground: true,
-              format: 'A4',
-            });
-          
-            // Close the browser instance
-            await browser.close();
-            res.json({ response: true , msg: "Data Found", pdf: 'https://belle-impex-360513.el.r.appspot.com/'});
-        })();
-
-        }
-    })
+    const user_data = await user_bill_db.findOne({user_id:req.body.user_id});
+    if(user_data == ''){
  
-});
+    }else{
+     let user = req.body.user_id;
+     let options = { format: 'A4' };
+     let file = { url: 'https://belle-impex-360513.el.r.appspot.com/userWebview/'+user };
+     await html_to_pdf.generatePdf(file, options).then(async pdfBuffer => {
+       console.log("PDF Buffer:-", pdfBuffer);
+       return res.json({response: true, msg: "PDF", data: pdfBuffer});
+     }); 
+     }
+  
+ });
+ 
 
 router.post('/invoice',async function (req, res, next) {
     const user = req.body.user_id;
@@ -380,7 +450,7 @@ router.post('/invoice',async function (req, res, next) {
     .then(result => {
         if (!result) return res.json({response: false, msg: "User not found"});
         else {
-            return res.json({response: true, msg:"User found", data: 'https://belle-impex-360513.el.r.appspot.com/userWebview/'+user});
+            return res.json({response: true, msg:"User found", data: 'https://belle-impex-360513.el.r.appspot.com/userWebview/'+ user});
         }
     })
 });

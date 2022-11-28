@@ -92,9 +92,9 @@ const userSchema = new mongoose.Schema({
         default: true
     },
     added_on:{
-        type: Date,
+        type: String,
         required: false,
-        default: Date.now()
+        default:"",
     },
     payment:{
         type: Boolean,
@@ -121,6 +121,27 @@ const userSchema = new mongoose.Schema({
         required: false,
         default:''
     },
+    packageId:{
+        type: String,
+        required: false,
+        default:''
+    },
+    packageIds:{
+        type: Array
+    },
+    invoice:{
+        type: Array
+    },
+    packageDate:{
+        type: String,
+        required: false,
+        default:''
+    },
+    packageEnd:{
+        type: String,
+        required: false,
+        default:''
+    },
     liked_post_id: {
             type: Array,
             required: false,
@@ -140,7 +161,7 @@ const userSchema = new mongoose.Schema({
         default:''
     }
     
-})
+});
 
 
 module.exports = mongoose.model('user',userSchema,'user');

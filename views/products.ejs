@@ -1,14 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
-
+  <style>
+    /* body {font-family: Arial, Helvetica, sans-serif;}
+    * {box-sizing: border-box;}*{align-content: center;} */
+    
+    /* Set a style for all buttons */
+    button {
+      background-color: #04AA6D;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      opacity: 0.9;
+    }
+    
+    button:hover {
+      opacity:1;
+    }
+    
+    /* Float cancel and delete buttons and add an equal width */
+    .cancelbtn, .deletebtn {
+      float: left;
+      width: 50%;
+    }
+    
+    /* Add a color to the cancel button */
+    .cancelbtn {
+      background-color: #ccc;
+      color: black;
+    }
+    
+    /* Add a color to the delete button */
+    .deletebtn {
+      background-color: #f44336;
+      padding-left: 5px;
+    }
+    
+    /* Add padding and center-align text to the container */
+    .container {
+      padding: 16px;
+      text-align: center;
+      padding-top: 50px;
+    }
+    
+    /* The Modal (background) */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: #474e5d;
+      padding-bottom: 500px;
+      padding-left: 600px;
+    }
+    
+    /* Modal Content/Box */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+      border: 1px solid #888;
+      width: 80%; /* Could be more or less, depending on screen size */
+    }
+    
+    /* Style the horizontal ruler */
+    hr {
+      border: 1px solid #f1f1f1;
+      margin-bottom: 25px;
+    }
+     
+    /* The Modal Close Button (x) */
+   
+    /* Clear floats */
+    .clearfix::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+    
+    /* Change styles for cancel button and delete button on extra small screens */
+    @media screen and (max-width: 300px) {
+      .cancelbtn, .deletebtn {
+         width: 100%;
+      }
+    }
+    </style>
   <%- include('admin/includes/header') %>
 <body>
-  <div class="min-height-250 bg-primary position-absolute w-100"></div>
- <%- include('admin/includes/sidebar')%>
+  <div class="max-height-1000 bg-primary w-100"></div>
+  <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 data-toggle" id="sidenav-main">
+ 
+  
+    <div class="sidenav-header">
+        <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+        <a class="navbar-brand m-0" target="_blank">
+          <img src="../assets/img/belle_logo.jpg" class="navbar-brand-img h-100" alt="main_logo">
+          <span class="ms-1 font-weight-bold">Belle Impex</span>
+        </a>
+      </div>
+      <hr class="horizontal dark mt-0">
+      <div class="collapse navbar-collapse" style="height: max-content;">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link " href="/index/">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="/user/">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">Users List</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="/category/">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">Explore Categories</span>
+              
+            </a>
+           
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="/subcategory_list/">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="ni ni-app text-info text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">List of Subcategory</span>
+            </a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link " href="/Forms/">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="ni ni-app text-info text-sm opacity-10"></i>
+              </div>
+              <span class="btn-dropdown">Forms</span>
+            </a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link " href="/pending/">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="ni ni-world-2 text-danger text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">Pending Post </span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/products/">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="ni ni-world-2 text-danger text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">Products</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link dropdown-toggle" href="/vehicle/">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="ni ni-app text-info text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">Vehicles</span>
+            </a>
+          </li>
+          <li class="nav-item" id="brand" >
+            <a class="nav-link" href="/brand/">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+    
+              </div>
+              <span class="nav-link-text ms-1">Brand</span>
+            </a>
+          </li>
+          <li class="nav-item" id="year" >
+            <a class="nav-link" href="/year/">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+               
+              </div>
+              <span class="nav-link-text ms-1">Year</span>
+            </a>
+          </li>
+          <li class="nav-item" id="budget" >
+            <a class="nav-link" href="/budget/">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+           
+              </div>
+              <span class="nav-link-text ms-1">Budget</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="/properties/">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="ni ni-app text-info text-sm opacity-10"></i>
+              </div>
+              <span class="btn-dropdown">Properties</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="/notification/">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">Notification</span>
+              
+            </a>
+           
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="/banner_list/">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">Add Banner</span>
+              
+            </a>
+           
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="/subscription/">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="ni ni-app text-info text-sm opacity-10"></i>
+              </div>
+              <span class="btn-dropdown">Add Suscription</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link hover-shadow " href="/viewState/">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">Add State/City</span>
+              
+            </a>
+           
+          </li>
+          <li class="nav-item">
+            <a class="nav-link hover-shadow " href="/invoice/">
+              <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+              </div>
+              <span class="nav-link-text ms-1">Update Invoice</span>
+              
+            </a>
+           
+          </li>
+        </ul>
+       
+  
+        <div class="sidenav-footer mt-3">
+        <a class="btn btn-rounded btn-dark btn-sm md-0 w-100" href="https://belle-impex-360513.el.r.appspot.com/" type="button">Log Out</a>
+       </div>
+      </div>
+      
+    </aside>
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
    <%- include('admin/includes/navbar')%>
-    <!-- End Navbar -->
+    <!-- End Navbar --> 
     <div class="container-fluid py-4">
       
       <div class="row">
@@ -51,7 +307,7 @@
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Description</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Sold Out</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Location</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Latitude & Longitude</th>
+                   
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
@@ -62,14 +318,50 @@
                         <td>
                             <p class="text-xs text-secondary mb-0">&nbsp;&nbsp; &nbsp;&nbsp;<%= i+1 %></p>
                         </td>
+                     
+                        <!-- <td>
+                          <a href="/image/2afc84aa81411996fd56872320b944fa.png" data-lightbox="image-1" data-title="My caption">Image #1</a>
+                            <div>
+                              <% if(data[i].image.length){
+                                for(var j = 0; j< data[i].image.length; j++) {%>
+                                  <a class="image-link" href="/image/2afc84aa81411996fd56872320b944fa.png">
+                                    <img src="/image/bbad98afec5128b8b3a2f69f9abe6f3a.jpg" class=" avatar-lg me-3" >
+                                  </a>  
+                              <% } %> 
+                              <% } %> 
+                            </div> 
+                         
+                          
+                        </td> -->
                         <td>
-                          <div>
-                            <% if(data[i].image.length){
-                              for(var j = 0; j< data[i].image.length; j++) {%>  
-                            <img src="../assets/images/products/<%= data[i].image[j].filename %>" class=" avatar-lg me-3" alt="user1">
-                            <% } %> 
-                            <% } %> 
-                            </div>
+                       
+<div class="row">
+  <% if(data[i].image.length){
+    for(var j = 0; j< data[i].image.length; j++) {%>
+   <div class="column">
+     <img src="<%= data[i].image[j].url %>" style="width:100%" onclick="openModal();currentSlide(1)" class="avatar-lg hover-shadow">
+   </div>
+  
+ </div>
+ <% } %> 
+     <% } %> 
+     <% if(data[i].image.length){
+      for(var j = 0; j< data[i].image.length; j++) {%>
+ <div id="myModal" class="modal">
+   <span class="close cursor" onclick="closeModal()">&times;</span>
+   <div class="modal-content">
+  
+     <div class="mySlides1">
+       <div class="numbertext"><%= j+1 %> / <%= data[i].image.length + 1 %></div>
+       <img src="<%= data[i].image[j].url %>" style="width:100%; margin-left: 150px;">
+     </div>
+     <% } %> 
+     <% } %> 
+  
+  </div>
+</div>
+ 
+
                         </td>
                       <td>
                        
@@ -81,13 +373,13 @@
                      
                       <td>
 
-                        <div class="text-secondary text-xs font-weight-bold area"><%= data[i].category_name %></div>
+                        <div class="text-secondary text-xs font-weight-bold area"><%= data[i].category %></div>
                        
                       </td>
                     
                       <td>
 
-                        <div class="text-secondary text-xs font-weight-bold area"><%= data[i].subcategory_name %></div>
+                        <div class="text-secondary text-xs font-weight-bold area"><%= data[i].subcategory %></div>
                        
                       </td>
                       <td class="align-middle text-center text-sm">
@@ -116,19 +408,17 @@
                     <td class="align-middle text-center">
                       <span class="text-secondary text-xs font-weight-bold"><%= data[i].location %></span>
                     </td>
-                    <td class="align-middle text-center">
-                      <span class="text-secondary text-xs font-weight-bold">Long. = <%= data[i].longitude %> & Lati. = <%= data[i].latitude %> </span>
-                    </td>
+                 
                      <td>
                        
 
-                      <a href="/update_product/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs text-end" data-toggle="tooltip" data-original-title="Edit user">
-                        <button class="btn btn-success btn-sm">Update</button>
+                      <a href="/view_product/<%= data[i]._id %>" class="btn btn-primary" data-toggle="tooltip" data-original-title="Edit user">
+                      View
                            </a>
-                           <a href="/delete_product/<%= data[i]._id %>" class="text-secondary font-weight-bold text-xs text-end" data-toggle="tooltip" data-original-title="Edit user">
-                            <button class="btn btn-danger btn-sm">Delete</button>
+                           <a href="/delete_product/<%= data[i]._id %>" onclick="return confirm('Are you sure you want to delete this item?');"  class="btn btn-danger" data-toggle="tooltip" data-original-title="Edit user">
+                           Delete
                                </a>
-
+                               
                       </td>
                     </tr>
                     <% }
@@ -149,7 +439,53 @@
       <%- include('admin/includes/footer')%>
     </div>
   </main>
-  
+  <script src="path/to/lightbox.js"></script>
+  <script>
+    function openModal() {
+  document.getElementById("myModal").style.display = "block";
+}
+
+function closeModal() {
+  document.getElementById("myModal").style.display = "none";
+}
+
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+   function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides","mySlides1");
+  // for (var i = 0; i < slides.length; i++) {
+  //           slides[i].style.display = "none";
+  //       }
+  var dots = document.getElementsByClassName("demo","demo1");
+  // for (var i = 0; i < dots.length; i++) {
+  //  dots[i].style.display = "block";            
+  //       }
+  var captionText = document.getElementById("caption","caption1");
+  // for (var i = 0; i < captionText.length; i++) {
+  //  captionText[i].style.display = "block";            
+  //       }
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+  captionText.innerHTML = dots[slideIndex-1].alt;
+}
+</script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -162,6 +498,7 @@
     function active(){
         alert("Employee is active");
       }
+
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>

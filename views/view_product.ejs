@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+ 
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px;
+  display: flex;
+}.left-column {
+  width: 65%;
+  position: relative;
+}
+ 
+.right-column {
+  width: 35%;
+  margin-top: 20px;
+}/* Left Column */
+.left-column img {
+  width: 80%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  padding: 100px;
+  transition: all 0.3s ease;
+}
+ 
+.left-column img.active {
+  opacity: 1;
+}/* Product Description */
+.product-description {
+  border-bottom: 1px solid #E1E8EE;
+  margin-bottom: 20px;
+}
+.product-description span {
+  font-size: 12px;
+  color: #358ED7;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.product-description h1 {
+  font-weight: 300;
+  font-size: 52px;
+  color: #43484D;
+  letter-spacing: -2px;
+}
+.product-description p {
+  font-size: 16px;
+  font-weight: 300;
+  color: #86939E;
+  line-height: 24px;
+}.product-color {
+  margin-bottom: 30px;
+}
+ 
+.color-choose div {
+  display: inline-block;
+}
+ 
+.color-choose input[type=&amp;quot;radio&amp;quot;] {
+  display: none;
+}
+ 
+.color-choose input[type=&amp;quot;radio&amp;quot;] + label span {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin: -1px 4px 0 0;
+  vertical-align: middle;
+  cursor: pointer;
+  border-radius: 50%;
+}
+ 
+.color-choose input[type=&amp;quot;radio&amp;quot;] + label span {
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.33);
+}
+ 
+.color-choose input[type=&amp;quot;radio&amp;quot;]#red + label span {
+  background-color: #C91524;
+}
+.color-choose input[type=&amp;quot;radio&amp;quot;]#blue + label span {
+  background-color: #314780;
+}
+.color-choose input[type=&amp;quot;radio&amp;quot;]#black + label span {
+  background-color: #323232;
+}
+ 
+.color-choose input[type=&amp;quot;radio&amp;quot;]:checked + label span {
+  background-image: url(images/check-icn.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+}.cable-choose {
+  margin-bottom: 20px;
+}
+ 
+.cable-choose button {
+  border: 2px solid #E1E8EE;
+  border-radius: 6px;
+  padding: 13px 20px;
+  font-size: 14px;
+  color: #5E6977;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all .5s;
+}
+ 
+.cable-choose button:hover,
+.cable-choose button:active,
+.cable-choose button:focus {
+  border: 2px solid #86939E;
+  outline: none;
+}
+ 
+.cable-config {
+  border-bottom: 1px solid #E1E8EE;
+  margin-bottom: 20px;
+}
+ 
+.cable-config a {
+  color: #358ED7;
+  text-decoration: none;
+  font-size: 12px;
+  position: relative;
+  margin: 10px 0;
+  display: inline-block;
+}
+.cable-config a:before {
+  content: &amp;quot;?&amp;quot;;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  border: 2px solid rgba(53, 142, 215, 0.5);
+  display: inline-block;
+  text-align: center;
+  line-height: 16px;
+  opacity: 0.5;
+  margin-right: 5px;
+}/* Product Price */
+.product-price {
+  display: flex;
+  align-items: center;
+}
+ 
+.product-price span {
+  font-size: 26px;
+  font-weight: 300;
+  color: #43474D;
+  margin-right: 20px;
+}
+ 
+.cart-btn {
+  display: inline-block;
+  background-color: #7DC855;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #FFFFFF;
+  text-decoration: none;
+  padding: 12px 30px;
+  transition: all .5s;
+}
+.cart-btn:hover {
+  background-color: #64af3d;
+}@media (max-width: 940px) {
+  .container {
+    flex-direction: column;
+    margin-top: 60px;
+  }
+ 
+  .left-column,
+  .right-column {
+    width: 100%;
+  }
+ 
+  .left-column img {
+    width: 300px;
+    right: 0;
+    top: -65px;
+    left: initial;
+  }
+}
+ 
+@media (max-width: 535px) {
+  .left-column img {
+    width: 220px;
+    top: -85px;
+  }
+}
+    </style>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belle Impex</title>
+      <!--     Fonts and icons     -->
+     
+      <!-- Nucleo Icons -->
+      <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+      <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+      <!-- Font Awesome Icons -->
+      <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+      <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+      <!-- CSS Files -->
+      <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+</head>
+<body>
+    <div class="content-wrapper" style="background-color: black;">
+        <main class="container">
+ 
+            <!-- Left Column / Headphones Image -->
+           
+            <!-- Right Column -->
+
+            <div class="right-column col-4">
+           
+              <!-- Product Description -->
+              <div class="product-description">
+                <span>Subcategory: -  <%= data.subcategory %></span>
+                <h1><%= data.title %></h1>
+                <p><%= data.description %></p>
+                <h5>Added By:-</h5>
+                <p><%= data.user_name %> (User Since:- <%= data.since %>)</p>
+                <h5>Location:-</h5>
+                <p><%= data.location %></p>
+              </div>
+           
+              <!-- Product Configuration -->
+              <div class="product-configuration">
+           
+                <!-- Product Color -->
+           
+                <!-- Cable Configuration -->
+                <div class="cable-config">
+                  <span>Other Details</span>
+           
+                  <div class="cable-choose">
+                <% for(var i=0; i< data.dataKey.length; i++){ %>
+                  <button><%= data.dataKey[i] %>:-  <%= data.dataValue[i] %></button>
+               <% } %>
+                  </div>
+           
+                  <a href="#">Price</a>
+                </div>
+              </div>
+           
+              <!-- Product Pricing -->
+              <div class="product-price">
+                <span>₹ <%= data.price %></span>
+                <a href="/products/" class="cart-btn">Back</a>
+              </div>
+            </div>
+            <div class="col-2"></div>
+            <div class="col-6">
+             
+                <% for(var i=0; i< data.image.length; i++){ %>
+              <img  src="<%= data.image[i].url %>" alt=""  width="500" height="500" >
+             
+                <%}%>
+      
+            </div>  
+            </main>
+            </div>
+           
+     
+
+
+  <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+    <script src="/assets/js/cities.js"></script>
+    <script language="javascript">print_state("sts");</script>
+    <script src="/assets/js/plugins/chartjs.min.js"></script>
+    <script>
+      var i =  document.getElementById("formFlag").value ;
+      if(i == 'false'){
+        var x = document.getElementById("queFormOne");
+  
+  if (x.style.display === 'none') {
+    x.style.display = 'block';
+  }
+      }else{
+        var x = document.getElementById("queFormTwo");
+  
+  if (x.style.display === 'none') {
+    x.style.display = 'block';
+  }
+      }
+
+
+function addMore(){
+  document.getElementById("indicat").value = "no";
+}
+
+    </script>
+    
+    <script>
+      var ctx1 = document.getElementById("chart-line").getContext("2d");
+  
+      var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50);
+  
+      gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)');
+      gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)');
+      gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)');
+      new Chart(ctx1, {
+        type: "line",
+        data: {
+          labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          datasets: [{
+            label: "Mobile apps",
+            tension: 0.4,
+            borderWidth: 0,
+            pointRadius: 0,
+            borderColor: "#5e72e4",
+            backgroundColor: gradientStroke1,
+            borderWidth: 3,
+            fill: true,
+            data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+            maxBarThickness: 6
+  
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false,
+            }
+          },
+          interaction: {
+            intersect: false,
+            mode: 'index',
+          },
+          scales: {
+            y: {
+              grid: {
+                drawBorder: false,
+                display: true,
+                drawOnChartArea: true,
+                drawTicks: false,
+                borderDash: [5, 5]
+              },
+              ticks: {
+                display: true,
+                padding: 10,
+                color: '#fbfbfb',
+                font: {
+                  size: 11,
+                  family: "Open Sans",
+                  style: 'normal',
+                  lineHeight: 2
+                },
+              }
+            },
+            x: {
+              grid: {
+                drawBorder: false,
+                display: false,
+                drawOnChartArea: false,
+                drawTicks: false,
+                borderDash: [5, 5]
+              },
+              ticks: {
+                display: true,
+                color: '#ccc',
+                padding: 20,
+                font: {
+                  size: 11,
+                  family: "Open Sans",
+                  style: 'normal',
+                  lineHeight: 2
+                },
+              }
+            },
+          },
+        },
+      });
+    </script>
+   <script>
+    (document).ready(function() {
+ 
+ ('.color-choose input').on('click', function() {
+     var headphonesColor = $(this).attr('data-image');
+
+     $('.active').removeClass('active');
+     $('.left-column img[data-image = ' + headphonesColor + ']').addClass('active');
+     $(this).addClass('active');
+ });
+
+});
+   </script>
+   <script>
+let slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}    
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+  setTimeout(showSlides, 2000); // Change image every 2 seconds
+}
+</script>
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="/assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+</div>
+</body>
+</html>

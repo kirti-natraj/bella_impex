@@ -222,12 +222,36 @@ input[type="radio"]{
 <body>
     <div class="container">
         <div class="title-con">
-            <h3><%= category.sub_category_name %></h3>
+            <h3>Fill some details</h3>
             <hr>
         </div>
         
-        <form action="#"  method="post" enctype="multipart/form-data" >
-            
+        <form action="/submit_dynamic_vehicle_form/<%= category._id %>/<%= user %>"  method="post" enctype="multipart/form-data" >
+            <div class="row">
+                <div class="col">
+                    <label for="brand-details">Brand*</label>
+                    <div class="brand-container">
+                        <select name="brand" id="dropdown-brand">
+                           
+                            <% if(brand.length){
+                                for(var i = 0; i< brand.length; i++) {%> 
+                              <option value="<%= brand[i]._id %>"><%= brand[i].brand_name %></option>
+                              <% } %> 
+                              <% } %> 
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <label for="year">Purchase Year*</label>
+                    <select name="year"  id="dropdown-year" required >
+                        <% if(yearObj.length){
+                            for(var i = 0; i< yearObj.length; i++) {%> 
+                          <option value="<%= yearObj[i] %>"><%= yearObj[i] %></option>
+                          <% } %> 
+                          <% } %> 
+                    </select>
+                </div>
+            </div>
             <div class="row">
                 <div class="col">
 
@@ -252,12 +276,19 @@ input[type="radio"]{
                     <input type="file" name="image" id="inputOne" placeholder="Heading of your Ad" cols="68" rows="1" multiple max="5" required>
                     
                     <p id="result"></p>
+                    <label for="ad-title">Location*</label>
+                    <textarea id="my-text" required  name="location" placeholder="Enter Location" id="" cols="68" rows="1"></textarea>
+                    <p id="result"></p>
+                    <label for="ad-title">Price*</label>
+                    <input type="number" id="my-text" required  name="price" placeholder="Enter Price" id="" cols="68" rows="1"></textarea>
+                    <p id="result"></p>
                 </div>
                 
                 <div class="col">
                     <label for="other-info">Other Information*</label>
                     <textarea id="my-text2"  required name="description" placeholder="Any other information related to car" cols="1" rows="6"></textarea>
                 <p id="result2"></p>
+               
                 </div>
             </div>
             <div class="btn-shadow">

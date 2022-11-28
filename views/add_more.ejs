@@ -24,21 +24,22 @@
               <div class="col-md-12">
                 <div class="card">
                   
-                <form action="/add_more_submit/<%= data._id %>"  method="post" >
+                <form action="/submit_form/<%= data._id %>"  method="post" >
                   <div class="card-body">
                     <p class="text-uppercase text-sm">Enter Form Field Name for Subcategory <%= data.sub_category_name %></p>
                     <div class="row">
                         <div class="col-md-5">
                             <div class="form-group">
-                            <input type="text" name="extra" placeholder="Enter Here"/>
-                            <select class="form-control" class="form-control" name="dataType">
-                              <option selected disabled>Enter Input Type</option>
+                            <input type="text" class="form-control" name="extra" placeholder="Enter Here" required/>
+                            <input type="number" value="1" name="flag" id="flag" placeholder="Enter Here" hidden/>
+                            <select class="form-control" class="form-control" name="dataType" required>
+                              <option value="">Enter Input Type</option>
                               <option value="number">Number</option>
                               <option value="text">Letter</option>
                               <option value="date">Date</option>
                             </select>
                             </div>
-                        </div>
+                    </div>
                       
                     </div>
                     <hr>
@@ -47,7 +48,7 @@
                     <div class="d-flex justify-content-between">
                       <a href="/subcategory_list/" class="btn btn-sm bg-gradient-secondary ">Cancel</a>
                      
-                      <a href="/add_more_one/<%= data._id %>" class="btn btn-sm btn-dark ">Add More</a>
+                      <button type="submit" formaction="/submit_add_more_form/<%= data._id %>"  class="btn btn-sm btn-dark ">Add More</button>
                       
                       <a href="/view_question/<%= data._id %>" class="btn btn-success btn-sm" id="viewform" >
                         View Form
@@ -56,7 +57,7 @@
                     </div>
                    </div>
                     
-                   </div>
+                  </div>
                 </form>
                 </div>
               </div>
@@ -107,6 +108,12 @@ btn2.addEventListener('click', function onClick() {
     }
 
 });
+
+function flagTwo(){
+document.getElementById("flag").value = 0;
+  
+
+}
 
     </script>
     

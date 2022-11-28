@@ -15,6 +15,26 @@ const subscriptionSchema = new mongoose.Schema({
         required: false,
 
     },
+    duration:{
+        type: Number,
+        required: false,
+        default: 0
+    },
+    gst:{
+        type: Number,
+        required: false,
+        default: 18
+    },
+    total:{
+        type: Number,
+        required: false,
+        default: 0
+    },
+    amount:{
+        type: Number,
+        required: false,
+        default: 0
+    },
     created_on:{
         type: Date,
         required: false,

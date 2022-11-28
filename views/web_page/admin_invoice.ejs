@@ -1,0 +1,244 @@
+<html><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script><style>#invoice{
+    padding: 30px;
+    }
+    .invoice {
+    position: relative;
+    background-color: #FFF;
+    min-height: 680px;
+    padding: 15px
+    }
+    .invoice header {
+    padding: 10px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #3989c6
+    }
+    .invoice .company-details {
+    text-align: right
+    }
+    .invoice .company-details .name {
+    margin-top: 0;
+    margin-bottom: 0
+    }
+    .invoice .contacts {
+    margin-bottom: 20px
+    }
+    .invoice .invoice-to {
+    text-align: left
+    }
+    .invoice .invoice-to .to {
+    margin-top: 0;
+    margin-bottom: 0
+    }
+    .invoice .invoice-details {
+    text-align: right
+    }
+    .invoice .invoice-details .invoice-id {
+    margin-top: 0;
+    color: #3989c6
+    }
+    .invoice main {
+    padding-bottom: 50px
+    }
+    .invoice main .thanks {
+    margin-top: -100px;
+    font-size: 2em;
+    margin-bottom: 50px
+    }
+    .invoice main .notices {
+    padding-left: 6px;
+    border-left: 6px solid #3989c6
+    }
+    .invoice main .notices .notice {
+    font-size: 1.2em
+    }
+    .invoice table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-bottom: 20px
+    }
+    .invoice table td,.invoice table th {
+    padding: 15px;
+    background: #eee;
+    border-bottom: 1px solid #fff
+    }
+    .invoice table th {
+    white-space: nowrap;
+    font-weight: 400;
+    font-size: 16px
+    }
+    .invoice table td h3 {
+    margin: 0;
+    font-weight: 400;
+    color: #3989c6;
+    font-size: 1.2em
+    }
+    .invoice table .qty,.invoice table .total,.invoice table .unit {
+    text-align: right;
+    font-size: 1.2em
+    }
+    .invoice table .no {
+    color: #fff;
+    font-size: 1.6em;
+    background: #3989c6
+    }
+    .invoice table .unit {
+    background: #ddd
+    }
+    .invoice table .total {
+    background: #3989c6;
+    color: #fff
+    }
+    .invoice table tbody tr:last-child td {
+    border: none
+    }
+    .invoice table tfoot td {
+    background: 0 0;
+    border-bottom: none;
+    white-space: nowrap;
+    text-align: right;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-top: 1px solid #aaa
+    }
+    .invoice table tfoot tr:first-child td {
+    border-top: none
+    }
+    .invoice table tfoot tr:last-child td {
+    color: #3989c6;
+    font-size: 1.4em;
+    border-top: 1px solid #3989c6
+    }
+    .invoice table tfoot tr td:first-child {
+    border: none
+    }
+    .invoice footer {
+    width: 100%;
+    text-align: center;
+    color: #777;
+    border-top: 1px solid #aaa;
+    padding: 8px 0
+    }
+    @media print {
+    .invoice {
+    font-size: 11px!important;
+    overflow: hidden!important
+    }
+    .invoice footer {
+    position: absolute;
+    bottom: 10px;
+    page-break-after: always
+    }
+    .invoice>div:last-child {
+    page-break-before: always
+    }
+    }</style><link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <!--Author : @arboshiki-->
+    </head><body><div id="invoice">
+    <div class="toolbar hidden-print">
+    <div class="text-right">
+    
+    </div>
+    <hr>
+    </div>
+    <div class="invoice overflow-auto">
+    <div style="min-width: 600px">
+    <header>
+    <div class="row">
+    <div class="col">
+    <img src="<%= data[0].image %>" style="width: 50px;height: 50px;" class="avatar-sm" >
+    </div>
+    <div class="col company-details">
+    <h2 class="name">
+    <a target="_blank" href="https://lobianijs.com">
+        <%= data[0].company_name %>
+    </a>
+    </h2>
+    <div><%= data[0].location %></div>
+    <div><a href="<%= data[0].email %>"><%= data[0].email %></a></div>
+    <div>  <%= data[0].mobile %></div>
+    </div>
+    </div>
+    </header>
+    <main>
+       
+      
+   
+    <br>
+    
+    <form action="/update_invoice"  method="post" enctype="multipart/form-data" >
+        <div class="card-body">
+          <p class="text-uppercase text-sm">Enter Details</p>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="example-text-input" class="form-control-label">Enter Company Name</label>
+                
+                <input class="form-control" type="text" name="company_name" value="" required>
+              
+              </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                  <label for="example-text-input" class="form-control-label">Enter Location</label>
+                  
+                  <input class="form-control" type="text" name="location" value="" required>
+                
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="example-text-input" class="form-control-label">Enter Mobile </label>
+                  <input class="form-control" type="text" name="mobile" value="" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="example-text-input" class="form-control-label">Enter Email </label>
+                  <input class="form-control" type="text" name="email" value="" required>
+                </div>
+              </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="example-text-input" class="form-control-label">Add Company Logo </label>
+                
+                <input class="form-control" type="file" name="image" required>
+                <br>
+              
+              </div>
+            </div>
+            
+            
+          </div>
+          
+          <hr>
+         <div class="row">
+          <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
+              <div class="d-flex justify-content-between">
+                <a href="/category/" class="btn btn-sm btn-info mb-0 d-none d-lg-block">Cancel</a>
+                <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-block d-lg-none"><i class="ni ni-collection"></i></a>
+                <button  type="submit" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Update</button>
+                <a href="javascript:;" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none"><i class="ni ni-email-83"></i></a>
+              </div>
+          </div>
+       </div>
+          
+        </div>
+      </form>
+    </main>
+    
+    </div>
+    <!--DO NOT DELETE THIS div. IT is responsible for showing footer always at the bottom-->
+    <div></div>
+    </div>
+    </div> <script type="text/javascript"> $('#printInvoice').click(function(){
+    Popup($('.invoice')[0].outerHTML);
+    function Popup(data)
+    {
+    window.print();
+    return true;
+    }
+    });</script></body></html>

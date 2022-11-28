@@ -15,6 +15,11 @@ const followSchema = new mongoose.Schema({
         required: false,
 
     },
+    indicator:{
+        type: String,
+        required: false,
+        default: 'default'
+    },
     created_on:{
         type: Date,
         required: false,

@@ -266,27 +266,11 @@ input[type="radio"]{
             <hr>
         </div>
         
-        <form action="/webviewIndex/add_vehicle/<%= user._id %>"  method="post" enctype="multipart/form-data" >
+        <form action="/webviewIndex/add_vehicle/<%= user._id %>" method="post" enctype="multipart/form-data" >
             <div class="row">
                 <div class="col">
                     <label for="brand-details">Brand*</label>
                     <div class="brand-container">
-                        <!-- <div class="dropdown">
-                            <button class="dropbtn">
-                                Country Flags
-                            </button>
-                              
-                            <div class="dropdown-content">
-                                <% if(brand.length){
-                                    for(var i = 0; i< brand.length; i++) {%> 
-                                <a href="#">
-                                    <img src=
-                "<%= brand[i].image %>"
-                                    width="20" height="15"><%= brand[i].brand_name %></a>
-                                    <% } %> 
-                                    <% } %> 
-                            </div>
-                        </div> -->
                         <select name="brand" id="dropdown-brand">
                            
                             <% if(brand.length){
